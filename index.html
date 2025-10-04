@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supratik Roy | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <style>
+        /* -------- Global Styles -------- */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 400;
+            margin: 0;
+            padding: 0;
+            background: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        :root {
+            --bg-color: #111;
+            --text-color: #eee;
+            --card-bg: #1c1c1c;
+            --primary: #4da6ff;
+        }
+
+        body.light {
+            --bg-color: #fdfdfd;
+            --text-color: #222;
+            --card-bg: #f4f4f4;
+            --primary: #0066cc;
+        }
+
+        /* Hero Section */
+        .hero h1,
+        .hero h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+        }
+
+        /* Section Titles (h2) */
+        h2 {
+            font-family: 'Raleway', sans-serif;
+            font-weight: 600;
+        }
+
+        /* Optional: project titles (h3) for some hierarchy */
+        h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: auto;
+            padding: 50px 0;
+        }
+
+        section {
+            margin-bottom: 60px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+            text-align: justify;
+        }
+
+        section.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* -------- Navbar -------- */
+        .logo-img {
+            height: 40px;
+            width: auto;
+            display: block;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            background: var(--bg-color);
+            padding: 12px 20px;
+            z-index: 999;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 25px;
+        }
+
+        nav ul li a {
+            color: var(--text-color);
+            font-weight: 600;
+            transition: color 0.3s, border-bottom 0.3s;
+            padding-bottom: 3px;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a.active {
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+        }
+
+        /* Hamburger */
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: var(--text-color);
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                flex-direction: column;
+                background: var(--bg-color);
+                position: absolute;
+                top: 60px;
+                right: 0;
+                width: 200px;
+                border-radius: 8px;
+                padding: 15px;
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        /* -------- Theme Toggle -------- */
+        .theme-toggle {
+            background: var(--card-bg);
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            font-size: 16px;
+            cursor: pointer;
+            color: var(--text-color);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            transition: 0.3s;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* -------- Hero -------- */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: white;
+        }
+
+        body.light .hero {
+            background: linear-gradient(to right, #e0f3ff, #c2e0ff, #99ccff);
+            color: #111;
+        }
+
+        .hero img {
+            width: 200px;
+            height: auto;
+            border-radius: 12px;
+            border: 3px solid var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin: 0;
+        }
+
+        .hero h2 {
+            font-size: 2rem;
+            margin: 10px 0;
+        }
+
+        .btn-group {
+            margin-top: 20px;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: 0.3s;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            filter: brightness(90%);
+            transform: scale(1.05);
+        }
+
+        /* -------- Skills -------- */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+            transition: 0.3s;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-8px);
+        }
+
+        /* -------- Projects Carousel -------- */
+        .carousel {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            list-style: none;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            box-sizing: border-box;
+            padding: 0 10px;
+        }
+
+        @media (min-width: 768px) {
+            .carousel-slide {
+                min-width: 50%;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .carousel-slide {
+                min-width: 33.33%;
+            }
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--card-bg);
+            border: none;
+            font-size: 2rem;
+            padding: 0 12px;
+            cursor: pointer;
+            color: var(--text-color);
+            border-radius: 50%;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .carousel-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .carousel-btn.prev {
+            left: 10px;
+        }
+
+        .carousel-btn.next {
+            right: 10px;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+            transition: 0.3s;
+        }
+
+        .project-card img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+        }
+
+        /* -------- Timeline -------- */
+        .timeline {
+            position: relative;
+            margin: 20px 0;
+            padding-left: 40px;
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 15px;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: var(--primary);
+        }
+
+        .timeline-item {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -32px;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--primary);
+        }
+
+        .timeline-item h3 {
+            margin: 0;
+        }
+
+        /* -------- Contact -------- */
+        .contact {
+            text-align: center;
+        }
+
+        .contact a {
+            margin: 0 10px;
+            font-size: 1.2rem;
+        }
+
+        /* -------- Footer -------- */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #777;
+        }
+
+        body.light footer {
+            background: #eaeaea;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <div class="logo">
+            <img src="singature_logo.png" alt="SR Logo" class="logo-img">
+        </div>
+        <div class="menu-toggle" id="menuToggle">☰</div>
+        <ul id="navMenu">
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="nav-right">
+            <button class="theme-toggle" id="themeToggle">☀️</button>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero" id="home">
+        <img src="profile.png" alt="Profile Picture">
+        <h1>Supratik Roy</h1>
+        <h2>Tech Lead | Full-Stack Developer</h2>
+        <div class="btn-group">
+            <a href="resume.pdf" class="btn" target="_blank">View Resume</a>
+            <a href="#contact" class="btn">Contact Me</a>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- About -->
+        <section id="about" class="about">
+            <h2>About Me</h2>
+            <p>
+                A dedicated professional with over 8 years of working experience and a proven track record in leading
+                technical teams and delivering successful projects. Skilled in full-stack development, project
+                management, and leveraging emerging technologies to drive innovation. Committed to fostering a
+                collaborative and high-performing work environment.
+            </p>
+        </section>
+
+        <!-- Skills -->
+        <section id="skills">
+            <h2>Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3>Frontend</h3>
+                    <p>React.js, Angular, JavaScript, HTML, CSS</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Backend</h3>
+                    <p>Node.js, Java, Spring Boot, Django</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Databases</h3>
+                    <p>MySQL, PostgreSQL, MongoDB, RethinkDB, Elasticsearch</p>
+                </div>
+                <div class="skill-card">
+                    <h3>DevOps & Cloud</h3>
+                    <p>AWS, Docker, Kubernetes, Jenkins, Datadog</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Other / Emerging Tech</h3>
+                    <p>Blockchain, Agile Project Management</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Carousel -->
+        <section id="projects">
+            <h2>Featured Projects</h2>
+            <div class="carousel">
+                <button class="carousel-btn prev">&#10094;</button>
+                <div class="carousel-track-container">
+                    <ul class="carousel-track">
+                        <li class="carousel-slide">
+                            <div class="project-card">
+                                <img src="project1.png" alt="Project Screenshot">
+                                <h3>Smart Budget Tracker</h3>
+                                <p>Designed and built a personal finance tracking app with interactive charts and
+                                    notifications.</p>
+                                <div class="project-links">
+                                    <a href="https://github.com/suroy92/budget-tracker" target="_blank">GitHub</a> |
+                                    <a href="#" target="_blank">Live Demo</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="carousel-slide">
+                            <div class="project-card">
+                                <img src="project2.png" alt="Project Screenshot">
+                                <h3>Portfolio Website</h3>
+                                <p>Responsive personal website showcasing my work, with animations and contact form
+                                    integration.</p>
+                                <div class="project-links">
+                                    <a href="https://github.com/suroy92/portfolio" target="_blank">GitHub</a> |
+                                    <a href="#" target="_blank">Live Demo</a>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- Add more slides here -->
+                    </ul>
+                </div>
+                <button class="carousel-btn next">&#10095;</button>
+            </div>
+        </section>
+
+        <!-- Experience -->
+        <section id="experience">
+            <h2>Experience</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>Tech Lead - CBNITS India Pvt Ltd</h3>
+                    <p>2019 - Present</p>
+                    <p>At CBNITS, I lead the technical design, development, and implementation of complex projects,
+                        while mentoring team members and fostering a collaborative work culture. I work closely with
+                        cross-functional teams to drive project success, ensuring high standards in both architecture
+                        and delivery. My role also involves designing scalable web applications, writing maintainable
+                        code, and managing content across multiple systems.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Software Developer - Qlikchain</h3>
+                    <p>2017 - 2019</p>
+                    <p>As a developer at Qlikchain, I contributed to the design and implementation of web applications,
+                        iterating through multiple versions to refine user experience and performance. I collaborated
+                        with the team to write extensible, maintainable code and ensured smooth maintenance of content
+                        across systems.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education -->
+        <section id="education">
+            <h2>Education</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>MBA in Systems and IT Management</h3>
+                    <p>Jadavpur University (Institute of Business Management), 2020 - 2023</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>B.Tech in Computer Science</h3>
+                    <p>Calcutta University (Rajabazar Science College), 2014 - 2017</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact" class="contact">
+            <h2>Contact</h2>
+            <p>Let’s build something together!</p>
+            <a href="mailto:supratik.roy@example.com">Email</a> |
+            <a href="https://linkedin.com/in/suroy92">LinkedIn</a> |
+            <a href="https://github.com/suroy92">GitHub</a>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2025 Supratik Roy. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Scroll Reveal
+        const sections = document.querySelectorAll("section");
+        const revealOnScroll = () => {
+            const triggerBottom = window.innerHeight * 0.85;
+            sections.forEach(sec => {
+                const boxTop = sec.getBoundingClientRect().top;
+                if (boxTop < triggerBottom) sec.classList.add("show");
+            });
+        };
+        window.addEventListener("scroll", revealOnScroll);
+        window.addEventListener("load", revealOnScroll);
+
+        // Theme Toggle
+        const themeToggle = document.getElementById("themeToggle");
+        const setTheme = (theme) => {
+            document.body.className = theme;
+            themeToggle.textContent = theme === "light" ? "🌙" : "☀️";
+            localStorage.setItem("theme", theme);
+        };
+        themeToggle.addEventListener("click", () => {
+            const current = document.body.classList.contains("light") ? "light" : "dark";
+            setTheme(current === "light" ? "dark" : "light");
+        });
+        setTheme(localStorage.getItem("theme") || "dark");
+
+        // Scroll Spy
+        const navLinks = document.querySelectorAll("nav ul li a");
+        const scrollSpy = () => {
+            let current = "";
+            sections.forEach(sec => {
+                const secTop = sec.offsetTop - 80;
+                if (pageYOffset >= secTop) current = sec.id;
+            });
+            navLinks.forEach(link => {
+                link.classList.remove("active");
+                if (link.getAttribute("href") === "#" + current) link.classList.add("active");
+            });
+        };
+        window.addEventListener("scroll", scrollSpy);
+        window.addEventListener("load", scrollSpy);
+
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById("menuToggle");
+        const navMenu = document.getElementById("navMenu");
+        menuToggle.addEventListener("click", () => {
+            navMenu.classList.toggle("show");
+        });
+
+        // Carousel JS with Autoplay & Swipe
+        const track = document.querySelector('.carousel-track');
+        const slides = Array.from(track.children);
+        const nextBtn = document.querySelector('.carousel-btn.next');
+        const prevBtn = document.querySelector('.carousel-btn.prev');
+        let currentIndex = 0;
+        let slideWidth = slides[0].getBoundingClientRect().width;
+
+        const updateCarousel = () => {
+            slideWidth = slides[0].getBoundingClientRect().width;
+            track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+        };
+
+        const nextSlide = () => {
+            currentIndex = (currentIndex + 1) % slides.length;
+            updateCarousel();
+        };
+
+        const prevSlide = () => {
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            updateCarousel();
+        };
+
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+
+        // Autoplay every 4 seconds
+        let autoplay = setInterval(nextSlide, 4000);
+
+        // Pause on hover
+        document.querySelector('.carousel').addEventListener('mouseenter', () => clearInterval(autoplay));
+        document.querySelector('.carousel').addEventListener('mouseleave', () => autoplay = setInterval(nextSlide, 4000));
+
+        // Touch/Swipe Support
+        let startX = 0;
+        let isDragging = false;
+
+        track.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+            clearInterval(autoplay);
+        });
+
+        track.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            const currentX = e.touches[0].clientX;
+            const diff = startX - currentX;
+            if (Math.abs(diff) > 50) { // swipe threshold
+                if (diff > 0) nextSlide();
+                else prevSlide();
+                isDragging = false;
+            }
+        });
+
+        track.addEventListener('touchend', () => {
+            isDragging = false;
+            autoplay = setInterval(nextSlide, 4000);
+        });
+
+        window.addEventListener('resize', updateCarousel);
+        window.addEventListener('load', updateCarousel);
+
+    </script>
+</body>
+
+</html>
