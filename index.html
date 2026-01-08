@@ -248,25 +248,27 @@
 
         /* -------- Hero -------- */
         .hero {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            align-items: center;
-            min-height: calc(100vh - 60px);
-            padding: 70px 40px;
-            gap: 80px;
+            min-height: 70vh;
             color: white;
             position: relative;
             overflow: clip;
             isolation: isolate;
-            background: radial-gradient(circle at 70% 40%, rgba(255, 107, 74, 0.22), transparent 38%),
-                        radial-gradient(circle at 20% 20%, rgba(59, 201, 219, 0.18), transparent 32%),
-                        #0f141c;
+            background: #0f141c;
+            padding: 60px 0;
+        }
+
+        .hero-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 80px;
+            width: 92%;
+            max-width: 1100px;
+            margin: 0 auto;
         }
 
         body.light .hero {
-            background: radial-gradient(circle at 70% 40%, rgba(255, 166, 130, 0.22), transparent 38%),
-                        radial-gradient(circle at 20% 20%, rgba(59, 201, 219, 0.18), transparent 32%),
-                        #e8f3ff;
+            background: #e8f3ff;
             color: #111;
         }
 
@@ -316,6 +318,21 @@
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        .hero-image::before {
+            content: "";
+            position: absolute;
+            inset: -120px;
+            background: radial-gradient(circle at center, rgba(255, 107, 74, 0.28), transparent 65%),
+                        radial-gradient(circle at center, rgba(59, 201, 219, 0.22), transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        body.light .hero-image::before {
+            background: radial-gradient(circle at center, rgba(255, 166, 130, 0.28), transparent 65%),
+                        radial-gradient(circle at center, rgba(59, 201, 219, 0.22), transparent 70%);
         }
 
         .hero-image-wrapper {
@@ -372,9 +389,8 @@
         }
 
         @media (max-width: 900px) {
-            .hero {
+            .hero-inner {
                 grid-template-columns: 1fr;
-                padding: 40px 20px;
                 gap: 40px;
                 text-align: center;
             }
@@ -535,7 +551,7 @@
             padding: 0;
             display: flex;
             flex-direction: column;
-            gap: .75rem;
+            gap: 1.5rem;
             order: 1;
         }
 
@@ -555,7 +571,7 @@
 
         .project-card-image:hover {
             transform: translateY(-6px) rotateX(2deg) rotateY(-3deg) scale(1.02);
-            box-shadow: 0 16px 30px rgba(0, 0, 0, .32);
+            box-shadow: 0 16px 30px rgba(255, 107, 74, 0.4), 0 8px 20px rgba(0, 0, 0, .32);
         }
 
         .project-card:nth-child(even) {
@@ -580,6 +596,7 @@
         .project-card p {
             text-align: left;
             margin: 0;
+            font-size: var(--step--1);
         }
 
         .project-links {
@@ -691,6 +708,53 @@
                 grid-column: 3;
                 text-align: left;
             }
+        }
+
+        /* -------- Skills Timeline (simple, no cards) -------- */
+        .skills-timeline {
+            position: relative;
+            margin: 24px 0;
+            padding-left: 48px;
+        }
+
+        .skills-timeline-item {
+            margin-bottom: 64px;
+            position: relative;
+            padding-left: 8px;
+        }
+
+        .skills-timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -34px;
+            top: 0;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--primary);
+            box-shadow: 0 0 0 3px color-mix(in oklab, var(--primary) 30%, transparent);
+            z-index: 2;
+        }
+
+        .skills-timeline-item::after {
+            content: "";
+            position: absolute;
+            left: -28px;
+            top: 18px;
+            width: 2px;
+            height: calc(100% + 32px);
+            background: linear-gradient(180deg, color-mix(in oklab, var(--primary) 65%, #fff 35%), transparent);
+            z-index: 1;
+        }
+
+        .skills-timeline-item:last-child::after {
+            display: none;
+        }
+
+        .skills-timeline-item h3 {
+            margin: 0 0 12px 0;
+            font-size: var(--step-0);
+            color: var(--primary);
         }
 
         /* -------- Contact -------- */
@@ -917,23 +981,25 @@
 
     <!-- Hero -->
     <section class="hero" id="home">
-        <div class="hero-content">
-            <p class="hero-greeting">Hello.</p>
-            <h1 class="hero-name">I'm Supratik Roy</h1>
-            <h2 class="hero-title">Tech Lead | Full-Stack Developer</h2>
-            <div class="hero-cta">
-                <a href="resume.pdf" class="btn" target="_blank" rel="noopener noreferrer">
-                    <iconify-icon icon="mdi:file-account-outline"></iconify-icon> View Resume
-                </a>
-                <a href="#contact" class="btn btn-secondary">
-                    <iconify-icon icon="mdi:send"></iconify-icon> Get in Touch
-                </a>
+        <div class="hero-inner">
+            <div class="hero-content">
+                <p class="hero-greeting">Hello.</p>
+                <h1 class="hero-name">I'm Supratik Roy</h1>
+                <h2 class="hero-title">Tech Lead | Full-Stack Developer</h2>
+                <div class="hero-cta">
+                    <a href="resume.pdf" class="btn" target="_blank" rel="noopener noreferrer">
+                        <iconify-icon icon="mdi:file-account-outline"></iconify-icon> View Resume
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">
+                        <iconify-icon icon="mdi:send"></iconify-icon> Get in Touch
+                    </a>
+                </div>
             </div>
-        </div>
-        <div class="hero-image">
-            <div class="hero-image-wrapper">
-                <div class="hero-image-circle"></div>
-                <img src="images/profile.png" alt="Portrait of Supratik Roy" />
+            <div class="hero-image">
+                <div class="hero-image-wrapper">
+                    <div class="hero-image-circle"></div>
+                    <img src="images/profile.png" alt="Portrait of Supratik Roy" />
+                </div>
             </div>
         </div>
     </section>
@@ -941,45 +1007,45 @@
     <div class="container">
         <!-- About & Skills -->
         <section id="about" class="about-skills">
-            <!-- Left: Skills -->
+            <!-- Left: Skills Timeline -->
             <div id="skills">
-                <h2><iconify-icon icon="ph:toolbox-duotone"></iconify-icon> Skills</h2>
-                <div class="skills-grid">
-                    <div class="skill-card">
-                        <h3>Frontend</h3>
-                        <p style="display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;justify-content:center">
+                <div class="skills-timeline">
+                    <div class="skills-timeline-item">
+                        <h3>Web Development</h3>
+                        <p style="display:flex;gap:.7rem;flex-wrap:wrap;align-items:center">
                             <i class="devicon-react-original colored" title="React"></i>
                             <i class="devicon-angularjs-plain colored" title="Angular"></i>
                             <i class="devicon-javascript-plain colored" title="JavaScript"></i>
                             <i class="devicon-html5-plain colored" title="HTML5"></i>
                             <i class="devicon-css3-plain colored" title="CSS3"></i>
-                        </p>
-                    </div>
-                    <div class="skill-card">
-                        <h3>Backend</h3>
-                        <p style="display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;justify-content:center">
                             <i class="devicon-nodejs-plain colored" title="Node.js"></i>
-                            <i class="devicon-java-plain colored" title="Java"></i>
                             <i class="devicon-spring-original colored" title="Spring Boot"></i>
-                            <i class="devicon-django-plain colored" title="Django"></i>
-                        </p>
-                    </div>
-                    <div class="skill-card">
-                        <h3>Databases</h3>
-                        <p style="display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;justify-content:center">
                             <i class="devicon-mysql-plain colored" title="MySQL"></i>
                             <i class="devicon-postgresql-plain colored" title="PostgreSQL"></i>
                             <i class="devicon-mongodb-plain colored" title="MongoDB"></i>
-                            <i class="devicon-elasticsearch-plain colored" title="Elasticsearch"></i>
                         </p>
                     </div>
-                    <div class="skill-card">
-                        <h3>DevOps & Cloud</h3>
-                        <p style="display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;justify-content:center">
+                    <div class="skills-timeline-item">
+                        <h3>App Development</h3>
+                        <p style="display:flex;gap:.7rem;flex-wrap:wrap;align-items:center">
+                            <i class="devicon-java-plain colored" title="Java"></i>
+                            <i class="devicon-android-plain colored" title="Android"></i>
+                            <i class="devicon-python-plain colored" title="Python"></i>
+                            <i class="devicon-django-plain colored" title="Django"></i>
+                            <i class="devicon-flutter-plain colored" title="Flutter"></i>
+                            <i class="devicon-react-original colored" title="React Native"></i>
+                        </p>
+                    </div>
+                    <div class="skills-timeline-item">
+                        <h3>DevOps</h3>
+                        <p style="display:flex;gap:.7rem;flex-wrap:wrap;align-items:center">
                             <i class="devicon-amazonwebservices-plain colored" title="AWS"></i>
                             <i class="devicon-docker-plain colored" title="Docker"></i>
                             <i class="devicon-kubernetes-plain colored" title="Kubernetes"></i>
                             <i class="devicon-jenkins-plain colored" title="Jenkins"></i>
+                            <i class="devicon-git-plain colored" title="Git"></i>
+                            <i class="devicon-github-original" title="GitHub"></i>
+                            <i class="devicon-gitlab-plain colored" title="GitLab"></i>
                         </p>
                     </div>
                 </div>
@@ -988,7 +1054,7 @@
             <!-- Right: About with stats -->
             <div>
                 <h2><iconify-icon icon="ph:user-duotone"></iconify-icon> About Me</h2>
-                <p style="font-size: var(--step-1); line-height: 1.8; margin: 6px 0 0; max-width: 70ch;">
+                <p style="font-size: var(--step-0); line-height: 1.7; margin: 6px 0 0; max-width: 70ch;">
                     A dedicated professional with over 8 years of working experience and a proven track record in leading technical teams and delivering successful projects. Skilled in full‑stack development, project management, and leveraging emerging technologies to drive innovation. Passionate about building scalable solutions that meet client needs and exceed expectations.
                 </p>
                 <div class="about-stats">
@@ -1018,18 +1084,15 @@
                         <h3>Automated Documentation Generator</h3>
                         <p>AI‑powered CLI that parses multi‑language codebases and emits polished Markdown/HTML docs with
                             caching, parallelism, and a LADOM schema.</p>
-                        <p>
-                            <span class="tag"><iconify-icon icon="mdi:robot-outline"></iconify-icon> AI</span>
-                            <span class="tag"><iconify-icon icon="mdi:language-python"></iconify-icon> Python</span>
-                            <span class="tag"><iconify-icon icon="mdi:language-javascript"></iconify-icon> JS</span>
+                        <p style="display:flex;gap:.5rem;align-items:center;font-size:1.5rem">
+                            <iconify-icon icon="mdi:robot-outline" title="AI"></iconify-icon>
+                            <i class="devicon-python-plain colored" title="Python"></i>
+                            <i class="devicon-javascript-plain colored" title="JavaScript"></i>
                         </p>
                         <div class="project-links" style="margin-top: auto;">
                             <a href="https://github.com/suroy92/automated-documentation-generator" target="_blank"
-                                rel="noopener noreferrer">
-                                <iconify-icon icon="mdi:github"></iconify-icon> GitHub
-                            </a>
-                            <a href="#" aria-label="View project" style="color:var(--primary);font-weight:700;display:inline-flex;gap:.3rem;align-items:center;">
-                                <span>View project</span><iconify-icon icon="mdi:arrow-right"></iconify-icon>
+                                rel="noopener noreferrer" class="btn">
+                                <iconify-icon icon="mdi:github"></iconify-icon> View in GitHub
                             </a>
                         </div>
                     </div>
@@ -1041,17 +1104,14 @@
                         <h3>Personal Finance Analyzer</h3>
                         <p>Local‑first desktop app that imports bank CSVs and auto‑categorizes spend with a TF‑IDF + LogReg
                             pipeline, dashboards, and on‑the‑fly retraining.</p>
-                        <p>
-                            <span class="tag"><iconify-icon icon="mdi:robot-outline"></iconify-icon> AI</span>
-                            <span class="tag"><iconify-icon icon="mdi:chart-line"></iconify-icon> Analytics</span>
-                            <span class="tag"><iconify-icon icon="mdi:database-outline"></iconify-icon> SQLite</span>
+                        <p style="display:flex;gap:.5rem;align-items:center;font-size:1.5rem">
+                            <iconify-icon icon="mdi:robot-outline" title="AI"></iconify-icon>
+                            <iconify-icon icon="mdi:chart-line" title="Analytics"></iconify-icon>
+                            <i class="devicon-sqlite-plain colored" title="SQLite"></i>
                         </p>
                         <div class="project-links" style="margin-top: auto;">
-                            <a href="https://github.com/suroy92" target="_blank" rel="noopener noreferrer">
-                                <iconify-icon icon="mdi:github"></iconify-icon> GitHub
-                            </a>
-                            <a href="#" aria-label="View project" style="color:var(--primary);font-weight:700;display:inline-flex;gap:.3rem;align-items:center;">
-                                <span>View project</span><iconify-icon icon="mdi:arrow-right"></iconify-icon>
+                            <a href="https://github.com/suroy92" target="_blank" rel="noopener noreferrer" class="btn">
+                                <iconify-icon icon="mdi:github"></iconify-icon> View in GitHub
                             </a>
                         </div>
                     </div>
@@ -1065,17 +1125,14 @@
                         <h3>Password Manager</h3>
                         <p>Lightweight Tkinter vault that encrypts credentials with Fernet, supports CRUD + generator, and
                             JSON export on a local SQLite store.</p>
-                        <p>
-                            <span class="tag"><iconify-icon icon="mdi:lock-outline"></iconify-icon> Security</span>
-                            <span class="tag"><iconify-icon icon="mdi:language-python"></iconify-icon> Python</span>
-                            <span class="tag"><iconify-icon icon="mdi:database-outline"></iconify-icon> SQLite</span>
+                        <p style="display:flex;gap:.5rem;align-items:center;font-size:1.5rem">
+                            <iconify-icon icon="mdi:lock-outline" title="Security"></iconify-icon>
+                            <i class="devicon-python-plain colored" title="Python"></i>
+                            <i class="devicon-sqlite-plain colored" title="SQLite"></i>
                         </p>
                         <div class="project-links" style="margin-top: auto;">
-                            <a href="https://github.com/suroy92/password-manager" target="_blank" rel="noopener noreferrer">
-                                <iconify-icon icon="mdi:github"></iconify-icon> GitHub
-                            </a>
-                            <a href="#" aria-label="View project" style="color:var(--primary);font-weight:700;display:inline-flex;gap:.3rem;align-items:center;">
-                                <span>View project</span><iconify-icon icon="mdi:arrow-right"></iconify-icon>
+                            <a href="https://github.com/suroy92/password-manager" target="_blank" rel="noopener noreferrer" class="btn">
+                                <iconify-icon icon="mdi:github"></iconify-icon> View in GitHub
                             </a>
                         </div>
                     </div>
