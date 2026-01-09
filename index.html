@@ -775,6 +775,156 @@
             }
         }
 
+        /* -------- Education Split Layout -------- */
+        .education-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            margin: 24px 0;
+        }
+
+        .education-item {
+            display: flex;
+            gap: 20px;
+            align-items: start;
+            padding: 24px;
+            background: linear-gradient(135deg, 
+                color-mix(in oklab, var(--primary) 8%, transparent) 0%, 
+                color-mix(in oklab, var(--accent) 5%, transparent) 100%);
+            border-left: 4px solid var(--primary);
+            border-radius: 8px;
+            transition: transform .3s ease, border-color .3s ease;
+            position: relative;
+        }
+
+        .education-item:hover {
+            transform: translateX(8px);
+            border-color: var(--accent);
+        }
+
+        .education-item:nth-child(2) {
+            border-left-color: var(--accent);
+        }
+
+        .education-item:nth-child(2):hover {
+            border-color: var(--primary);
+        }
+
+        .education-icon-badge {
+            width: 56px;
+            height: 56px;
+            min-width: 56px;
+            background: var(--bg-elev-1);
+            border: 2px solid color-mix(in oklab, var(--primary) 30%, transparent);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--primary);
+            transition: all .3s ease;
+        }
+
+        .education-item:nth-child(2) .education-icon-badge {
+            border-color: color-mix(in oklab, var(--accent) 30%, transparent);
+            color: var(--accent);
+        }
+
+        .education-item:hover .education-icon-badge {
+            transform: rotate(-5deg) scale(1.1);
+            box-shadow: 0 8px 16px rgba(255, 107, 74, 0.3);
+        }
+
+        .education-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .education-degree-line {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .education-degree-line h3 {
+            margin: 0;
+            font-size: var(--step-1);
+            line-height: 1.2;
+        }
+
+        .education-degree-line .degree-tag {
+            padding: 4px 10px;
+            background: color-mix(in oklab, var(--primary) 20%, transparent);
+            border: 1px solid color-mix(in oklab, var(--primary) 30%, transparent);
+            border-radius: 6px;
+            font-size: .75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+            color: var(--primary);
+        }
+
+        .education-item:nth-child(2) .degree-tag {
+            background: color-mix(in oklab, var(--accent) 20%, transparent);
+            border-color: color-mix(in oklab, var(--accent) 30%, transparent);
+            color: var(--accent);
+        }
+
+        .education-university {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: color-mix(in oklab, var(--text-color) 85%, transparent);
+            font-size: var(--step-0);
+            font-weight: 500;
+            margin: 0;
+        }
+
+        .education-university iconify-icon {
+            font-size: 1.1rem;
+            color: var(--primary);
+        }
+
+        .education-item:nth-child(2) .education-university iconify-icon {
+            color: var(--accent);
+        }
+
+        .education-meta {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: var(--step--1);
+            color: color-mix(in oklab, var(--text-color) 70%, transparent);
+            margin: 4px 0 0 0;
+        }
+
+        @media (max-width: 680px) {
+            .education-container {
+                grid-template-columns: 1fr;
+            }
+
+            .education-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .education-icon-badge {
+                margin: 0 auto;
+            }
+
+            .education-degree-line {
+                justify-content: center;
+            }
+
+            .education-university,
+            .education-meta {
+                justify-content: center;
+            }
+        }
+
         /* -------- Timeline (for Education) -------- */
         .timeline {
             position: relative;
@@ -932,6 +1082,10 @@
             font-weight: 600;
         }
 
+        .contact-form label:has(textarea) {
+            grid-column: 1 / -1;
+        }
+
         .contact-form input,
         .contact-form textarea {
             border: 1px solid rgba(255, 255, 255, .12);
@@ -941,17 +1095,25 @@
             padding: 12px;
             font-size: var(--step-0);
             font-family: inherit;
+            transition: border-color .3s ease, box-shadow .3s ease;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px color-mix(in oklab, var(--primary) 15%, transparent);
         }
 
         .contact-form textarea {
             min-height: 120px;
             resize: vertical;
-            grid-column: 1 / -1;
         }
 
         .contact-form button {
             grid-column: 1 / -1;
             width: fit-content;
+            justify-self: center;
         }
 
         @media (max-width: 700px) {
@@ -993,15 +1155,79 @@
 
         /* -------- Footer -------- */
         footer {
-            text-align: center;
-            padding: 20px;
-            background: #1a1a1a;
-            color: #777;
+            background: var(--card-bg);
+            border-top: 1px solid rgba(255, 255, 255, .06);
+            padding: 48px 20px 32px;
+            margin-top: 80px;
         }
 
-        body.light footer {
-            background: #eaeaea;
-            color: #555;
+        .footer-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-logo {
+            font-size: var(--step-1);
+            font-weight: 800;
+            background: linear-gradient(90deg, #7bc9ff, #a586ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 0;
+        }
+
+        .footer-tagline {
+            color: color-mix(in oklab, var(--text-color) 70%, transparent);
+            font-size: var(--step--1);
+            margin: 0;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .footer-social .icon-btn {
+            padding: .7rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-social .icon-btn iconify-icon {
+            margin: 0;
+        }
+
+        .footer-copyright {
+            text-align: right;
+            color: color-mix(in oklab, var(--text-color) 60%, transparent);
+            font-size: var(--step--1);
+            margin: 0;
+        }
+
+        @media (max-width: 900px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 32px;
+            }
+
+            .footer-copyright {
+                text-align: center;
+            }
+
+            .footer-brand {
+                align-items: center;
+            }
         }
 
         /* Scroll progress bar */
@@ -1364,14 +1590,46 @@
         <!-- Education -->
         <section id="education">
             <h2><iconify-icon icon="ph:graduation-cap-duotone"></iconify-icon> Education</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <h3>MBA in Systems and IT Management</h3>
-                    <p>Jadavpur University, 2020 - 2023</p>
+            
+            <div class="education-container">
+                <div class="education-item">
+                    <div class="education-icon-badge">
+                        <iconify-icon icon="ph:graduation-cap-fill"></iconify-icon>
+                    </div>
+                    <div class="education-details">
+                        <div class="education-degree-line">
+                            <h3>MBA in Systems and IT Management</h3>
+                            <span class="degree-tag">Master's</span>
+                        </div>
+                        <p class="education-university">
+                            <iconify-icon icon="ph:bank-duotone"></iconify-icon>
+                            Jadavpur University
+                        </p>
+                        <p class="education-meta">
+                            <iconify-icon icon="mdi:calendar-outline"></iconify-icon>
+                            2020 - 2023
+                        </p>
+                    </div>
                 </div>
-                <div class="timeline-item">
-                    <h3>B.Tech in Computer Science</h3>
-                    <p>Calcutta University, 2014 - 2017</p>
+
+                <div class="education-item">
+                    <div class="education-icon-badge">
+                        <iconify-icon icon="ph:code-fill"></iconify-icon>
+                    </div>
+                    <div class="education-details">
+                        <div class="education-degree-line">
+                            <h3>B.Tech in Computer Science</h3>
+                            <span class="degree-tag">Bachelor's</span>
+                        </div>
+                        <p class="education-university">
+                            <iconify-icon icon="ph:bank-duotone"></iconify-icon>
+                            Calcutta University
+                        </p>
+                        <p class="education-meta">
+                            <iconify-icon icon="mdi:calendar-outline"></iconify-icon>
+                            2014 - 2017
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1395,23 +1653,31 @@
                 </label>
                 <button type="submit" class="btn">Submit</button>
             </form>
-            <div class="social">
-                <a class="icon-btn" href="mailto:supratik1992@gmail.com">
-                    <iconify-icon icon="mdi:email-outline"></iconify-icon>Email
-                </a>
-                <a class="icon-btn" href="https://www.linkedin.com/in/supratikroy/" target="_blank"
-                    rel="noopener noreferrer">
-                    <iconify-icon icon="mdi:linkedin"></iconify-icon>LinkedIn
-                </a>
-                <a class="icon-btn" href="https://github.com/suroy92" target="_blank" rel="noopener noreferrer">
-                    <iconify-icon icon="mdi:github"></iconify-icon>GitHub
-                </a>
-            </div>
         </section>
     </div>
 
     <footer>
-        <p>© 2025 Supratik Roy. All rights reserved.</p>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3 class="footer-logo">Supratik Roy</h3>
+                <p class="footer-tagline">Building the future, one line at a time.</p>
+            </div>
+            
+            <div class="footer-social">
+                <a class="icon-btn" href="mailto:supratik1992@gmail.com" aria-label="Email">
+                    <iconify-icon icon="mdi:email-outline"></iconify-icon>
+                </a>
+                <a class="icon-btn" href="https://www.linkedin.com/in/supratikroy/" target="_blank"
+                    rel="noopener noreferrer" aria-label="LinkedIn">
+                    <iconify-icon icon="mdi:linkedin"></iconify-icon>
+                </a>
+                <a class="icon-btn" href="https://github.com/suroy92" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                    <iconify-icon icon="mdi:github"></iconify-icon>
+                </a>
+            </div>
+            
+            <p class="footer-copyright">© 2025 Supratik Roy<br/>All rights reserved.</p>
+        </div>
     </footer>
 
     <!-- Progress Bar -->
