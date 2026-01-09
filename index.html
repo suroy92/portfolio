@@ -629,7 +629,153 @@
             display: none !important;
         }
 
-        /* -------- Timeline -------- */
+        /* -------- Experience Cards -------- */
+        .experience-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            margin: 24px 0;
+        }
+
+        .experience-card {
+            background: var(--bg-elev-1);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: var(--radius);
+            padding: 28px;
+            box-shadow: var(--shadow-2), var(--shadow-1);
+            transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        .experience-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, .35), var(--shadow-2);
+            border-color: color-mix(in oklab, var(--primary) 30%, transparent);
+        }
+
+        .experience-logo {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: white;
+            box-shadow: 0 4px 12px rgba(255, 107, 74, 0.3);
+            flex-shrink: 0;
+        }
+
+        .experience-content {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .experience-title-group h3 {
+            margin: 0;
+            font-size: var(--step-1);
+            line-height: 1.2;
+        }
+
+        .experience-company {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: var(--step-0);
+            margin: 4px 0 0 0;
+        }
+
+        .experience-period {
+            background: color-mix(in oklab, var(--primary) 15%, transparent);
+            border: 1px solid color-mix(in oklab, var(--primary) 25%, transparent);
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: var(--step--1);
+            font-weight: 600;
+            color: var(--primary);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .experience-description {
+            color: color-mix(in oklab, var(--text-color) 85%, transparent);
+            line-height: 1.65;
+            margin: 0;
+        }
+
+        .experience-highlights {
+            list-style: none;
+            padding: 0;
+            margin: 8px 0 0 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .experience-highlights li {
+            display: flex;
+            align-items: start;
+            gap: 10px;
+            color: color-mix(in oklab, var(--text-color) 85%, transparent);
+            line-height: 1.5;
+        }
+
+        .experience-highlights li::before {
+            content: "▸";
+            color: var(--primary);
+            font-weight: 800;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .experience-tech {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+
+        .experience-tech .tag {
+            background: color-mix(in oklab, var(--accent) 12%, transparent);
+            border-color: color-mix(in oklab, var(--accent) 25%, transparent);
+            color: var(--accent);
+            font-size: .85rem;
+            padding: .3rem .7rem;
+        }
+
+        @media (max-width: 768px) {
+            .experience-card {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .experience-logo {
+                width: 56px;
+                height: 56px;
+                font-size: 1.3rem;
+            }
+
+            .experience-header {
+                flex-direction: column;
+            }
+        }
+
+        /* -------- Timeline (for Education) -------- */
         .timeline {
             position: relative;
             margin: 24px 0;
@@ -1055,7 +1201,7 @@
             <div>
                 <h2><iconify-icon icon="ph:user-duotone"></iconify-icon> About Me</h2>
                 <p style="font-size: var(--step-0); line-height: 1.7; margin: 6px 0 0; max-width: 70ch;">
-                    A dedicated professional with over 8 years of working experience and a proven track record in leading technical teams and delivering successful projects. Skilled in full‑stack development, project management, and leveraging emerging technologies to drive innovation. Passionate about building scalable solutions that meet client needs and exceed expectations.
+                    A dedicated professional with over 8 years of working experience and a proven track record in leading technical teams and delivering successful projects. Skilled in full-stack development, project management, and leveraging emerging technologies to drive innovation. Passionate about building scalable solutions that meet client needs and exceed expectations.
                 </p>
                 <div class="about-stats">
                     <div class="stat">
@@ -1082,7 +1228,7 @@
                 <article class="project-card" data-tags="ai,cli,python,web">
                     <div class="project-card-content">
                         <h3>Automated Documentation Generator</h3>
-                        <p>AI‑powered CLI that parses multi‑language codebases and emits polished Markdown/HTML docs with
+                        <p>AI-powered CLI that parses multi-language codebases and emits polished Markdown/HTML docs with
                             caching, parallelism, and a LADOM schema.</p>
                         <p style="display:flex;gap:.5rem;align-items:center;font-size:1.5rem">
                             <iconify-icon icon="mdi:robot-outline" title="AI"></iconify-icon>
@@ -1102,8 +1248,8 @@
                 <article class="project-card" data-tags="ai,python,desktop">
                     <div class="project-card-content">
                         <h3>Personal Finance Analyzer</h3>
-                        <p>Local‑first desktop app that imports bank CSVs and auto‑categorizes spend with a TF‑IDF + LogReg
-                            pipeline, dashboards, and on‑the‑fly retraining.</p>
+                        <p>Local-first desktop app that imports bank CSVs and auto-categorizes spend with a TF-IDF + LogReg
+                            pipeline, dashboards, and on-the-fly retraining.</p>
                         <p style="display:flex;gap:.5rem;align-items:center;font-size:1.5rem">
                             <iconify-icon icon="mdi:robot-outline" title="AI"></iconify-icon>
                             <iconify-icon icon="mdi:chart-line" title="Analytics"></iconify-icon>
@@ -1115,9 +1261,10 @@
                             </a>
                         </div>
                     </div>
-                    <div class="project-card-image" style="display: flex; align-items: center; justify-content: center; font-size: 3rem; color: var(--primary); background: linear-gradient(135deg, rgba(255,107,74,0.12), rgba(59,201,219,0.08));">
+                    <!-- <div class="project-card-image" style="display: flex; align-items: center; justify-content: center; font-size: 3rem; color: var(--primary); background: linear-gradient(135deg, rgba(255,107,74,0.12), rgba(59,201,219,0.08));">
                         <iconify-icon icon="mdi:chart-line-variant"></iconify-icon>
-                    </div>
+                    </div> -->
+                    <img src="images/financial_app_dashboard_square_1.png" alt="Personal Finance Analyzer" class="project-card-image" loading="lazy" />
                 </article>
 
                 <article class="project-card" data-tags="desktop,security,python">
@@ -1143,20 +1290,74 @@
 
         <!-- Experience -->
         <section id="experience">
-            <p class="section-kicker">Career</p>
-            <h2><iconify-icon icon="ph:briefcase-duotone"></iconify-icon> Experience</h2>
+            <h2><iconify-icon icon="ph:briefcase-duotone"></iconify-icon> Career</h2>
             <p style="margin:6px 0 18px;color:rgba(233,238,245,.78);max-width:680px">A quick view of the roles where I led delivery, architecture, and mentorship across web, cloud, and data-heavy products.</p>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <h3>Tech Lead — CBNITS India Pvt Ltd</h3>
-                    <p style="margin:4px 0;color:rgba(233,238,245,.75)">2019 - Present</p>
-                    <p style="margin:0">Led architecture and delivery for multi-tenant SaaS; mentored engineers; drove reliability and performance improvements.</p>
-                </div>
-                <div class="timeline-item">
-                    <h3>Software Developer — Qlikchain</h3>
-                    <p style="margin:4px 0;color:rgba(233,238,245,.75)">2017 - 2019</p>
-                    <p style="margin:0">Built and optimized web applications with a focus on UX and performance; collaborated closely with product and design.</p>
-                </div>
+            
+            <div class="experience-grid">
+                <article class="experience-card">
+                    <div class="experience-logo">CB</div>
+                    <div class="experience-content">
+                        <div class="experience-header">
+                            <div class="experience-title-group">
+                                <h3>Tech Lead</h3>
+                                <p class="experience-company">CBNITS India Pvt Ltd</p>
+                            </div>
+                            <div class="experience-period">
+                                <iconify-icon icon="mdi:calendar-outline"></iconify-icon>
+                                2019 - Present
+                            </div>
+                        </div>
+                        <p class="experience-description">
+                            Leading technical strategy and architecture for multi-tenant SaaS platforms, driving innovation and ensuring scalable, high-performance solutions.
+                        </p>
+                        <ul class="experience-highlights">
+                            <li>Architected and delivered multiple cloud-native applications serving 100K+ users</li>
+                            <li>Mentored a team of 8 engineers, establishing coding standards and best practices</li>
+                            <li>Reduced system latency by 40% through strategic refactoring and optimization</li>
+                            <li>Led migration from monolith to microservices, improving deployment frequency by 3x</li>
+                        </ul>
+                        <div class="experience-tech">
+                            <span class="tag">React</span>
+                            <span class="tag">Node.js</span>
+                            <span class="tag">AWS</span>
+                            <span class="tag">Docker</span>
+                            <span class="tag">PostgreSQL</span>
+                            <span class="tag">Kubernetes</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="experience-card">
+                    <div class="experience-logo">Q</div>
+                    <div class="experience-content">
+                        <div class="experience-header">
+                            <div class="experience-title-group">
+                                <h3>Software Developer</h3>
+                                <p class="experience-company">Qlikchain</p>
+                            </div>
+                            <div class="experience-period">
+                                <iconify-icon icon="mdi:calendar-outline"></iconify-icon>
+                                2017 - 2019
+                            </div>
+                        </div>
+                        <p class="experience-description">
+                            Developed and optimized full-stack web applications with a strong focus on user experience, performance, and code quality.
+                        </p>
+                        <ul class="experience-highlights">
+                            <li>Built responsive web applications using React and Angular frameworks</li>
+                            <li>Improved application load times by 50% through code splitting and lazy loading</li>
+                            <li>Collaborated with UX designers to implement pixel-perfect, accessible interfaces</li>
+                            <li>Contributed to CI/CD pipeline setup, reducing deployment time from hours to minutes</li>
+                        </ul>
+                        <div class="experience-tech">
+                            <span class="tag">Angular</span>
+                            <span class="tag">React</span>
+                            <span class="tag">Spring Boot</span>
+                            <span class="tag">MySQL</span>
+                            <span class="tag">Jenkins</span>
+                        </div>
+                    </div>
+                </article>
             </div>
         </section>
 
