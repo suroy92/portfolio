@@ -1071,12 +1071,33 @@
         @media (max-width: 768px) {
             .education-flow {
                 flex-direction: column;
-                gap: 40px;
+                gap: 32px;
+                padding: 0 8px;
             }
 
             .education-block {
                 flex: 1 1 auto;
                 width: 100%;
+                max-width: 100%;
+                padding: 16px;
+            }
+
+            .education-icon-large {
+                width: 80px;
+                height: 80px;
+                font-size: 2.5rem;
+            }
+
+            .education-icon-large::after {
+                inset: -6px;
+            }
+
+            .education-degree {
+                font-size: var(--step-0);
+            }
+
+            .education-field {
+                font-size: var(--step--1);
             }
         }
 
