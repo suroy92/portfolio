@@ -51,9 +51,12 @@
             --bg-color: #fdfdfd;
             --text-color: #222;
             --card-bg: #f4f4f4;
-            --primary: #0066cc;
+            --primary: #e94e2b;
+            --accent: #0099b8;
 
             --bg-elev-1: color-mix(in oklab, var(--bg-color) 92%, black 8%);
+            --shadow-1: 0 10px 25px rgba(0, 0, 0, .08);
+            --shadow-2: 0 1px 0 rgba(0, 0, 0, .03) inset;
         }
 
         /* -------- Global Styles -------- */
@@ -155,95 +158,151 @@
             position: sticky;
             top: 0;
             z-index: 998;
-            backdrop-filter: blur(10px);
-            background: rgba(17, 17, 17, 0.8);
-            border-bottom: 1px solid rgba(255, 255, 255, .06);
-            padding: 16px 40px;
+            backdrop-filter: blur(12px);
+            background: transparent;
+            padding: 24px 48px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: all .3s ease;
         }
 
-        body.light nav {
-            background: rgba(253, 253, 253, 0.8);
+        nav::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: var(--bg-color);
+            opacity: 0.7;
+            z-index: -1;
+        }
+
+        body.light nav::before {
+            opacity: 0.85;
         }
 
         .nav-logo {
             font-size: var(--step-1);
             font-weight: 800;
-            background: linear-gradient(90deg, #7bc9ff, #a586ff);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            letter-spacing: -.02em;
+            transition: transform .2s ease;
+            cursor: pointer;
+        }
+
+        .nav-logo:hover {
+            transform: scale(1.05);
         }
 
         nav ul {
             list-style: none;
             display: flex;
-            gap: 32px;
+            gap: 40px;
             margin: 0;
             padding: 0;
         }
 
         nav ul li a {
-            color: var(--text-color);
+            display: block;
+            color: color-mix(in oklab, var(--text-color) 80%, transparent);
             font-weight: 500;
-            transition: color .2s ease;
+            font-size: var(--step-0);
+            padding: 8px 0;
+            transition: all .3s ease;
             position: relative;
         }
 
         nav ul li a::after {
             content: '';
             position: absolute;
-            bottom: -4px;
+            bottom: 0;
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--primary);
+            background: linear-gradient(90deg, var(--primary), var(--accent));
             transition: width .3s ease;
         }
 
         nav ul li a:hover {
-            color: var(--primary);
+            color: var(--text-color);
         }
 
         nav ul li a:hover::after {
             width: 100%;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             nav {
-                padding: 16px 20px;
+                padding: 20px 32px;
+            }
+
+            nav ul {
+                gap: 24px;
             }
             
+            nav ul li a {
+                font-size: var(--step--1);
+            }
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                padding: 16px 24px;
+            }
+
             nav ul {
-                gap: 16px;
+                display: none;
+            }
+        }
+
+        /* -------- Mobile Menu Toggle -------- */
+        .mobile-menu-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 8px;
+            transition: transform .2s ease;
+        }
+
+        .mobile-menu-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 600px) {
+            .mobile-menu-toggle {
+                display: block;
             }
         }
 
         /* -------- Theme Toggle -------- */
         .theme-toggle-fixed {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            bottom: 32px;
+            right: 32px;
             z-index: 999;
             background: var(--card-bg);
             border: 1px solid rgba(255, 255, 255, .06);
             border-radius: 50%;
-            width: 44px;
-            height: 44px;
-            font-size: 18px;
+            width: 52px;
+            height: 52px;
+            font-size: 20px;
             cursor: pointer;
             color: var(--text-color);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            transition: transform 0.2s;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
         .theme-toggle-fixed:hover {
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
         }
 
         /* -------- Hero -------- */
@@ -282,7 +341,7 @@
             font-size: clamp(3rem, 8vw, 5rem);
             font-weight: 300;
             margin: 0;
-            color: white;
+            color: inherit;
             letter-spacing: -.02em;
         }
 
@@ -298,11 +357,21 @@
             letter-spacing: -.01em;
         }
 
+        body.light .hero-name {
+            background: linear-gradient(90deg, #d94523, #e94e2b 50%, #c23d1f);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
         .hero-title {
             font-size: var(--step-2);
             font-weight: 600;
             margin: 8px 0 0 0;
             color: color-mix(in oklab, white 90%, var(--primary) 10%);
+        }
+
+        body.light .hero-title {
+            color: color-mix(in oklab, #222 85%, var(--primary) 15%);
         }
 
         .hero-description {
@@ -311,6 +380,10 @@
             line-height: 1.7;
             max-width: 520px;
             margin: 16px 0 0 0;
+        }
+
+        body.light .hero-description {
+            color: rgba(34, 34, 34, 0.75);
         }
 
         .hero-image {
@@ -812,10 +885,14 @@
             align-items: center;
             justify-content: center;
             font-size: 3rem;
-            color: white;
+            color: #fff;
             box-shadow: 0 12px 28px rgba(255, 107, 74, 0.35);
             transition: all .3s ease;
             position: relative;
+        }
+
+        body.light .education-icon-large {
+            box-shadow: 0 12px 28px rgba(0, 102, 204, 0.25);
         }
 
         .education-block:hover .education-icon-large {
@@ -1078,7 +1155,13 @@
             padding: 12px;
             font-size: var(--step-0);
             font-family: inherit;
-            transition: border-color .3s ease, box-shadow .3s ease;
+            transition: border-color .3s ease, box-shadow .3s ease, background .3s ease;
+        }
+
+        body.light .contact-form input,
+        body.light .contact-form textarea {
+            border: 1.5px solid rgba(0, 0, 0, .15);
+            background: #ffffff;
         }
 
         .contact-form input:focus,
@@ -1097,6 +1180,35 @@
             grid-column: 1 / -1;
             width: fit-content;
             justify-self: center;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            padding: 14px 40px;
+            font-size: var(--step-0);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 6px 20px color-mix(in oklab, var(--primary) 35%, transparent);
+        }
+
+        .contact-form button::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            opacity: 0;
+            transition: opacity .3s ease;
+        }
+
+        .contact-form button:hover::before {
+            opacity: 1;
+        }
+
+        .contact-form button iconify-icon {
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-form button:hover {
+            box-shadow: 0 8px 25px color-mix(in oklab, var(--primary) 45%, transparent), 
+                        0 0 30px color-mix(in oklab, var(--accent) 25%, transparent);
         }
 
         @media (max-width: 700px) {
@@ -1226,7 +1338,7 @@
         /* -------- Buttons -------- */
         .btn {
             background: var(--primary);
-            color: white;
+            color: #fff;
             padding: 10px 20px;
             border-radius: 25px;
             font-weight: 700;
@@ -1258,34 +1370,34 @@
             transform: scale(1.1) rotate(-5deg);
         }
 
-        /* -------- Custom Cursor -------- */
-        .cursor-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--primary);
-            border-radius: 50%;
+        /* -------- Cursor Trail Effect -------- */
+        .cursor-trail {
             position: fixed;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--primary);
             pointer-events: none;
             z-index: 9999;
-            transition: transform .15s ease, opacity .3s ease;
             opacity: 0;
-        }
-
-        .cursor-ring {
-            width: 40px;
-            height: 40px;
-            border: 2px solid var(--primary);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9998;
-            transition: transform .2s ease, opacity .3s ease;
-            opacity: 0;
+            transition: opacity 0.3s ease;
+            will-change: transform, opacity;
         }
 
         @media (hover: hover) and (pointer: fine) {
-            .cursor-dot, .cursor-ring {
-                opacity: .6;
+            .cursor-trail {
+                animation: trailFade 0.5s ease-out forwards;
+            }
+        }
+
+        @keyframes trailFade {
+            0% {
+                opacity: 0.25;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.2);
             }
         }
 
@@ -1314,24 +1426,23 @@
 <body>
     <a href="#about" class="skip-link">Skip to content</a>
 
-    <!-- Custom Cursor -->
-    <div class="cursor-dot"></div>
-    <div class="cursor-ring"></div>
-
     <!-- Theme Toggle -->
     <button class="theme-toggle-fixed" id="themeToggle" aria-label="Toggle theme">☀️</button>
 
     <!-- Navbar -->
     <nav>
         <div class="nav-logo">Supratik Roy</div>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#experience">Experience</a></li>
-            <li><a href="#contact">Contact</a></li>
+        <ul id="navMenu">
+            <li><a href="#home" class="nav-link">Home</a></li>
+            <li><a href="#about" class="nav-link">About</a></li>
+            <li><a href="#skills" class="nav-link">Skills</a></li>
+            <li><a href="#projects" class="nav-link">Projects</a></li>
+            <li><a href="#experience" class="nav-link">Career</a></li>
+            <li><a href="#contact" class="nav-link">Contact</a></li>
         </ul>
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+            <iconify-icon icon="mdi:menu"></iconify-icon>
+        </button>
     </nav>
 
     <!-- Hero -->
@@ -1500,7 +1611,7 @@
         <!-- Experience -->
         <section id="experience">
             <h2><iconify-icon icon="ph:briefcase-duotone"></iconify-icon> Career</h2>
-            <p style="margin:6px 0 18px;color:rgba(233,238,245,.78);max-width:680px">A quick view of the roles where I led delivery, architecture, and mentorship across web, cloud, and data-heavy products.</p>
+            <p style="margin:6px 0 18px;color:color-mix(in oklab, var(--text-color) 78%, transparent);max-width:680px">A quick view of the roles where I led delivery, architecture, and mentorship across web, cloud, and data-heavy products.</p>
             
             <div class="career-list">
                 <div class="career-item">
@@ -1620,7 +1731,10 @@
                     Message
                     <textarea name="message" placeholder="Tell me about your project" required></textarea>
                 </label>
-                <button type="submit" class="btn">Submit</button>
+                <button type="submit" class="btn">
+                    <iconify-icon icon="mdi:send" style="position: relative; z-index: 1;"></iconify-icon>
+                    <span style="position: relative; z-index: 1;">Submit</span>
+                </button>
             </form>
         </section>
     </div>
@@ -1681,7 +1795,7 @@
 
             function matches(card) {
                 const text = (card.textContent || '').toLowerCase();
-                const q = (search.value || '').toLowerCase();
+                const q = search ? (search.value || '').toLowerCase() : '';
                 const tags = (card.getAttribute('data-tags') || '').split(',').map(t => t.trim());
                 const tagOk = activeTag === 'all' || tags.includes(activeTag);
                 const qOk = !q || text.includes(q);
@@ -1706,7 +1820,9 @@
                 });
             });
 
-            search.addEventListener('input', render);
+            if (search) {
+                search.addEventListener('input', render);
+            }
             render();
         })();
 
@@ -1769,38 +1885,22 @@
 
         stats.forEach(stat => statsObserver.observe(stat));
 
-        // Custom cursor
-        const cursorDot = document.querySelector('.cursor-dot');
-        const cursorRing = document.querySelector('.cursor-ring');
+        // Cursor trail effect
+        let isHoverDevice = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
         
-        let mouseX = 0, mouseY = 0;
-        let ringX = 0, ringY = 0;
-        
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            cursorDot.style.transform = `translate(${mouseX - 4}px, ${mouseY - 4}px)`;
-        });
-
-        const animateRing = () => {
-            ringX += (mouseX - ringX) * 0.15;
-            ringY += (mouseY - ringY) * 0.15;
-            cursorRing.style.transform = `translate(${ringX - 20}px, ${ringY - 20}px)`;
-            requestAnimationFrame(animateRing);
-        };
-        animateRing();
-
-        const interactiveElements = document.querySelectorAll('a, button, .project-card, .skill-card, .chip');
-        interactiveElements.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursorDot.style.transform = `translate(${mouseX - 4}px, ${mouseY - 4}px) scale(1.5)`;
-                cursorRing.style.transform = `translate(${ringX - 20}px, ${ringY - 20}px) scale(1.5)`;
+        if (isHoverDevice) {
+            document.addEventListener('mousemove', (e) => {
+                const trail = document.createElement('div');
+                trail.className = 'cursor-trail';
+                trail.style.left = `${e.clientX - 3}px`;
+                trail.style.top = `${e.clientY - 3}px`;
+                document.body.appendChild(trail);
+                
+                setTimeout(() => {
+                    trail.remove();
+                }, 500);
             });
-            el.addEventListener('mouseleave', () => {
-                cursorDot.style.transform = `translate(${mouseX - 4}px, ${mouseY - 4}px) scale(1)`;
-                cursorRing.style.transform = `translate(${ringX - 20}px, ${ringY - 20}px) scale(1)`;
-            });
-        });
+        }
     </script>
 </body>
 
