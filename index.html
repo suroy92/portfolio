@@ -646,7 +646,8 @@
         .project-card {
             display: grid;
             grid-template-columns: 1fr 320px;
-            align-items: center;
+            grid-template-rows: auto auto auto;
+            align-items: start;
             gap: 32px;
             padding: 8px 0;
             background: transparent;
@@ -654,15 +655,28 @@
             box-shadow: none;
         }
 
-        .project-card-content {
-            padding: 0;
+        .project-card-text {
+            grid-column: 1;
+            grid-row: 1;
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
-            order: 1;
+            gap: 0.8rem;
+        }
+
+        .project-card-tech {
+            grid-column: 1;
+            grid-row: 2;
+            margin: 0;
+        }
+
+        .project-links {
+            grid-column: 1;
+            grid-row: 3;
         }
 
         .project-card-image {
+            grid-column: 2;
+            grid-row: 1 / -1;
             width: 100%;
             max-width: 320px;
             aspect-ratio: 1 / 1;
@@ -670,9 +684,9 @@
             border-radius: 12px;
             background: linear-gradient(135deg, color-mix(in oklab, var(--primary) 20%, transparent), transparent);
             transition: transform .35s ease, box-shadow .35s ease;
-            order: 2;
             box-shadow: 0 8px 20px rgba(0, 0, 0, .28);
             justify-self: end;
+            align-self: center;
             display: block;
         }
 
@@ -685,12 +699,21 @@
             grid-template-columns: 320px 1fr;
         }
 
-        .project-card:nth-child(even) .project-card-content {
-            order: 2;
+        .project-card:nth-child(even) .project-card-text {
+            grid-column: 2;
+        }
+
+        .project-card:nth-child(even) .project-card-tech {
+            grid-column: 2;
+        }
+
+        .project-card:nth-child(even) .project-links {
+            grid-column: 2;
         }
 
         .project-card:nth-child(even) .project-card-image {
-            order: 1;
+            grid-column: 1;
+            grid-row: 1 / -1;
             justify-self: start;
         }
 
@@ -700,15 +723,17 @@
             letter-spacing: -.01em;
         }
 
-        .project-card p {
+        .project-card-text p {
             text-align: left;
             margin: 0;
             font-size: var(--step--1);
         }
 
+        .project-card-tech {
+            text-align: left;
+        }
+
         .project-links {
-            margin-top: auto;
-            padding-top: .3rem;
             display: flex;
             gap: 12px;
             align-items: center;
@@ -717,23 +742,34 @@
 
         @media (max-width: 880px) {
             .project-card {
-                grid-template-columns: 1fr;
+                display: flex;
+                flex-direction: column;
                 gap: 20px;
             }
 
-            .project-card-content,
-            .project-card-image {
-                order: initial;
-            }
-
             .project-card:nth-child(even) {
-                grid-template-columns: 1fr;
+                display: flex;
+                flex-direction: column;
             }
 
             .project-card-image {
+                order: 1;
                 width: 100%;
                 max-width: 100%;
                 justify-self: center;
+                align-self: center;
+            }
+
+            .project-card-text {
+                order: 2;
+            }
+
+            .project-card-tech {
+                order: 3;
+            }
+
+            .project-links {
+                order: 4;
             }
         }
 
@@ -746,6 +782,8 @@
             .project-card h3 {
                 font-size: var(--step-0);
             }
+
+            .project-card-text
 
             .project-card p {
                 font-size: .9rem;
@@ -1604,64 +1642,61 @@
 
             <div class="projects-list" id="projectsList">
                 <article class="project-card" data-tags="ai,cli,python,web">
-                    <div class="project-card-content">
+                    <img src="images/cli_documentation_tool_1.png" alt="Automated Documentation Generator" class="project-card-image" loading="lazy" />
+                    <div class="project-card-text">
                         <h3>Automated Documentation Generator</h3>
                         <p>AI-powered CLI that parses multi-language codebases and emits polished Markdown/HTML docs with
                             caching, parallelism, and a LADOM schema.</p>
-                        <p style="display:flex;gap:.5rem;align-items:center;font-size:1.5rem">
-                            <iconify-icon icon="mdi:robot-outline" title="AI"></iconify-icon>
-                            <i class="devicon-python-plain colored" title="Python"></i>
-                            <i class="devicon-javascript-plain colored" title="JavaScript"></i>
-                        </p>
-                        <div class="project-links" style="margin-top: auto;">
-                            <a href="https://github.com/suroy92/automated-documentation-generator" target="_blank"
-                                rel="noopener noreferrer" class="btn">
-                                <iconify-icon icon="mdi:github"></iconify-icon> View in GitHub
-                            </a>
-                        </div>
                     </div>
-                    <img src="images/cli_documentation_tool_1.png" alt="Automated Documentation Generator" class="project-card-image" loading="lazy" />
+                    <p class="project-card-tech" style="display:flex;gap:.5rem;align-items:center;font-size:1.5rem">
+                        <iconify-icon icon="mdi:robot-outline" title="AI"></iconify-icon>
+                        <i class="devicon-python-plain colored" title="Python"></i>
+                        <i class="devicon-javascript-plain colored" title="JavaScript"></i>
+                    </p>
+                    <div class="project-links">
+                        <a href="https://github.com/suroy92/automated-documentation-generator" target="_blank"
+                            rel="noopener noreferrer" class="btn">
+                            <iconify-icon icon="mdi:github"></iconify-icon> View in GitHub
+                        </a>
+                    </div>
                 </article>
 
                 <article class="project-card" data-tags="ai,python,desktop">
-                    <div class="project-card-content">
+                    <img src="images/financial_app_dashboard_square_1.png" alt="Personal Finance Analyzer" class="project-card-image" loading="lazy" />
+                    <div class="project-card-text">
                         <h3>Personal Finance Analyzer</h3>
                         <p>Local-first desktop app that imports bank CSVs and auto-categorizes spend with a TF-IDF + LogReg
                             pipeline, dashboards, and on-the-fly retraining.</p>
-                        <p style="display:flex;gap:.5rem;align-items:center;font-size:1.5rem">
-                            <iconify-icon icon="mdi:robot-outline" title="AI"></iconify-icon>
-                            <iconify-icon icon="mdi:chart-line" title="Analytics"></iconify-icon>
-                            <i class="devicon-sqlite-plain colored" title="SQLite"></i>
-                        </p>
-                        <div class="project-links" style="margin-top: auto;">
-                            <a href="https://github.com/suroy92" target="_blank" rel="noopener noreferrer" class="btn">
-                                <iconify-icon icon="mdi:github"></iconify-icon> View in GitHub
-                            </a>
-                        </div>
                     </div>
-                    <!-- <div class="project-card-image" style="display: flex; align-items: center; justify-content: center; font-size: 3rem; color: var(--primary); background: linear-gradient(135deg, rgba(255,107,74,0.12), rgba(59,201,219,0.08));">
-                        <iconify-icon icon="mdi:chart-line-variant"></iconify-icon>
-                    </div> -->
-                    <img src="images/financial_app_dashboard_square_1.png" alt="Personal Finance Analyzer" class="project-card-image" loading="lazy" />
+                    <p class="project-card-tech" style="display:flex;gap:.5rem;align-items:center;font-size:1.5rem">
+                        <iconify-icon icon="mdi:robot-outline" title="AI"></iconify-icon>
+                        <iconify-icon icon="mdi:chart-line" title="Analytics"></iconify-icon>
+                        <i class="devicon-sqlite-plain colored" title="SQLite"></i>
+                    </p>
+                    <div class="project-links">
+                        <a href="https://github.com/suroy92" target="_blank" rel="noopener noreferrer" class="btn">
+                            <iconify-icon icon="mdi:github"></iconify-icon> View in GitHub
+                        </a>
+                    </div>
                 </article>
 
                 <article class="project-card" data-tags="desktop,security,python">
-                    <div class="project-card-content">
+                    <img src="images/password_manager_square_1.png" alt="Password Manager" class="project-card-image" loading="lazy" />
+                    <div class="project-card-text">
                         <h3>Password Manager</h3>
                         <p>Lightweight Tkinter vault that encrypts credentials with Fernet, supports CRUD + generator, and
                             JSON export on a local SQLite store.</p>
-                        <p style="display:flex;gap:.5rem;align-items:center;font-size:1.5rem">
-                            <iconify-icon icon="mdi:lock-outline" title="Security"></iconify-icon>
-                            <i class="devicon-python-plain colored" title="Python"></i>
-                            <i class="devicon-sqlite-plain colored" title="SQLite"></i>
-                        </p>
-                        <div class="project-links" style="margin-top: auto;">
-                            <a href="https://github.com/suroy92/password-manager" target="_blank" rel="noopener noreferrer" class="btn">
-                                <iconify-icon icon="mdi:github"></iconify-icon> View in GitHub
-                            </a>
-                        </div>
                     </div>
-                    <img src="images/password_manager_square_1.png" alt="Password Manager" class="project-card-image" loading="lazy" />
+                    <p class="project-card-tech" style="display:flex;gap:.5rem;align-items:center;font-size:1.5rem">
+                        <iconify-icon icon="mdi:lock-outline" title="Security"></iconify-icon>
+                        <i class="devicon-python-plain colored" title="Python"></i>
+                        <i class="devicon-sqlite-plain colored" title="SQLite"></i>
+                    </p>
+                    <div class="project-links">
+                        <a href="https://github.com/suroy92/password-manager" target="_blank" rel="noopener noreferrer" class="btn">
+                            <iconify-icon icon="mdi:github"></iconify-icon> View in GitHub
+                        </a>
+                    </div>
                 </article>
             </div>
         </section>
