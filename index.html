@@ -629,271 +629,74 @@
             display: none !important;
         }
 
-        /* -------- Experience Cards -------- */
-        .experience-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 24px;
-            margin: 24px 0;
-        }
-
-        .experience-card {
-            background: var(--bg-elev-1);
-            border: 1px solid rgba(255, 255, 255, .08);
-            border-radius: var(--radius);
-            padding: 28px;
-            box-shadow: var(--shadow-2), var(--shadow-1);
-            transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
-            display: grid;
-            grid-template-columns: auto 1fr;
-            gap: 24px;
-            align-items: start;
-        }
-
-        .experience-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, .35), var(--shadow-2);
-            border-color: color-mix(in oklab, var(--primary) 30%, transparent);
-        }
-
-        .experience-logo {
-            width: 64px;
-            height: 64px;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 1.5rem;
-            color: white;
-            box-shadow: 0 4px 12px rgba(255, 107, 74, 0.3);
-            flex-shrink: 0;
-        }
-
-        .experience-content {
+        /* -------- Career Split Table Style -------- */
+        .career-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 0;
+            margin: 32px 0;
         }
 
-        .experience-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .experience-title-group h3 {
-            margin: 0;
-            font-size: var(--step-1);
-            line-height: 1.2;
-        }
-
-        .experience-company {
-            color: var(--primary);
-            font-weight: 600;
-            font-size: var(--step-0);
-            margin: 4px 0 0 0;
-        }
-
-        .experience-period {
-            background: color-mix(in oklab, var(--primary) 15%, transparent);
-            border: 1px solid color-mix(in oklab, var(--primary) 25%, transparent);
-            padding: 6px 14px;
-            border-radius: 999px;
-            font-size: var(--step--1);
-            font-weight: 600;
-            color: var(--primary);
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .experience-description {
-            color: color-mix(in oklab, var(--text-color) 85%, transparent);
-            line-height: 1.65;
-            margin: 0;
-        }
-
-        .experience-highlights {
-            list-style: none;
-            padding: 0;
-            margin: 8px 0 0 0;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .experience-highlights li {
-            display: flex;
-            align-items: start;
-            gap: 10px;
-            color: color-mix(in oklab, var(--text-color) 85%, transparent);
-            line-height: 1.5;
-        }
-
-        .experience-highlights li::before {
-            content: "▸";
-            color: var(--primary);
-            font-weight: 800;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        .experience-tech {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-top: 4px;
-        }
-
-        .experience-tech .tag {
-            background: color-mix(in oklab, var(--accent) 12%, transparent);
-            border-color: color-mix(in oklab, var(--accent) 25%, transparent);
-            color: var(--accent);
-            font-size: .85rem;
-            padding: .3rem .7rem;
-        }
-
-        @media (max-width: 768px) {
-            .experience-card {
-                grid-template-columns: 1fr;
-                padding: 20px;
-            }
-
-            .experience-logo {
-                width: 56px;
-                height: 56px;
-                font-size: 1.3rem;
-            }
-
-            .experience-header {
-                flex-direction: column;
-            }
-        }
-
-        /* -------- Education Split Layout -------- */
-        .education-container {
+        .career-item {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 32px;
-            margin: 24px 0;
-        }
-
-        .education-item {
-            display: flex;
-            gap: 20px;
-            align-items: start;
-            padding: 24px;
-            background: linear-gradient(135deg, 
-                color-mix(in oklab, var(--primary) 8%, transparent) 0%, 
-                color-mix(in oklab, var(--accent) 5%, transparent) 100%);
-            border-left: 4px solid var(--primary);
-            border-radius: 8px;
-            transition: transform .3s ease, border-color .3s ease;
+            grid-template-columns: 180px 1fr;
+            gap: 40px;
+            padding: 40px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, .08);
+            transition: all .3s ease;
             position: relative;
         }
 
-        .education-item:hover {
-            transform: translateX(8px);
-            border-color: var(--accent);
+        .career-item:first-child {
+            padding-top: 0;
         }
 
-        .education-item:nth-child(2) {
-            border-left-color: var(--accent);
+        .career-item:last-child {
+            border-bottom: none;
         }
 
-        .education-item:nth-child(2):hover {
-            border-color: var(--primary);
+        .career-item::before {
+            content: "";
+            position: absolute;
+            left: -20px;
+            top: 0;
+            width: 3px;
+            height: 0;
+            background: linear-gradient(180deg, var(--primary), var(--accent));
+            transition: height .3s ease;
         }
 
-        .education-icon-badge {
-            width: 56px;
-            height: 56px;
-            min-width: 56px;
-            background: var(--bg-elev-1);
-            border: 2px solid color-mix(in oklab, var(--primary) 30%, transparent);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            color: var(--primary);
-            transition: all .3s ease;
+        .career-item:hover::before {
+            height: 100%;
         }
 
-        .education-item:nth-child(2) .education-icon-badge {
-            border-color: color-mix(in oklab, var(--accent) 30%, transparent);
-            color: var(--accent);
+        .career-item:hover {
+            padding-left: 12px;
         }
 
-        .education-item:hover .education-icon-badge {
-            transform: rotate(-5deg) scale(1.1);
-            box-shadow: 0 8px 16px rgba(255, 107, 74, 0.3);
-        }
-
-        .education-details {
-            flex: 1;
+        .career-left {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 12px;
         }
 
-        .education-degree-line {
-            display: flex;
-            align-items: baseline;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .education-degree-line h3 {
-            margin: 0;
-            font-size: var(--step-1);
-            line-height: 1.2;
-        }
-
-        .education-degree-line .degree-tag {
-            padding: 4px 10px;
-            background: color-mix(in oklab, var(--primary) 20%, transparent);
-            border: 1px solid color-mix(in oklab, var(--primary) 30%, transparent);
-            border-radius: 6px;
-            font-size: .75rem;
+        .career-company {
+            font-family: 'Montserrat', sans-serif;
             font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: .05em;
-            color: var(--primary);
-        }
-
-        .education-item:nth-child(2) .degree-tag {
-            background: color-mix(in oklab, var(--accent) 20%, transparent);
-            border-color: color-mix(in oklab, var(--accent) 30%, transparent);
-            color: var(--accent);
-        }
-
-        .education-university {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: color-mix(in oklab, var(--text-color) 85%, transparent);
             font-size: var(--step-0);
-            font-weight: 500;
+            color: var(--primary);
             margin: 0;
         }
 
-        .education-university iconify-icon {
-            font-size: 1.1rem;
-            color: var(--primary);
+        .career-role {
+            font-weight: 600;
+            font-size: var(--step-0);
+            margin: 0;
+            line-height: 1.3;
         }
 
-        .education-item:nth-child(2) .education-university iconify-icon {
-            color: var(--accent);
-        }
-
-        .education-meta {
-            display: flex;
+        .career-period {
+            display: inline-flex;
             align-items: center;
             gap: 6px;
             font-size: var(--step--1);
@@ -901,27 +704,206 @@
             margin: 4px 0 0 0;
         }
 
-        @media (max-width: 680px) {
-            .education-container {
+        .career-right {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .career-description {
+            color: color-mix(in oklab, var(--text-color) 88%, transparent);
+            line-height: 1.65;
+            margin: 0;
+            font-size: var(--step-0);
+        }
+
+        .career-highlights {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 12px;
+        }
+
+        .career-highlights li {
+            display: flex;
+            align-items: start;
+            gap: 10px;
+            color: color-mix(in oklab, var(--text-color) 82%, transparent);
+            line-height: 1.5;
+            font-size: var(--step--1);
+            padding: 8px 12px;
+            background: color-mix(in oklab, var(--primary) 5%, transparent);
+            border-radius: 8px;
+            border-left: 2px solid color-mix(in oklab, var(--primary) 30%, transparent);
+        }
+
+        .career-highlights li::before {
+            content: "✓";
+            color: var(--primary);
+            font-weight: 800;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .career-tech {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .career-tech .tag {
+            background: transparent;
+            border: 1px solid color-mix(in oklab, var(--accent) 35%, transparent);
+            color: var(--accent);
+            font-size: .8rem;
+            padding: .25rem .65rem;
+            transition: all .2s ease;
+        }
+
+        .career-tech .tag:hover {
+            background: color-mix(in oklab, var(--accent) 15%, transparent);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .career-item {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 32px 0;
+            }
+
+            .career-highlights {
                 grid-template-columns: 1fr;
             }
+        }
 
-            .education-item {
+        /* -------- Education Inline Flow -------- */
+        .education-flow {
+            display: flex;
+            gap: 48px;
+            flex-wrap: wrap;
+            align-items: start;
+            justify-content: center;
+            margin: 32px 0;
+        }
+
+        .education-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            flex: 0 1 320px;
+            padding: 24px;
+            transition: transform .3s ease;
+        }
+
+        .education-block:hover {
+            transform: translateY(-8px);
+        }
+
+        .education-icon-large {
+            width: 96px;
+            height: 96px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            box-shadow: 0 12px 28px rgba(255, 107, 74, 0.35);
+            transition: all .3s ease;
+            position: relative;
+        }
+
+        .education-block:hover .education-icon-large {
+            transform: rotate(-5deg) scale(1.05);
+            box-shadow: 0 16px 36px rgba(255, 107, 74, 0.45);
+        }
+
+        .education-icon-large::after {
+            content: "";
+            position: absolute;
+            inset: -8px;
+            border-radius: 28px;
+            border: 2px solid color-mix(in oklab, var(--primary) 30%, transparent);
+            opacity: 0;
+            transition: opacity .3s ease;
+        }
+
+        .education-block:hover .education-icon-large::after {
+            opacity: 1;
+        }
+
+        .education-block:nth-child(2) .education-icon-large {
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+        }
+
+        .education-text {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            text-align: center;
+        }
+
+        .education-degree {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: var(--step-1);
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .education-field {
+            font-size: var(--step-0);
+            color: color-mix(in oklab, var(--text-color) 85%, transparent);
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .education-divider-small {
+            width: 40px;
+            height: 2px;
+            background: var(--primary);
+            margin: 4px 0;
+        }
+
+        .education-block:nth-child(2) .education-divider-small {
+            background: var(--accent);
+        }
+
+        .education-institution {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: var(--step-0);
+            margin: 0;
+        }
+
+        .education-block:nth-child(2) .education-institution {
+            color: var(--accent);
+        }
+
+        .education-years {
+            font-size: var(--step--1);
+            color: color-mix(in oklab, var(--text-color) 65%, transparent);
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .education-flow {
                 flex-direction: column;
-                text-align: center;
+                gap: 40px;
             }
 
-            .education-icon-badge {
-                margin: 0 auto;
-            }
-
-            .education-degree-line {
-                justify-content: center;
-            }
-
-            .education-university,
-            .education-meta {
-                justify-content: center;
+            .education-block {
+                flex: 1 1 auto;
+                width: 100%;
             }
         }
 
@@ -1023,7 +1005,7 @@
             content: "";
             position: absolute;
             left: -34px;
-            top: 0;
+            top: 6px;
             width: 14px;
             height: 14px;
             border-radius: 50%;
@@ -1036,9 +1018,9 @@
             content: "";
             position: absolute;
             left: -28px;
-            top: 18px;
+            top: 24px;
             width: 2px;
-            height: calc(100% + 32px);
+            height: calc(100% + 26px);
             background: linear-gradient(180deg, color-mix(in oklab, var(--primary) 65%, #fff 35%), transparent);
             z-index: 1;
         }
@@ -1051,6 +1033,7 @@
             margin: 0 0 12px 0;
             font-size: var(--step-0);
             color: var(--primary);
+            line-height: 1.4;
         }
 
         /* -------- Contact -------- */
@@ -1519,30 +1502,27 @@
             <h2><iconify-icon icon="ph:briefcase-duotone"></iconify-icon> Career</h2>
             <p style="margin:6px 0 18px;color:rgba(233,238,245,.78);max-width:680px">A quick view of the roles where I led delivery, architecture, and mentorship across web, cloud, and data-heavy products.</p>
             
-            <div class="experience-grid">
-                <article class="experience-card">
-                    <div class="experience-logo">CB</div>
-                    <div class="experience-content">
-                        <div class="experience-header">
-                            <div class="experience-title-group">
-                                <h3>Tech Lead</h3>
-                                <p class="experience-company">CBNITS India Pvt Ltd</p>
-                            </div>
-                            <div class="experience-period">
-                                <iconify-icon icon="mdi:calendar-outline"></iconify-icon>
-                                2019 - Present
-                            </div>
-                        </div>
-                        <p class="experience-description">
+            <div class="career-list">
+                <div class="career-item">
+                    <div class="career-left">
+                        <h3 class="career-company">CBNITS India Pvt Ltd</h3>
+                        <p class="career-role">Tech Lead</p>
+                        <p class="career-period">
+                            <iconify-icon icon="mdi:calendar-outline"></iconify-icon>
+                            2019 - Present
+                        </p>
+                    </div>
+                    <div class="career-right">
+                        <p class="career-description">
                             Leading technical strategy and architecture for multi-tenant SaaS platforms, driving innovation and ensuring scalable, high-performance solutions.
                         </p>
-                        <ul class="experience-highlights">
+                        <ul class="career-highlights">
                             <li>Architected and delivered multiple cloud-native applications serving 100K+ users</li>
                             <li>Mentored a team of 8 engineers, establishing coding standards and best practices</li>
                             <li>Reduced system latency by 40% through strategic refactoring and optimization</li>
                             <li>Led migration from monolith to microservices, improving deployment frequency by 3x</li>
                         </ul>
-                        <div class="experience-tech">
+                        <div class="career-tech">
                             <span class="tag">React</span>
                             <span class="tag">Node.js</span>
                             <span class="tag">AWS</span>
@@ -1551,31 +1531,28 @@
                             <span class="tag">Kubernetes</span>
                         </div>
                     </div>
-                </article>
+                </div>
 
-                <article class="experience-card">
-                    <div class="experience-logo">Q</div>
-                    <div class="experience-content">
-                        <div class="experience-header">
-                            <div class="experience-title-group">
-                                <h3>Software Developer</h3>
-                                <p class="experience-company">Qlikchain</p>
-                            </div>
-                            <div class="experience-period">
-                                <iconify-icon icon="mdi:calendar-outline"></iconify-icon>
-                                2017 - 2019
-                            </div>
-                        </div>
-                        <p class="experience-description">
+                <div class="career-item">
+                    <div class="career-left">
+                        <h3 class="career-company">Qlikchain</h3>
+                        <p class="career-role">Software Developer</p>
+                        <p class="career-period">
+                            <iconify-icon icon="mdi:calendar-outline"></iconify-icon>
+                            2017 - 2019
+                        </p>
+                    </div>
+                    <div class="career-right">
+                        <p class="career-description">
                             Developed and optimized full-stack web applications with a strong focus on user experience, performance, and code quality.
                         </p>
-                        <ul class="experience-highlights">
+                        <ul class="career-highlights">
                             <li>Built responsive web applications using React and Angular frameworks</li>
                             <li>Improved application load times by 50% through code splitting and lazy loading</li>
                             <li>Collaborated with UX designers to implement pixel-perfect, accessible interfaces</li>
                             <li>Contributed to CI/CD pipeline setup, reducing deployment time from hours to minutes</li>
                         </ul>
-                        <div class="experience-tech">
+                        <div class="career-tech">
                             <span class="tag">Angular</span>
                             <span class="tag">React</span>
                             <span class="tag">Spring Boot</span>
@@ -1583,7 +1560,7 @@
                             <span class="tag">Jenkins</span>
                         </div>
                     </div>
-                </article>
+                </div>
             </div>
         </section>
 
@@ -1591,44 +1568,36 @@
         <section id="education">
             <h2><iconify-icon icon="ph:graduation-cap-duotone"></iconify-icon> Education</h2>
             
-            <div class="education-container">
-                <div class="education-item">
-                    <div class="education-icon-badge">
+            <div class="education-flow">
+                <div class="education-block">
+                    <div class="education-icon-large">
                         <iconify-icon icon="ph:graduation-cap-fill"></iconify-icon>
                     </div>
-                    <div class="education-details">
-                        <div class="education-degree-line">
-                            <h3>MBA in Systems and IT Management</h3>
-                            <span class="degree-tag">Master's</span>
-                        </div>
-                        <p class="education-university">
+                    <div class="education-text">
+                        <h3 class="education-degree">MBA</h3>
+                        <p class="education-field">Systems and IT Management</p>
+                        <div class="education-divider-small"></div>
+                        <p class="education-institution">
                             <iconify-icon icon="ph:bank-duotone"></iconify-icon>
                             Jadavpur University
                         </p>
-                        <p class="education-meta">
-                            <iconify-icon icon="mdi:calendar-outline"></iconify-icon>
-                            2020 - 2023
-                        </p>
+                        <p class="education-years">2020 - 2023</p>
                     </div>
                 </div>
 
-                <div class="education-item">
-                    <div class="education-icon-badge">
+                <div class="education-block">
+                    <div class="education-icon-large">
                         <iconify-icon icon="ph:code-fill"></iconify-icon>
                     </div>
-                    <div class="education-details">
-                        <div class="education-degree-line">
-                            <h3>B.Tech in Computer Science</h3>
-                            <span class="degree-tag">Bachelor's</span>
-                        </div>
-                        <p class="education-university">
+                    <div class="education-text">
+                        <h3 class="education-degree">B.Tech</h3>
+                        <p class="education-field">Computer Science</p>
+                        <div class="education-divider-small"></div>
+                        <p class="education-institution">
                             <iconify-icon icon="ph:bank-duotone"></iconify-icon>
                             Calcutta University
                         </p>
-                        <p class="education-meta">
-                            <iconify-icon icon="mdi:calendar-outline"></iconify-icon>
-                            2014 - 2017
-                        </p>
+                        <p class="education-years">2014 - 2017</p>
                     </div>
                 </div>
             </div>
