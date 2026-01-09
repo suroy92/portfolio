@@ -253,6 +253,40 @@
             }
 
             nav ul {
+                display: flex;
+                position: fixed;
+                top: 72px;
+                left: 0;
+                right: 0;
+                background: var(--card-bg);
+                flex-direction: column;
+                gap: 0;
+                padding: 20px 0;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+                border-bottom: 1px solid rgba(255, 255, 255, .06);
+                opacity: 0;
+                transform: translateY(-20px);
+                pointer-events: none;
+                transition: opacity 0.3s ease, transform 0.3s ease;
+            }
+
+            nav ul.mobile-open {
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: auto;
+            }
+
+            nav ul li {
+                width: 100%;
+            }
+
+            nav ul li a {
+                padding: 16px 32px;
+                display: block;
+                font-size: var(--step-0);
+            }
+
+            nav ul li a::after {
                 display: none;
             }
         }
@@ -684,7 +718,7 @@
         @media (max-width: 880px) {
             .project-card {
                 grid-template-columns: 1fr;
-                gap: 16px;
+                gap: 20px;
             }
 
             .project-card-content,
@@ -692,9 +726,33 @@
                 order: initial;
             }
 
+            .project-card:nth-child(even) {
+                grid-template-columns: 1fr;
+            }
+
             .project-card-image {
-                max-width: 220px;
-                justify-self: start;
+                width: 100%;
+                max-width: 100%;
+                justify-self: center;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .project-card {
+                gap: 16px;
+                padding: 16px 0;
+            }
+
+            .project-card h3 {
+                font-size: var(--step-0);
+            }
+
+            .project-card p {
+                font-size: .9rem;
+            }
+
+            .project-card-image {
+                max-width: 280px;
             }
         }
 
@@ -1884,6 +1942,34 @@
         }, { threshold: 0.5 });
 
         stats.forEach(stat => statsObserver.observe(stat));
+
+        // Mobile menu toggle
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        if (mobileMenuToggle && navMenu) {
+            mobileMenuToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('mobile-open');
+                const isOpen = navMenu.classList.contains('mobile-open');
+                mobileMenuToggle.setAttribute('aria-expanded', isOpen);
+            });
+
+            // Close menu when clicking a link
+            navMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('mobile-open');
+                    mobileMenuToggle.setAttribute('aria-expanded', 'false');
+                });
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!navMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+                    navMenu.classList.remove('mobile-open');
+                    mobileMenuToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+        }
 
         // Cursor trail effect
         let isHoverDevice = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
