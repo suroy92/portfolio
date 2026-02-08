@@ -1,13 +1,13 @@
 /* -------- Root & Theme Tokens -------- */
 :root {
-    --bg-color: #0f131a;
-    --text-color: #e9eef5;
-    --card-bg: #141b24;
-    --primary: #ff6b4a;
-    --accent: #3bc9db;
+    --bg-color: #0D1117;
+    --text-color: #C9D1D9;
+    --card-bg: #161B22;
+    --primary: #58A6FF;
+    --accent: #D2A8FF;
 
     --bg-elev-1: color-mix(in oklab, var(--bg-color) 88%, white 12%);
-    --ring: hsl(210 90% 60% / .4);
+    --ring: hsl(212 100% 67% / .4);
     --radius: 14px;
     --shadow-1: 0 10px 25px rgba(0, 0, 0, .25);
     --shadow-2: 0 1px 0 rgba(255, 255, 255, .05) inset;
@@ -21,10 +21,10 @@
 
 body.light {
     --bg-color: #fdfdfd;
-    --text-color: #222;
-    --card-bg: #f4f4f4;
-    --primary: #e94e2b;
-    --accent: #0099b8;
+    --text-color: #1F2328;
+    --card-bg: #F6F8FA;
+    --primary: #0969DA;
+    --accent: #8250DF;
 
     --bg-elev-1: color-mix(in oklab, var(--bg-color) 92%, black 8%);
     --shadow-1: 0 10px 25px rgba(0, 0, 0, .08);
@@ -386,7 +386,7 @@ nav ul li a:hover::after {
     position: relative;
     overflow: clip;
     isolation: isolate;
-    background: #0f141c;
+    background: #0D1117;
     padding: 60px 0;
 }
 
@@ -401,8 +401,8 @@ nav ul li a:hover::after {
 }
 
 body.light .hero {
-    background: #e8f3ff;
-    color: #111;
+    background: #EBF2FA;
+    color: #1F2328;
 }
 
 .hero-content {
@@ -423,7 +423,7 @@ body.light .hero {
     font-size: clamp(2.6rem, 6.2vw, 4.8rem);
     font-weight: 800;
     margin: 0;
-    background: linear-gradient(90deg, #ffffff, #f7b199 40%, #ff8c5c);
+    background: linear-gradient(90deg, #F0F6FC, #A5D6FF 40%, #79C0FF);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -432,7 +432,7 @@ body.light .hero {
 }
 
 body.light .hero-name {
-    background: linear-gradient(90deg, #d94523, #e94e2b 50%, #c23d1f);
+    background: linear-gradient(90deg, #0550AE, #0969DA 50%, #218BFF);
     -webkit-background-clip: text;
     background-clip: text;
 }
@@ -445,7 +445,7 @@ body.light .hero-name {
 }
 
 body.light .hero-title {
-    color: color-mix(in oklab, #222 85%, var(--primary) 15%);
+    color: color-mix(in oklab, #1F2328 85%, var(--primary) 15%);
 }
 
 .hero-description {
@@ -457,7 +457,7 @@ body.light .hero-title {
 }
 
 body.light .hero-description {
-    color: rgba(34, 34, 34, 0.75);
+    color: rgba(31, 35, 40, 0.75);
 }
 
 .hero-image {
@@ -471,15 +471,15 @@ body.light .hero-description {
     content: "";
     position: absolute;
     inset: -120px;
-    background: radial-gradient(circle at center, rgba(255, 107, 74, 0.28), transparent 65%),
-        radial-gradient(circle at center, rgba(59, 201, 219, 0.22), transparent 70%);
+    background: radial-gradient(circle at center, rgba(88, 166, 255, 0.28), transparent 65%),
+        radial-gradient(circle at center, rgba(210, 168, 255, 0.22), transparent 70%);
     z-index: 0;
     pointer-events: none;
 }
 
 body.light .hero-image::before {
-    background: radial-gradient(circle at center, rgba(255, 166, 130, 0.28), transparent 65%),
-        radial-gradient(circle at center, rgba(59, 201, 219, 0.22), transparent 70%);
+    background: radial-gradient(circle at center, rgba(9, 105, 218, 0.22), transparent 65%),
+        radial-gradient(circle at center, rgba(130, 80, 223, 0.18), transparent 70%);
 }
 
 .hero-image-wrapper {
@@ -495,7 +495,7 @@ body.light .hero-image::before {
     border-radius: 50%;
     opacity: 0.32;
     animation: rotate 24s linear infinite;
-    box-shadow: 0 0 40px rgba(255, 107, 74, 0.25);
+    box-shadow: 0 0 40px rgba(88, 166, 255, 0.25);
 }
 
 .hero-image img {
@@ -777,7 +777,7 @@ body.light .hero-image::before {
 
 .project-card-image:hover {
     transform: translateY(-6px) rotateX(2deg) rotateY(-3deg) scale(1.02);
-    box-shadow: 0 16px 30px rgba(255, 107, 74, 0.4), 0 8px 20px rgba(0, 0, 0, .32);
+    box-shadow: 0 16px 30px rgba(88, 166, 255, 0.4), 0 8px 20px rgba(0, 0, 0, .32);
 }
 
 .project-card:nth-child(even) {
@@ -1065,18 +1065,18 @@ body.light .hero-image::before {
     justify-content: center;
     font-size: 3rem;
     color: #fff;
-    box-shadow: 0 12px 28px rgba(255, 107, 74, 0.35);
+    box-shadow: 0 12px 28px rgba(88, 166, 255, 0.35);
     transition: all .3s ease;
     position: relative;
 }
 
 body.light .education-icon-large {
-    box-shadow: 0 12px 28px rgba(0, 102, 204, 0.25);
+    box-shadow: 0 12px 28px rgba(9, 105, 218, 0.25);
 }
 
 .education-block:hover .education-icon-large {
     transform: rotate(-5deg) scale(1.05);
-    box-shadow: 0 16px 36px rgba(255, 107, 74, 0.45);
+    box-shadow: 0 16px 36px rgba(88, 166, 255, 0.45);
 }
 
 .education-icon-large::after {
@@ -1484,7 +1484,7 @@ footer {
 .footer-logo {
     font-size: var(--step-1);
     font-weight: 800;
-    background: linear-gradient(90deg, #7bc9ff, #a586ff);
+    background: linear-gradient(90deg, #79C0FF, #D2A8FF);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -1541,7 +1541,7 @@ footer {
     inset: 0 auto auto 0;
     height: 3px;
     width: 0%;
-    background: linear-gradient(90deg, var(--primary), #ffd266);
+    background: linear-gradient(90deg, var(--primary), #E3B341);
     z-index: 1000;
 }
 
@@ -1556,7 +1556,7 @@ footer {
     display: inline-flex;
     align-items: center;
     gap: .5rem;
-    box-shadow: 0 4px 12px rgba(77, 166, 255, .3);
+    box-shadow: 0 4px 12px rgba(88, 166, 255, .3);
     border: none;
     cursor: pointer;
 }
@@ -1564,12 +1564,12 @@ footer {
 .btn:hover {
     filter: brightness(110%);
     transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(77, 166, 255, .4);
+    box-shadow: 0 8px 20px rgba(88, 166, 255, .4);
 }
 
 .btn:active {
     transform: translateY(-1px) scale(.98);
-    box-shadow: 0 2px 8px rgba(77, 166, 255, .3);
+    box-shadow: 0 2px 8px rgba(88, 166, 255, .3);
 }
 
 .btn iconify-icon {

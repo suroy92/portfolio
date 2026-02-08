@@ -234,3 +234,122 @@ if (isHoverDevice) {
         }, 500);
     });
 }
+
+// Contact Form Handler
+// ============================================================================
+// SETUP INSTRUCTIONS:
+// 1. Go to https://www.emailjs.com/ and create a free account
+// 2. Add an email service (Gmail, Outlook, etc.)
+// 3. Create an email template with variables: {{from_name}}, {{from_email}}, {{message}}
+// 4. Get your credentials and replace below (publicKey, serviceId, templateId)
+// 5. IMPORTANT: In EmailJS Dashboard, enable security:
+//    - Restrict to your domain only
+//    - Enable reCAPTCHA (optional)
+//    - Set rate limits
+// ============================================================================
+
+(function() {
+    const contactForm = document.querySelector('.contact-form');
+    
+    if (!contactForm) return;
+
+    // EmailJS configuration - replace with your credentials
+    const EMAILJS_CONFIG = {
+        publicKey: 'r2AePUGGm7nheYfl3',      // From Account → API Keys
+        serviceId: 'service_b84zon8',       // From Email Services
+        templateId: 'template_dibbdzv'      // From Email Templates
+    };
+
+    contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.innerHTML;
+        
+        // Get form data
+        const formData = {
+            from_name: contactForm.querySelector('input[name="name"]').value,
+            from_email: contactForm.querySelector('input[name="email"]').value,
+            message: contactForm.querySelector('textarea[name="message"]').value
+        };
+
+        // Validate
+        if (!formData.from_name || !formData.from_email || !formData.message) {
+            showMessage('Please fill in all fields', 'error');
+            return;
+        }
+
+        // Disable button and show loading
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<iconify-icon icon="mdi:loading" class="spin"></iconify-icon> Sending...';
+
+        try {
+            // Check if EmailJS is configured
+            if (EMAILJS_CONFIG.publicKey === 'YOUR_PUBLIC_KEY') {
+                throw new Error('EmailJS not configured. Please follow setup instructions in script.js');
+            }
+
+            // Initialize EmailJS if not already done
+            if (typeof emailjs === 'undefined') {
+                throw new Error('EmailJS library not loaded. Add the script tag to your HTML.');
+            }
+
+            // Send email using EmailJS
+            const response = await emailjs.send(
+                EMAILJS_CONFIG.serviceId,
+                EMAILJS_CONFIG.templateId,
+                formData,
+                EMAILJS_CONFIG.publicKey
+            );
+
+            if (response.status === 200) {
+                showMessage('Message sent successfully! I\'ll get back to you soon.', 'success');
+                contactForm.reset();
+            } else {
+                throw new Error('Failed to send message');
+            }
+        } catch (error) {
+            console.error('Form submission error:', error);
+            showMessage(error.message || 'Failed to send message. Please try again or email me directly.', 'error');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnText;
+        }
+    });
+
+    // Show feedback message
+    function showMessage(text, type = 'info') {
+        // Remove existing messages
+        const existing = document.querySelector('.form-message');
+        if (existing) existing.remove();
+
+        const message = document.createElement('div');
+        message.className = `form-message form-message-${type}`;
+        message.textContent = text;
+        message.style.cssText = `
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            animation: slideIn 0.3s ease;
+        `;
+
+        if (type === 'success') {
+            message.style.backgroundColor = 'color-mix(in oklab, green 20%, transparent)';
+            message.style.color = 'green';
+            message.style.border = '1px solid green';
+        } else if (type === 'error') {
+            message.style.backgroundColor = 'color-mix(in oklab, red 20%, transparent)';
+            message.style.color = 'red';
+            message.style.border = '1px solid red';
+        }
+
+        contactForm.appendChild(message);
+
+        // Auto-remove after 5 seconds
+        setTimeout(() => {
+            message.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => message.remove(), 300);
+        }, 5000);
+    }
+})();
