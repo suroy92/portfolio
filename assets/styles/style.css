@@ -179,7 +179,7 @@ body.light nav::before {
 nav ul {
     list-style: none;
     display: flex;
-    gap: 40px;
+    gap: 8px;
     margin: 0;
     padding: 0;
 }
@@ -189,28 +189,26 @@ nav ul li a {
     color: color-mix(in oklab, var(--text-color) 80%, transparent);
     font-weight: 500;
     font-size: var(--step-0);
-    padding: 8px 0;
+    padding: 8px 16px;
+    border-radius: 25px;
+    border: 1px solid transparent;
+    background: transparent;
+    backdrop-filter: blur(0px);
     transition: all .3s ease;
-    position: relative;
-}
-
-nav ul li a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--primary), var(--accent));
-    transition: width .3s ease;
 }
 
 nav ul li a:hover {
     color: var(--text-color);
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 12px rgba(88, 166, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
-nav ul li a:hover::after {
-    width: 100%;
+body.light nav ul li a:hover {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 0 12px rgba(9, 105, 218, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 @media (max-width: 900px) {
@@ -219,7 +217,7 @@ nav ul li a:hover::after {
     }
 
     nav ul {
-        gap: 24px;
+        gap: 6px;
     }
 
     nav ul li a {
@@ -264,10 +262,7 @@ nav ul li a:hover::after {
         padding: 16px 32px;
         display: block;
         font-size: var(--step-0);
-    }
-
-    nav ul li a::after {
-        display: none;
+        border-radius: 0;
     }
 }
 
