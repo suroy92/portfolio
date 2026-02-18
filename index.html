@@ -163,14 +163,36 @@
             <h2><iconify-icon icon="ph:rocket-launch-duotone"></iconify-icon> Projects</h2>
 
             <div class="projects-list" id="projectsList">
+                <article class="project-card" data-tags="web,typescript,nextjs">
+                    <img src="assets/images/rankit_square_1.svg" alt="RankIt"
+                        class="project-card-image" loading="lazy" />
+                    <div class="project-card-text">
+                        <h3>RankIt</h3>
+                        <p>Compare any list of items head-to-head and get a definitive ELO-scored tier ranking
+                            (S–D). Supports Quick and Thorough modes, CSV import, shareable result URLs, and
+                            re-ranking — all client-side with no backend or account needed.</p>
+                    </div>
+                    <p class="project-card-tech" style="display:flex;gap:.5rem;align-items:center;font-size:1.5rem">
+                        <i class="devicon-nextjs-plain colored" title="Next.js"></i>
+                        <i class="devicon-typescript-plain colored" title="TypeScript"></i>
+                        <i class="devicon-tailwindcss-original colored" title="Tailwind CSS"></i>
+                    </p>
+                    <div class="project-links">
+                        <a href="https://jade-cobbler-098504.netlify.app/" target="_blank"
+                            rel="noopener noreferrer" class="btn">
+                            <iconify-icon icon="ph:globe-duotone"></iconify-icon> Live Site
+                        </a>
+                    </div>
+                </article>
+
                 <article class="project-card" data-tags="ai,cli,python,web">
-                    <img src="assets/images/cli_documentation_tool_1.png" alt="Automated Documentation Generator"
+                    <img src="assets/images/cli_documentation_tool_1.svg" alt="Automated Documentation Generator"
                         class="project-card-image" loading="lazy" />
                     <div class="project-card-text">
                         <h3>Automated Documentation Generator</h3>
-                        <p>AI-powered CLI that parses multi-language codebases and emits polished Markdown/HTML docs
-                            with
-                            caching, parallelism, and a LADOM schema.</p>
+                        <p>Point it at any codebase and get a comprehensive README with architecture diagrams,
+                            API docs, real code examples, and setup guides — powered by a local Ollama LLM.
+                            No API keys, fully offline, supports Python, JS, TS, and Java.</p>
                     </div>
                     <p class="project-card-tech" style="display:flex;gap:.5rem;align-items:center;font-size:1.5rem">
                         <iconify-icon icon="mdi:robot-outline" title="AI"></iconify-icon>
@@ -186,13 +208,13 @@
                 </article>
 
                 <article class="project-card" data-tags="ai,python,desktop">
-                    <img src="assets/images/financial_app_dashboard_square_1.png" alt="Personal Finance Analyzer"
+                    <img src="assets/images/financial_app_dashboard_square_1.svg" alt="Personal Finance Analyzer"
                         class="project-card-image" loading="lazy" />
                     <div class="project-card-text">
                         <h3>Personal Finance Analyzer</h3>
-                        <p>Local-first desktop app that imports bank CSVs and auto-categorizes spend with a TF-IDF +
-                            LogReg
-                            pipeline, dashboards, and on-the-fly retraining.</p>
+                        <p>Import bank statement CSVs and get a full Dash dashboard — ML-powered transaction
+                            categorisation, monthly trend charts, budget tracking, savings suggestions, and
+                            festive season alerts. All data stays local in SQLite.</p>
                     </div>
                     <p class="project-card-tech" style="display:flex;gap:.5rem;align-items:center;font-size:1.5rem">
                         <iconify-icon icon="mdi:robot-outline" title="AI"></iconify-icon>
@@ -208,13 +230,13 @@
                 </article>
 
                 <article class="project-card" data-tags="desktop,security,python">
-                    <img src="assets/images/password_manager_square_1.png" alt="Password Manager"
+                    <img src="assets/images/password_manager_square_1.svg" alt="Password Manager"
                         class="project-card-image" loading="lazy" />
                     <div class="project-card-text">
                         <h3>Password Manager</h3>
-                        <p>Lightweight Tkinter vault that encrypts credentials with Fernet, supports CRUD + generator,
-                            and
-                            JSON export on a local SQLite store.</p>
+                        <p>PySide6 desktop vault with master-password encryption using Argon2id KDF and
+                            Fernet AES-128. Features light/dark themes, a password generator, secure clipboard
+                            auto-clear, encrypted export/import, and master password rotation.</p>
                     </div>
                     <p class="project-card-tech" style="display:flex;gap:.5rem;align-items:center;font-size:1.5rem">
                         <iconify-icon icon="mdi:lock-outline" title="Security"></iconify-icon>

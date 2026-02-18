@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#071520"/>
+    </linearGradient>
+    <linearGradient id="incomeCard" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0d2318"/>
+      <stop offset="100%" stop-color="#091810"/>
+    </linearGradient>
+    <linearGradient id="expCard" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#231010"/>
+      <stop offset="100%" stop-color="#180a0a"/>
+    </linearGradient>
+    <linearGradient id="saveCard" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0d1a30"/>
+      <stop offset="100%" stop-color="#091220"/>
+    </linearGradient>
+    <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#388bfd"/>
+      <stop offset="100%" stop-color="#1f6feb"/>
+    </linearGradient>
+    <linearGradient id="barHigh" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f0883e"/>
+      <stop offset="100%" stop-color="#d05a10"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="320" height="320" fill="url(#bg)" rx="12"/>
+
+  <!-- Header -->
+  <text x="160" y="24" fill="#58a6ff" font-family="'Segoe UI',system-ui,sans-serif" font-size="13" font-weight="700" text-anchor="middle" letter-spacing="1">FINANCE ANALYZER</text>
+  <text x="160" y="38" fill="#484f58" font-family="'Segoe UI',system-ui,sans-serif" font-size="9" text-anchor="middle" letter-spacing="1">DASH · SCIKIT-LEARN · LOCAL · SQLITE</text>
+  <line x1="16" y1="46" x2="304" y2="46" stroke="#21262d" stroke-width="1"/>
+
+  <!-- ── Summary Cards ── -->
+  <!-- Income card -->
+  <rect x="14" y="52" width="88" height="42" fill="url(#incomeCard)" rx="6" stroke="#2ea043" stroke-width="1"/>
+  <text x="58" y="67" fill="#484f58" font-family="'Segoe UI',system-ui,sans-serif" font-size="8" text-anchor="middle" letter-spacing="1">INCOME</text>
+  <text x="58" y="84" fill="#3fb950" font-family="'Segoe UI',system-ui,sans-serif" font-size="13" text-anchor="middle" font-weight="700">&#x20B9;84,500</text>
+
+  <!-- Expenses card -->
+  <rect x="116" y="52" width="88" height="42" fill="url(#expCard)" rx="6" stroke="#da3633" stroke-width="1"/>
+  <text x="160" y="67" fill="#484f58" font-family="'Segoe UI',system-ui,sans-serif" font-size="8" text-anchor="middle" letter-spacing="1">EXPENSES</text>
+  <text x="160" y="84" fill="#f85149" font-family="'Segoe UI',system-ui,sans-serif" font-size="13" text-anchor="middle" font-weight="700">&#x20B9;61,200</text>
+
+  <!-- Savings card -->
+  <rect x="218" y="52" width="88" height="42" fill="url(#saveCard)" rx="6" stroke="#388bfd" stroke-width="1"/>
+  <text x="262" y="67" fill="#484f58" font-family="'Segoe UI',system-ui,sans-serif" font-size="8" text-anchor="middle" letter-spacing="1">SAVINGS</text>
+  <text x="262" y="84" fill="#58a6ff" font-family="'Segoe UI',system-ui,sans-serif" font-size="13" text-anchor="middle" font-weight="700">27.6%</text>
+
+  <!-- ── Monthly Spending Bar Chart ── -->
+  <text x="14" y="112" fill="#484f58" font-family="'Segoe UI',system-ui,sans-serif" font-size="9" letter-spacing="1">MONTHLY SPENDING</text>
+
+  <!-- Y axis -->
+  <line x1="38" y1="118" x2="38" y2="178" stroke="#21262d" stroke-width="1"/>
+  <!-- X axis -->
+  <line x1="38" y1="178" x2="306" y2="178" stroke="#21262d" stroke-width="1"/>
+
+  <!-- Y-axis labels -->
+  <text x="34" y="122" fill="#484f58" font-family="'Segoe UI',system-ui,sans-serif" font-size="7" text-anchor="end">80K</text>
+  <text x="34" y="148" fill="#484f58" font-family="'Segoe UI',system-ui,sans-serif" font-size="7" text-anchor="end">50K</text>
+  <text x="34" y="178" fill="#484f58" font-family="'Segoe UI',system-ui,sans-serif" font-size="7" text-anchor="end">0</text>
+  <!-- Gridlines -->
+  <line x1="38" y1="120" x2="306" y2="120" stroke="#21262d" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="38" y1="148" x2="306" y2="148" stroke="#21262d" stroke-width="0.5" stroke-dasharray="3,3"/>
+
+  <!-- Bars (baseline y=178, max height=58 at 80K) -->
+  <!-- Jan: 48K → h=35  -->
+  <rect x="44"  y="143" width="32" height="35" fill="url(#barGrad)" rx="3 3 0 0"/>
+  <!-- Feb: 55K → h=40 -->
+  <rect x="86"  y="138" width="32" height="40" fill="url(#barGrad)" rx="3 3 0 0"/>
+  <!-- Mar: 50K → h=36 -->
+  <rect x="128" y="142" width="32" height="36" fill="url(#barGrad)" rx="3 3 0 0"/>
+  <!-- Apr: 73K → h=53 (highlight as anomaly) -->
+  <rect x="170" y="125" width="32" height="53" fill="url(#barHigh)" rx="3 3 0 0"/>
+  <!-- anomaly indicator -->
+  <text x="186" y="122" fill="#f0883e" font-family="'Segoe UI',system-ui,sans-serif" font-size="8" text-anchor="middle">&#x25B2;</text>
+  <!-- May: 62K → h=45 -->
+  <rect x="212" y="133" width="32" height="45" fill="url(#barGrad)" rx="3 3 0 0"/>
+  <!-- Jun: 58K → h=42 -->
+  <rect x="254" y="136" width="32" height="42" fill="url(#barGrad)" rx="3 3 0 0"/>
+
+  <!-- X-axis labels -->
+  <text x="60"  y="189" fill="#484f58" font-family="'Segoe UI',system-ui,sans-serif" font-size="8" text-anchor="middle">Jan</text>
+  <text x="102" y="189" fill="#484f58" font-family="'Segoe UI',system-ui,sans-serif" font-size="8" text-anchor="middle">Feb</text>
+  <text x="144" y="189" fill="#484f58" font-family="'Segoe UI',system-ui,sans-serif" font-size="8" text-anchor="middle">Mar</text>
+  <text x="186" y="189" fill="#f0883e" font-family="'Segoe UI',system-ui,sans-serif" font-size="8" text-anchor="middle">Apr</text>
+  <text x="228" y="189" fill="#484f58" font-family="'Segoe UI',system-ui,sans-serif" font-size="8" text-anchor="middle">May</text>
+  <text x="270" y="189" fill="#484f58" font-family="'Segoe UI',system-ui,sans-serif" font-size="8" text-anchor="middle">Jun</text>
+
+  <line x1="16" y1="197" x2="304" y2="197" stroke="#21262d" stroke-width="1"/>
+
+  <!-- ── Expense Category Breakdown ── -->
+  <text x="14" y="212" fill="#484f58" font-family="'Segoe UI',system-ui,sans-serif" font-size="9" letter-spacing="1">EXPENSE BREAKDOWN</text>
+
+  <!-- Food 38% -->
+  <rect x="14" y="218" width="8" height="8" fill="#f0883e" rx="1"/>
+  <text x="26" y="226" fill="#c9d1d9" font-family="'Segoe UI',system-ui,sans-serif" font-size="9">Food</text>
+  <rect x="80" y="219" width="152" height="6" fill="#21262d" rx="3"/>
+  <rect x="80" y="219" width="76" height="6" fill="#f0883e" rx="3"/>
+  <text x="238" y="226" fill="#8b949e" font-family="'Segoe UI',system-ui,sans-serif" font-size="9">38%</text>
+
+  <!-- Shopping 25% -->
+  <rect x="14" y="237" width="8" height="8" fill="#a371f7" rx="1"/>
+  <text x="26" y="245" fill="#c9d1d9" font-family="'Segoe UI',system-ui,sans-serif" font-size="9">Shopping</text>
+  <rect x="80" y="238" width="152" height="6" fill="#21262d" rx="3"/>
+  <rect x="80" y="238" width="50" height="6" fill="#a371f7" rx="3"/>
+  <text x="238" y="245" fill="#8b949e" font-family="'Segoe UI',system-ui,sans-serif" font-size="9">25%</text>
+
+  <!-- Transport 18% -->
+  <rect x="14" y="256" width="8" height="8" fill="#3fb950" rx="1"/>
+  <text x="26" y="264" fill="#c9d1d9" font-family="'Segoe UI',system-ui,sans-serif" font-size="9">Transport</text>
+  <rect x="80" y="257" width="152" height="6" fill="#21262d" rx="3"/>
+  <rect x="80" y="257" width="36" height="6" fill="#3fb950" rx="3"/>
+  <text x="238" y="264" fill="#8b949e" font-family="'Segoe UI',system-ui,sans-serif" font-size="9">18%</text>
+
+  <!-- Other 19% -->
+  <rect x="14" y="275" width="8" height="8" fill="#58a6ff" rx="1"/>
+  <text x="26" y="283" fill="#c9d1d9" font-family="'Segoe UI',system-ui,sans-serif" font-size="9">Other</text>
+  <rect x="80" y="276" width="152" height="6" fill="#21262d" rx="3"/>
+  <rect x="80" y="276" width="38" height="6" fill="#58a6ff" rx="3"/>
+  <text x="238" y="283" fill="#8b949e" font-family="'Segoe UI',system-ui,sans-serif" font-size="9">19%</text>
+
+  <!-- ── Festival Alert Banner ── -->
+  <rect x="14" y="294" width="292" height="20" fill="#1a1508" rx="4" stroke="#d4b700" stroke-width="1"/>
+  <text x="160" y="308" fill="#d4b700" font-family="'Segoe UI',system-ui,sans-serif" font-size="8.5" text-anchor="middle">&#x1F389; Festival Alert: Diwali in 18 days — start saving now!</text>
+</svg>
