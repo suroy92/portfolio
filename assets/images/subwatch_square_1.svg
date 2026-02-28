@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1F6FEB"/>
+      <stop offset="100%" stop-color="#388BFD"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Rounded-square background -->
+  <rect width="32" height="32" rx="7" fill="url(#bg)"/>
+
+  <!--
+    Circular refresh arrows.
+    Both arcs sit on a circle centred at (16,16) with r≈9.
+    Point A (upper-left of circle, ~200° clockwise from right):
+      x = 16 + 9·cos(200°) ≈ 7.5,  y = 16 + 9·sin(200°) ≈ 12.9
+    Point B (lower-right of circle, ~20° clockwise from right):
+      x = 16 + 9·cos(20°)  ≈ 24.5, y = 16 + 9·sin(20°)  ≈ 19.1
+
+    Arc 1: A → B clockwise (sweep=1), through top — ≈180°.
+    Arc 2: B → A clockwise (sweep=1), through bottom — ≈180°.
+    Arrowheads are V-shaped polylines sitting at each arc endpoint.
+  -->
+
+  <!-- Arc 1: upper-left → lower-right, over the top -->
+  <path d="M7.5 12.9 A9 9 0 0 1 24.5 19.1"
+        stroke="#F0F6FC" stroke-width="2.4" stroke-linecap="round"/>
+  <!-- Arrowhead at B (24.5, 19.1) — points roughly south-west along arc tangent -->
+  <polyline points="27.4,16.9 24.5,19.1 23.6,15.6"
+            stroke="#F0F6FC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Arc 2: lower-right → upper-left, under the bottom -->
+  <path d="M24.5 19.1 A9 9 0 0 1 7.5 12.9"
+        stroke="#F0F6FC" stroke-width="2.4" stroke-linecap="round"/>
+  <!-- Arrowhead at A (7.5, 12.9) — points roughly north-east along arc tangent -->
+  <polyline points="8.4,16.4 7.5,12.9 4.6,15.1"
+            stroke="#F0F6FC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
