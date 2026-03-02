@@ -89,45 +89,176 @@ prefersDark.addEventListener('change', () => {
     }
 });
 
-// Projects: filters + search
+// ─── Project Data ────────────────────────────────────────────────────────────
+// To add a new project, append an object to this array and it will
+// automatically appear in the carousel.
+const projectsData = [
+    {
+        title: "SubWatch",
+        category: "Web",
+        tags: ["web", "typescript", "nextjs"],
+        description: "Manual-entry subscription tracker and cost audit tool. Dashboard shows total monthly spend, category breakdown, and upcoming renewals. Includes an audit wizard to review and cancel unused subs, a renewal calendar, email reminders, and CSV/JSON export — backed by Google OAuth and PostgreSQL.",
+        image: "assets/images/subwatch_square_1.svg",
+        tech: [
+            { type: "devicon", cls: "devicon-nextjs-plain", label: "Next.js" },
+            { type: "devicon", cls: "devicon-typescript-plain colored", label: "TypeScript" },
+            { type: "devicon", cls: "devicon-tailwindcss-original colored", label: "Tailwind CSS" },
+            { type: "devicon", cls: "devicon-postgresql-plain colored", label: "PostgreSQL" }
+        ],
+        links: [
+            { label: "Live Site", url: "https://subwatch-app.vercel.app", icon: "ph:globe-duotone" }
+        ]
+    },
+    {
+        title: "RankIt",
+        category: "Web",
+        tags: ["web", "typescript", "nextjs"],
+        description: "Compare any list of items head-to-head and get a definitive ELO-scored tier ranking (S–D). Supports Quick and Thorough modes, CSV import, shareable result URLs, and re-ranking — all client-side with no backend or account needed.",
+        image: "assets/images/rankit_square_1.svg",
+        tech: [
+            { type: "devicon", cls: "devicon-nextjs-plain", label: "Next.js" },
+            { type: "devicon", cls: "devicon-typescript-plain colored", label: "TypeScript" },
+            { type: "devicon", cls: "devicon-tailwindcss-original colored", label: "Tailwind CSS" }
+        ],
+        links: [
+            { label: "Live Site", url: "https://jade-cobbler-098504.netlify.app/", icon: "ph:globe-duotone" }
+        ]
+    },
+    {
+        title: "Automated Documentation Generator",
+        category: "AI",
+        tags: ["ai", "cli", "python", "web"],
+        description: "Point it at any codebase and get a comprehensive README with architecture diagrams, API docs, real code examples, and setup guides — powered by a local Ollama LLM. No API keys, fully offline, supports Python, JS, TS, and Java.",
+        image: "assets/images/cli_documentation_tool_1.svg",
+        tech: [
+            { type: "iconify", icon: "mdi:robot-outline", label: "AI" },
+            { type: "devicon", cls: "devicon-python-plain colored", label: "Python" },
+            { type: "devicon", cls: "devicon-javascript-plain colored", label: "JavaScript" }
+        ],
+        links: [
+            { label: "View in GitHub", url: "https://github.com/suroy92/automated-documentation-generator", icon: "mdi:github" }
+        ]
+    },
+    {
+        title: "Personal Finance Analyzer",
+        category: "AI",
+        tags: ["ai", "python", "desktop"],
+        description: "Import bank statement CSVs and get a full Dash dashboard — ML-powered transaction categorisation, monthly trend charts, budget tracking, savings suggestions, and festive season alerts. All data stays local in SQLite.",
+        image: "assets/images/financial_app_dashboard_square_1.svg",
+        tech: [
+            { type: "iconify", icon: "mdi:robot-outline", label: "AI" },
+            { type: "iconify", icon: "mdi:chart-line", label: "Analytics" },
+            { type: "devicon", cls: "devicon-sqlite-plain colored", label: "SQLite" }
+        ],
+        links: [
+            { label: "View in GitHub", url: "https://github.com/suroy92/personal-finance-analyzer", icon: "mdi:github" }
+        ]
+    },
+    {
+        title: "Password Manager",
+        category: "Security",
+        tags: ["desktop", "security", "python"],
+        description: "PySide6 desktop vault with master-password encryption using Argon2id KDF and Fernet AES-128. Features light/dark themes, a password generator, secure clipboard auto-clear, encrypted export/import, and master password rotation.",
+        image: "assets/images/password_manager_square_1.svg",
+        tech: [
+            { type: "iconify", icon: "mdi:lock-outline", label: "Security" },
+            { type: "devicon", cls: "devicon-python-plain colored", label: "Python" },
+            { type: "devicon", cls: "devicon-sqlite-plain colored", label: "SQLite" }
+        ],
+        links: [
+            { label: "View in GitHub", url: "https://github.com/suroy92/password-manager", icon: "mdi:github" }
+        ]
+    }
+];
+
+// ─── Projects Carousel ───────────────────────────────────────────────────────
 (function () {
-    const list = document.getElementById('projectsList');
-    const cards = Array.from(list.querySelectorAll('.project-card'));
-    const chips = Array.from(document.querySelectorAll('[data-chip]'));
-    const search = document.getElementById('projectSearch');
+    const track   = document.getElementById('carouselTrack');
+    const dots    = document.getElementById('carouselDots');
+    const prevBtn = document.getElementById('carouselPrev');
+    const nextBtn = document.getElementById('carouselNext');
+    const search  = document.getElementById('projectSearch');
 
     let activeTag = 'all';
+    let query     = '';
+    let page      = 0;
 
-    function matches(card) {
-        const text = (card.textContent || '').toLowerCase();
-        const q = search ? (search.value || '').toLowerCase() : '';
-        const tags = (card.getAttribute('data-tags') || '').split(',').map(t => t.trim());
-        const tagOk = activeTag === 'all' || tags.includes(activeTag);
-        const qOk = !q || text.includes(q);
+    const visibleCount = () => window.innerWidth >= 900 ? 3 : window.innerWidth >= 600 ? 2 : 1;
+
+    const filtered = () => projectsData.filter(p => {
+        const tagOk = activeTag === 'all' || p.tags.includes(activeTag);
+        const qOk   = !query || p.title.toLowerCase().includes(query) || p.description.toLowerCase().includes(query);
         return tagOk && qOk;
-    }
+    });
 
-    function render() {
-        cards.forEach(card => {
-            if (matches(card)) {
-                card.classList.remove('hidden-card');
-            } else {
-                card.classList.add('hidden-card');
-            }
-        });
-    }
+    const buildCard = p => {
+        const techHtml  = p.tech.map(t =>
+            t.type === 'devicon'
+                ? `<i class="${t.cls}" title="${t.label}"></i>`
+                : `<iconify-icon icon="${t.icon}" title="${t.label}"></iconify-icon>`
+        ).join('');
+        const linksHtml = p.links.map(l =>
+            `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="btn">
+                <iconify-icon icon="${l.icon}"></iconify-icon> ${l.label}
+            </a>`
+        ).join('');
+        return `
+            <article class="project-card">
+                <img src="${p.image}" alt="${p.title}" class="project-card-image" loading="lazy" />
+                <div class="project-card-text">
+                    <span class="project-card-category">${p.category}</span>
+                    <h3>${p.title}</h3>
+                    <p>${p.description}</p>
+                </div>
+                <p class="project-card-tech">${techHtml}</p>
+                <div class="project-links">${linksHtml}</div>
+            </article>`;
+    };
 
-    chips.forEach(chip => {
+    const render = () => {
+        const items = filtered();
+        const cols  = visibleCount();
+        const total = Math.max(1, Math.ceil(items.length / cols));
+        page = Math.max(0, Math.min(page, total - 1));
+
+        track.style.setProperty('--cols', cols);
+
+        const slice = items.slice(page * cols, page * cols + cols);
+        track.innerHTML = slice.length
+            ? slice.map(buildCard).join('')
+            : '<p class="carousel-empty">No projects match your search.</p>';
+
+        // Dots
+        dots.innerHTML = Array.from({ length: total }, (_, i) =>
+            `<button class="carousel-dot${i === page ? ' is-active' : ''}" aria-label="Page ${i + 1}"></button>`
+        ).join('');
+        dots.querySelectorAll('.carousel-dot').forEach((d, i) =>
+            d.addEventListener('click', () => { page = i; render(); })
+        );
+
+        prevBtn.disabled = page === 0;
+        nextBtn.disabled = page >= total - 1;
+    };
+
+    prevBtn.addEventListener('click', () => { page--; render(); });
+    nextBtn.addEventListener('click', () => { page++; render(); });
+
+    // Filter chips
+    document.querySelectorAll('[data-chip]').forEach(chip => {
         chip.addEventListener('click', () => {
-            chips.forEach(c => { c.classList.remove('is-active'); c.setAttribute('aria-selected', 'false'); });
+            document.querySelectorAll('[data-chip]').forEach(c => {
+                c.classList.remove('is-active'); c.setAttribute('aria-selected', 'false');
+            });
             chip.classList.add('is-active'); chip.setAttribute('aria-selected', 'true');
-            activeTag = chip.dataset.chip; render();
+            activeTag = chip.dataset.chip; page = 0; render();
         });
     });
 
-    if (search) {
-        search.addEventListener('input', render);
-    }
+    if (search) search.addEventListener('input', () => { query = search.value.toLowerCase(); page = 0; render(); });
+
+    let resizeTimer;
+    window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => { page = 0; render(); }, 200); });
+
     render();
 })();
 
