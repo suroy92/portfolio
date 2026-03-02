@@ -725,99 +725,65 @@ body.light .hero-image::before {
 
 /* Projects Grid */
 .projects-list {
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
 }
 
 .project-card {
-    display: grid;
-    grid-template-columns: 1fr 320px;
-    grid-template-rows: auto auto auto;
-    align-items: start;
-    gap: 32px;
-    padding: 8px 0;
-    background: transparent;
-    border: none;
-    box-shadow: none;
-}
-
-.project-card-text {
-    grid-column: 1;
-    grid-row: 1;
     display: flex;
     flex-direction: column;
-    gap: 0.8rem;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 22px;
+    background: color-mix(in oklab, var(--bg-color) 60%, transparent);
+    border: 1px solid rgba(255, 255, 255, .07);
+    border-radius: 14px;
+    transition: transform .25s ease, box-shadow .25s ease;
 }
 
-.project-card-tech {
-    grid-column: 1;
-    grid-row: 2;
-    margin: 0;
-}
-
-.project-links {
-    grid-column: 1;
-    grid-row: 3;
+.project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(240, 136, 62, 0.35), 0 4px 12px rgba(0, 0, 0, .3);
 }
 
 .project-card-image {
-    grid-column: 2;
-    grid-row: 1 / -1;
-    width: 100%;
-    max-width: 320px;
-    aspect-ratio: 1 / 1;
+    width: 72px;
+    height: 72px;
+    border-radius: 16px;
     object-fit: cover;
-    border-radius: 12px;
-    background: linear-gradient(135deg, color-mix(in oklab, var(--primary) 20%, transparent), transparent);
-    transition: transform .35s ease, box-shadow .35s ease;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, .28);
-    justify-self: end;
-    align-self: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .3);
     display: block;
 }
 
-.project-card-image:hover {
-    transform: translateY(-6px) rotateX(2deg) rotateY(-3deg) scale(1.02);
-    box-shadow: 0 16px 30px rgba(88, 166, 255, 0.4), 0 8px 20px rgba(0, 0, 0, .32);
-}
-
-.project-card:nth-child(even) {
-    grid-template-columns: 320px 1fr;
-}
-
-.project-card:nth-child(even) .project-card-text {
-    grid-column: 2;
-}
-
-.project-card:nth-child(even) .project-card-tech {
-    grid-column: 2;
-}
-
-.project-card:nth-child(even) .project-links {
-    grid-column: 2;
-}
-
-.project-card:nth-child(even) .project-card-image {
-    grid-column: 1;
-    grid-row: 1 / -1;
-    justify-self: start;
+.project-card-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    flex: 1;
 }
 
 .project-card h3 {
     margin: 0;
-    text-align: left;
     letter-spacing: -.01em;
 }
 
 .project-card-text p {
-    text-align: left;
     margin: 0;
     font-size: var(--step--1);
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .project-card-tech {
-    text-align: left;
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 1.5rem;
+    margin: 0;
 }
 
 .project-links {
@@ -825,57 +791,27 @@ body.light .hero-image::before {
     gap: 12px;
     align-items: center;
     flex-wrap: wrap;
+    margin-top: auto;
 }
 
 @media (max-width: 880px) {
-    .project-card {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .project-card:nth-child(even) {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .project-card-image {
-        order: 1;
-        width: 100%;
-        max-width: 100%;
-        justify-self: center;
-        align-self: center;
-    }
-
-    .project-card-text {
-        order: 2;
-    }
-
-    .project-card-tech {
-        order: 3;
-    }
-
-    .project-links {
-        order: 4;
+    .projects-list {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (max-width: 600px) {
+    .projects-list {
+        grid-template-columns: 1fr;
+    }
+
     .project-card {
-        gap: 16px;
-        padding: 16px 0;
+        gap: 12px;
+        padding: 18px;
     }
 
     .project-card h3 {
         font-size: var(--step-0);
-    }
-
-    .project-card-text .project-card p {
-        font-size: .9rem;
-    }
-
-    .project-card-image {
-        max-width: 280px;
     }
 }
 
