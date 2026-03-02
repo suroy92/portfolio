@@ -218,22 +218,77 @@ if (mobileMenuToggle && navMenu) {
     });
 }
 
-// Cursor trail effect
-let isHoverDevice = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+// Custom two-part cursor (dot + lagging ring)
+(function () {
+    const dot  = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+    if (!dot || !ring) return;
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    if (prefersReducedMotion.matches) return;
 
-if (isHoverDevice) {
+    let mx = 0, my = 0; // mouse
+    let rx = 0, ry = 0; // ring (lerped)
+    const EASE = 0.12;
+
     document.addEventListener('mousemove', (e) => {
-        const trail = document.createElement('div');
-        trail.className = 'cursor-trail';
-        trail.style.left = `${e.clientX - 3}px`;
-        trail.style.top = `${e.clientY - 3}px`;
-        document.body.appendChild(trail);
-
-        setTimeout(() => {
-            trail.remove();
-        }, 500);
+        mx = e.clientX;
+        my = e.clientY;
+        dot.style.transform = `translate(calc(${mx}px - 50%), calc(${my}px - 50%))`;
     });
-}
+
+    (function animateRing() {
+        rx += (mx - rx) * EASE;
+        ry += (my - ry) * EASE;
+        ring.style.transform = `translate(calc(${rx}px - 50%), calc(${ry}px - 50%))`;
+        requestAnimationFrame(animateRing);
+    })();
+
+    // Expand ring on interactive elements
+    const interactiveSelector = 'a, button, .project-card, .chip, .skill-pill, .icon-btn, input, textarea';
+    document.addEventListener('mouseover', (e) => {
+        if (e.target.closest(interactiveSelector)) ring.classList.add('is-expanded');
+    });
+    document.addEventListener('mouseout', (e) => {
+        if (e.target.closest(interactiveSelector)) ring.classList.remove('is-expanded');
+    });
+})();
+
+// Typewriter role cycling
+(function () {
+    const el = document.getElementById('typewriter-text');
+    if (!el) return;
+    if (prefersReducedMotion.matches) { el.textContent = 'Tech Lead'; return; }
+
+    const roles = ['Tech Lead', 'Full-Stack Developer', 'Cloud Architect', 'Open Source Builder'];
+    let roleIdx = 0, charIdx = roles[0].length, deleting = false;
+    const TYPE_SPEED = 80, DELETE_SPEED = 45, PAUSE_END = 1800, PAUSE_START = 320;
+
+    function tick() {
+        const current = roles[roleIdx];
+        if (!deleting) {
+            el.textContent = current.slice(0, charIdx);
+            if (charIdx === current.length) {
+                deleting = true;
+                setTimeout(tick, PAUSE_END);
+                return;
+            }
+            charIdx++;
+        } else {
+            el.textContent = current.slice(0, charIdx);
+            if (charIdx === 0) {
+                deleting = false;
+                roleIdx = (roleIdx + 1) % roles.length;
+                setTimeout(tick, PAUSE_START);
+                return;
+            }
+            charIdx--;
+        }
+        setTimeout(tick, deleting ? DELETE_SPEED : TYPE_SPEED);
+    }
+
+    // Start deleting from the initial text so the animation begins immediately
+    setTimeout(tick, PAUSE_END);
+})();
 
 // Contact Form Handler
 // ============================================================================
