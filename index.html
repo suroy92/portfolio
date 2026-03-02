@@ -162,6 +162,20 @@
         <section id="projects">
             <h2><iconify-icon icon="ph:rocket-launch-duotone"></iconify-icon> Projects</h2>
 
+            <div class="projects-toolbar">
+                <div class="chips" role="listbox" aria-label="Filter projects">
+                    <button class="chip is-active" data-chip="all"      role="option" aria-selected="true">All</button>
+                    <button class="chip"           data-chip="web"      role="option" aria-selected="false">Web</button>
+                    <button class="chip"           data-chip="ai"       role="option" aria-selected="false">AI</button>
+                    <button class="chip"           data-chip="desktop"  role="option" aria-selected="false">Desktop</button>
+                    <button class="chip"           data-chip="security" role="option" aria-selected="false">Security</button>
+                </div>
+                <div class="search">
+                    <iconify-icon icon="ph:magnifying-glass"></iconify-icon>
+                    <input id="projectSearch" type="search" placeholder="Search projects…" aria-label="Search projects" />
+                </div>
+            </div>
+
             <div class="projects-list" id="projectsList">
                 <article class="project-card" data-tags="web,typescript,nextjs">
                     <img src="assets/images/subwatch_square_1.svg" alt="SubWatch"
@@ -170,7 +184,7 @@
                         <h3>SubWatch</h3>
                         <p>Manual-entry subscription tracker and cost audit tool. Dashboard shows total monthly spend, category breakdown, and upcoming renewals. Includes an audit wizard to review and cancel unused subs, a renewal calendar, email reminders, and CSV/JSON export — backed by Google OAuth and PostgreSQL.</p>
                     </div>
-                    <p class="project-card-tech" style="display:flex;gap:.5rem;align-items:center;font-size:1.5rem">
+                    <p class="project-card-tech">
                         <i class="devicon-nextjs-plain colored" title="Next.js"></i>
                         <i class="devicon-typescript-plain colored" title="TypeScript"></i>
                         <i class="devicon-tailwindcss-original colored" title="Tailwind CSS"></i>
@@ -193,7 +207,7 @@
                             (S–D). Supports Quick and Thorough modes, CSV import, shareable result URLs, and
                             re-ranking — all client-side with no backend or account needed.</p>
                     </div>
-                    <p class="project-card-tech" style="display:flex;gap:.5rem;align-items:center;font-size:1.5rem">
+                    <p class="project-card-tech">
                         <i class="devicon-nextjs-plain colored" title="Next.js"></i>
                         <i class="devicon-typescript-plain colored" title="TypeScript"></i>
                         <i class="devicon-tailwindcss-original colored" title="Tailwind CSS"></i>
@@ -215,7 +229,7 @@
                             API docs, real code examples, and setup guides — powered by a local Ollama LLM.
                             No API keys, fully offline, supports Python, JS, TS, and Java.</p>
                     </div>
-                    <p class="project-card-tech" style="display:flex;gap:.5rem;align-items:center;font-size:1.5rem">
+                    <p class="project-card-tech">
                         <iconify-icon icon="mdi:robot-outline" title="AI"></iconify-icon>
                         <i class="devicon-python-plain colored" title="Python"></i>
                         <i class="devicon-javascript-plain colored" title="JavaScript"></i>
@@ -237,7 +251,7 @@
                             categorisation, monthly trend charts, budget tracking, savings suggestions, and
                             festive season alerts. All data stays local in SQLite.</p>
                     </div>
-                    <p class="project-card-tech" style="display:flex;gap:.5rem;align-items:center;font-size:1.5rem">
+                    <p class="project-card-tech">
                         <iconify-icon icon="mdi:robot-outline" title="AI"></iconify-icon>
                         <iconify-icon icon="mdi:chart-line" title="Analytics"></iconify-icon>
                         <i class="devicon-sqlite-plain colored" title="SQLite"></i>
@@ -259,7 +273,7 @@
                             Fernet AES-128. Features light/dark themes, a password generator, secure clipboard
                             auto-clear, encrypted export/import, and master password rotation.</p>
                     </div>
-                    <p class="project-card-tech" style="display:flex;gap:.5rem;align-items:center;font-size:1.5rem">
+                    <p class="project-card-tech">
                         <iconify-icon icon="mdi:lock-outline" title="Security"></iconify-icon>
                         <i class="devicon-python-plain colored" title="Python"></i>
                         <i class="devicon-sqlite-plain colored" title="SQLite"></i>
