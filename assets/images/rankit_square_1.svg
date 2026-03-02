@@ -1,84 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0d1117"/>
-      <stop offset="100%" stop-color="#0f172a"/>
-    </linearGradient>
-    <linearGradient id="btn" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#2563eb"/>
-      <stop offset="100%" stop-color="#1d4ed8"/>
-    </linearGradient>
-    <linearGradient id="progress" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#1f6feb"/>
-      <stop offset="100%" stop-color="#58a6ff"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#4c1d95"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
     </linearGradient>
   </defs>
 
-  <!-- Background -->
-  <rect width="320" height="320" fill="url(#bg)" rx="12"/>
+  <!-- Rounded-square background -->
+  <rect width="32" height="32" rx="7" fill="url(#bg)"/>
 
-  <!-- Header -->
-  <text x="160" y="25" fill="#58a6ff" font-family="'Segoe UI',system-ui,sans-serif" font-size="15" font-weight="700" text-anchor="middle" letter-spacing="4">RANKIT</text>
-  <text x="160" y="39" fill="#484f58" font-family="'Segoe UI',system-ui,sans-serif" font-size="9" text-anchor="middle" letter-spacing="1">ELO · PAIRWISE · TIER RANKING</text>
-  <line x1="16" y1="47" x2="304" y2="47" stroke="#21262d" stroke-width="1"/>
+  <!--
+    Podium: classic 2nd-1st-3rd layout (left/center/right), baseline y=27.
+    2nd place (left):  h=9  → top=18
+    1st place (center): h=15 → top=12  (tallest)
+    3rd place (right): h=6  → top=21
+  -->
+  <rect x="2"  y="18" width="8" height="9"  rx="1.5" fill="#DDD6FE"/>
+  <rect x="12" y="12" width="8" height="15" rx="1.5" fill="#F0F6FC"/>
+  <rect x="22" y="21" width="8" height="6"  rx="1.5" fill="#A78BFA"/>
 
-  <!-- ── Left card ── -->
-  <rect x="14" y="55" width="118" height="90" fill="#161b22" rx="8" stroke="#30363d" stroke-width="1"/>
-  <text x="73" y="91" font-size="24" text-anchor="middle" font-family="Segoe UI Emoji,Apple Color Emoji,sans-serif">🍕</text>
-  <text x="73" y="108" fill="#e6edf3" font-family="'Segoe UI',system-ui,sans-serif" font-size="11" text-anchor="middle" font-weight="600">Pizza</text>
-  <text x="73" y="121" fill="#58a6ff" font-family="'Segoe UI',system-ui,sans-serif" font-size="9" text-anchor="middle">ELO 1142</text>
-  <rect x="24" y="130" width="98" height="16" fill="url(#btn)" rx="4"/>
-  <text x="73" y="142" fill="white" font-family="'Segoe UI',system-ui,sans-serif" font-size="9" text-anchor="middle" font-weight="600">← PICK</text>
-
-  <!-- ── VS badge ── -->
-  <circle cx="160" cy="100" r="15" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
-  <text x="160" y="105" fill="#f0883e" font-family="'Segoe UI',system-ui,sans-serif" font-size="10" font-weight="800" text-anchor="middle">VS</text>
-
-  <!-- ── Right card ── -->
-  <rect x="188" y="55" width="118" height="90" fill="#161b22" rx="8" stroke="#30363d" stroke-width="1"/>
-  <text x="247" y="91" font-size="24" text-anchor="middle" font-family="Segoe UI Emoji,Apple Color Emoji,sans-serif">🍣</text>
-  <text x="247" y="108" fill="#e6edf3" font-family="'Segoe UI',system-ui,sans-serif" font-size="11" text-anchor="middle" font-weight="600">Sushi</text>
-  <text x="247" y="121" fill="#58a6ff" font-family="'Segoe UI',system-ui,sans-serif" font-size="9" text-anchor="middle">ELO 1078</text>
-  <rect x="198" y="130" width="98" height="16" fill="url(#btn)" rx="4"/>
-  <text x="247" y="142" fill="white" font-family="'Segoe UI',system-ui,sans-serif" font-size="9" text-anchor="middle" font-weight="600">PICK →</text>
-
-  <!-- ── Progress bar ── -->
-  <text x="14" y="163" fill="#484f58" font-family="'Segoe UI',system-ui,sans-serif" font-size="9">7 of 12 comparisons</text>
-  <rect x="14" y="167" width="292" height="5" fill="#21262d" rx="2.5"/>
-  <rect x="14" y="167" width="170" height="5" fill="url(#progress)" rx="2.5"/>
-
-  <line x1="16" y1="181" x2="304" y2="181" stroke="#21262d" stroke-width="1"/>
-
-  <!-- ── Tier list label ── -->
-  <text x="14" y="197" fill="#484f58" font-family="'Segoe UI',system-ui,sans-serif" font-size="9" letter-spacing="1">RESULTS</text>
-
-  <!-- S tier -->
-  <rect x="14" y="201" width="292" height="22" fill="#1c2128" rx="4"/>
-  <rect x="14" y="201" width="28" height="22" fill="#ffd700" rx="4"/>
-  <text x="28" y="216" fill="#0d1117" font-family="'Segoe UI',system-ui,sans-serif" font-size="11" font-weight="800" text-anchor="middle">S</text>
-  <text x="52" y="216" fill="#e6edf3" font-family="Segoe UI Emoji,Apple Color Emoji,sans-serif" font-size="9">🍕 Pizza  🍜 Ramen  🌯 Wrap</text>
-
-  <!-- A tier -->
-  <rect x="14" y="227" width="292" height="22" fill="#1c2128" rx="4"/>
-  <rect x="14" y="227" width="28" height="22" fill="#3fb950" rx="4"/>
-  <text x="28" y="242" fill="#0d1117" font-family="'Segoe UI',system-ui,sans-serif" font-size="11" font-weight="800" text-anchor="middle">A</text>
-  <text x="52" y="242" fill="#e6edf3" font-family="Segoe UI Emoji,Apple Color Emoji,sans-serif" font-size="9">🍔 Burger  🍣 Sushi</text>
-
-  <!-- B tier -->
-  <rect x="14" y="253" width="292" height="22" fill="#1c2128" rx="4"/>
-  <rect x="14" y="253" width="28" height="22" fill="#58a6ff" rx="4"/>
-  <text x="28" y="268" fill="#0d1117" font-family="'Segoe UI',system-ui,sans-serif" font-size="11" font-weight="800" text-anchor="middle">B</text>
-  <text x="52" y="268" fill="#e6edf3" font-family="Segoe UI Emoji,Apple Color Emoji,sans-serif" font-size="9">🌮 Tacos  🥗 Salad</text>
-
-  <!-- C tier -->
-  <rect x="14" y="279" width="292" height="22" fill="#1c2128" rx="4"/>
-  <rect x="14" y="279" width="28" height="22" fill="#f0883e" rx="4"/>
-  <text x="28" y="294" fill="#0d1117" font-family="'Segoe UI',system-ui,sans-serif" font-size="11" font-weight="800" text-anchor="middle">C</text>
-  <text x="52" y="294" fill="#e6edf3" font-family="Segoe UI Emoji,Apple Color Emoji,sans-serif" font-size="9">🍟 Fries  🥪 Sandwich</text>
-
-  <!-- D tier -->
-  <rect x="14" y="305" width="292" height="13" fill="#1c2128" rx="4"/>
-  <rect x="14" y="305" width="28" height="13" fill="#da3633" rx="4"/>
-  <text x="28" y="315" fill="white" font-family="'Segoe UI',system-ui,sans-serif" font-size="8" font-weight="800" text-anchor="middle">D</text>
-  <text x="52" y="315" fill="#8b949e" font-family="Segoe UI Emoji,Apple Color Emoji,sans-serif" font-size="8">🥫 Canned food</text>
+  <!--
+    Gold 5-point star centred at (16, 8.5), outer r=2.8, inner r=1.1.
+    Points alternate outer/inner at 36° intervals, starting at -90° (top):
+      outer: -90, -18, 54, 126, 198
+      inner: -54, 18, 90, 162, 234
+  -->
+  <polygon
+    points="16,5.7 16.6,7.6 18.7,7.6 17.0,8.8 17.6,10.8 16,9.6 14.4,10.8 14.9,8.8 13.3,7.6 15.4,7.6"
+    fill="#FDE68A"/>
 </svg>
