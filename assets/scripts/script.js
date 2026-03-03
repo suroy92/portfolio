@@ -1,3 +1,129 @@
+// Glitch Background Generator
+// Draws a 600×400 canvas tile once per theme change and applies it as a tiling body background
+function generateGlitchBg() {
+    const isLight = document.body.classList.contains('light');
+    const canvas  = document.createElement('canvas');
+    canvas.width  = 600;
+    canvas.height = 400;
+    const ctx = canvas.getContext('2d');
+
+    const ri = (min, max) => Math.floor(Math.random() * (max - min) + min);
+
+    const img = ctx.getImageData(0, 0, 600, 400);
+    const d   = img.data;
+    const sp  = (x, y, r, g, b, a) => {
+        if (x < 0 || x >= 600 || y < 0 || y >= 400) return;
+        const i = (y * 600 + x) * 4;
+        d[i] = r; d[i + 1] = g; d[i + 2] = b; d[i + 3] = a;
+    };
+
+    // 1. Base fill
+    const base = isLight ? 253 : 13;
+    for (let i = 0; i < d.length; i += 4) { d[i] = base; d[i+1] = base; d[i+2] = isLight ? base : 23; d[i+3] = 255; }
+
+    // 2. RGB chromatic-aberration clusters — edge-anchored only (top / bottom / left / right margins)
+    //    Center stays clean; colored static lives at the borders like the reference
+    const numClusters = ri(5, 9);
+    for (let c = 0; c < numClusters; c++) {
+        let cx, cy, cw, ch;
+        const zone = ri(0, 4); // 0=top, 1=bottom, 2=left side, 3=right side
+        if (zone === 0) {
+            cy = ri(0, 16);  ch = ri(3, 7);  cw = ri(60, 260); cx = ri(0, 600 - cw);
+        } else if (zone === 1) {
+            ch = ri(3, 7);   cy = 400 - ch - ri(0, 16); cw = ri(60, 260); cx = ri(0, 600 - cw);
+        } else if (zone === 2) {
+            cx = ri(0, 8);   cw = ri(50, 210); ch = ri(2, 6); cy = ri(0, 394);
+        } else {
+            cw = ri(50, 210); cx = 600 - cw - ri(0, 8); ch = ri(2, 6); cy = ri(0, 394);
+        }
+        for (let y = cy; y < cy + ch; y++) {
+            for (let x = cx; x < cx + cw; x++) {
+                const t = Math.random();
+                let r, g, b, a;
+                if      (t < 0.28) { r = 0;   g = isLight ? 140 : 190; b = isLight ? 200 : 245; a = ri(110, 210); } // cyan
+                else if (t < 0.52) { r = isLight ? 200 : 240; g = 0;   b = isLight ? 120 : 170; a = ri(110, 210); } // magenta
+                else if (t < 0.70) { r = 0;   g = 0;   b = isLight ? 190 : 250; a = ri(90,  185); } // blue
+                else if (t < 0.84) { r = isLight ? 200 : 240; g = 0;   b = 0;   a = ri(80,  165); } // red
+                else               { const v = ri(isLight ? 80 : 160, isLight ? 180 : 245); r = v; g = v; b = v; a = ri(55, 130); }
+                sp(x,     y, r, g, b, a);
+                sp(x - 2, y, r, 0, 0, Math.floor(a * 0.35)); // red ghost left
+                sp(x + 2, y, 0, 0, b, Math.floor(a * 0.35)); // blue ghost right
+            }
+        }
+    }
+
+    // 3. Dashed tracking lines — very few, low alpha; tile repeats make these multiply fast
+    const numLines = ri(3, 6);
+    for (let i = 0; i < numLines; i++) {
+        const lineY  = ri(0, 399);
+        const startX = ri(0, 450);
+        const endX   = Math.min(startX + ri(30, 200), 600);
+        const lv     = isLight ? ri(50, 110) : ri(100, 180);
+        const la     = ri(12, 38);
+        let x = startX;
+        while (x < endX) {
+            const dashW = ri(5, 18);
+            const gapW  = ri(4, 16);
+            for (let px = x; px < Math.min(x + dashW, endX); px++) sp(px, lineY, lv, lv, lv, la);
+            x += dashW + gapW;
+        }
+    }
+
+    // 4. Block artifacts — very few, very faint
+    const numBlocks = ri(3, 7);
+    for (let i = 0; i < numBlocks; i++) {
+        const bx  = ri(0, 545);
+        const by  = ri(0, 370);
+        const bw  = ri(10, 50);
+        const bh  = ri(3, 14);
+        const bri = isLight ? ri(165, 210) : ri(20, 44);
+        const ba  = ri(10, 28);
+        for (let y = by; y < Math.min(by + bh, 400); y++)
+            for (let x = bx; x < Math.min(bx + bw, 600); x++)
+                sp(x, y, bri, bri, bri, ba);
+    }
+
+    // 5. Sparse noise pixels — minimal, just enough for film-grain feel
+    for (let i = 0; i < 250; i++) {
+        const nv = isLight ? ri(0, 60) : ri(180, 255);
+        sp(ri(0, 600), ri(0, 400), nv, nv, nv, ri(4, 22));
+    }
+
+    ctx.putImageData(img, 0, 0);
+
+    // 6. Subtle scanlines
+    ctx.fillStyle = isLight ? 'rgba(0,0,0,0.01)' : 'rgba(0,0,0,0.032)';
+    for (let y = 0; y < 400; y += 4) ctx.fillRect(0, y + 2, 600, 2);
+
+    // Apply as fixed tiling background
+    const url = canvas.toDataURL('image/png');
+    document.body.style.backgroundImage      = `url('${url}')`;
+    document.body.style.backgroundSize       = '600px 400px';
+    document.body.style.backgroundRepeat     = 'repeat';
+    document.body.style.backgroundAttachment = 'fixed';
+}
+
+// Navbar scroll opacity
+const navEl = document.querySelector("nav");
+const updateNavOpacity = () => navEl.classList.toggle("nav-scrolled", window.scrollY > 20);
+window.addEventListener("scroll", updateNavOpacity, { passive: true });
+updateNavOpacity();
+
+// Active nav link based on scroll position
+const navLinks = document.querySelectorAll(".nav-link");
+const scrollSections = [...document.querySelectorAll("section[id]")];
+const updateActiveLink = () => {
+    // Find the last section whose top has passed 40% down the viewport
+    const scrollMid = window.scrollY + window.innerHeight * 0.4;
+    let active = scrollSections[0];
+    for (const sec of scrollSections) {
+        if (sec.offsetTop <= scrollMid) active = sec;
+    }
+    navLinks.forEach(l => l.classList.toggle("active", l.getAttribute("href") === `#${active.id}`));
+};
+window.addEventListener("scroll", updateActiveLink, { passive: true });
+updateActiveLink();
+
 // Scroll Reveal
 const sections = document.querySelectorAll("section");
 const revealOnScroll = () => {
@@ -57,6 +183,8 @@ const setTheme = (mode, skipAnimation = false) => {
 
     // Update meta color-scheme
     document.documentElement.style.colorScheme = actualTheme;
+
+    generateGlitchBg();
 };
 
 const cycleTheme = () => {
@@ -69,6 +197,7 @@ const cycleTheme = () => {
 const savedMode = localStorage.getItem('themeMode');
 const initialMode = savedMode || (prefersDark.matches ? 'dark' : 'light');
 setTheme(initialMode, true);
+generateGlitchBg();
 
 // Click handler
 themeToggle.addEventListener('click', cycleTheme);
@@ -89,45 +218,176 @@ prefersDark.addEventListener('change', () => {
     }
 });
 
-// Projects: filters + search
+// ─── Project Data ────────────────────────────────────────────────────────────
+// To add a new project, append an object to this array and it will
+// automatically appear in the carousel.
+const projectsData = [
+    {
+        title: "SubWatch",
+        category: "Web",
+        tags: ["web", "typescript", "nextjs"],
+        description: "Manual-entry subscription tracker and cost audit tool. Dashboard shows total monthly spend, category breakdown, and upcoming renewals. Includes an audit wizard to review and cancel unused subs, a renewal calendar, email reminders, and CSV/JSON export — backed by Google OAuth and PostgreSQL.",
+        image: "assets/images/subwatch_square_1.svg",
+        tech: [
+            { type: "devicon", cls: "devicon-nextjs-plain", label: "Next.js" },
+            { type: "devicon", cls: "devicon-typescript-plain colored", label: "TypeScript" },
+            { type: "devicon", cls: "devicon-tailwindcss-original colored", label: "Tailwind CSS" },
+            { type: "devicon", cls: "devicon-postgresql-plain colored", label: "PostgreSQL" }
+        ],
+        links: [
+            { label: "Live Site", url: "https://subwatch-app.vercel.app", icon: "ph:globe-duotone" }
+        ]
+    },
+    {
+        title: "RankIt",
+        category: "Web",
+        tags: ["web", "typescript", "nextjs"],
+        description: "Compare any list of items head-to-head and get a definitive ELO-scored tier ranking (S–D). Supports Quick and Thorough modes, CSV import, shareable result URLs, and re-ranking — all client-side with no backend or account needed.",
+        image: "assets/images/rankit_square_1.svg",
+        tech: [
+            { type: "devicon", cls: "devicon-nextjs-plain", label: "Next.js" },
+            { type: "devicon", cls: "devicon-typescript-plain colored", label: "TypeScript" },
+            { type: "devicon", cls: "devicon-tailwindcss-original colored", label: "Tailwind CSS" }
+        ],
+        links: [
+            { label: "Live Site", url: "https://jade-cobbler-098504.netlify.app/", icon: "ph:globe-duotone" }
+        ]
+    },
+    {
+        title: "Automated Documentation Generator",
+        category: "AI",
+        tags: ["ai", "cli", "python", "web"],
+        description: "Point it at any codebase and get a comprehensive README with architecture diagrams, API docs, real code examples, and setup guides — powered by a local Ollama LLM. No API keys, fully offline, supports Python, JS, TS, and Java.",
+        image: "assets/images/cli_documentation_tool_1.svg",
+        tech: [
+            { type: "iconify", icon: "mdi:robot-outline", label: "AI" },
+            { type: "devicon", cls: "devicon-python-plain colored", label: "Python" },
+            { type: "devicon", cls: "devicon-javascript-plain colored", label: "JavaScript" }
+        ],
+        links: [
+            { label: "View in GitHub", url: "https://github.com/suroy92/automated-documentation-generator", icon: "mdi:github" }
+        ]
+    },
+    {
+        title: "Personal Finance Analyzer",
+        category: "AI",
+        tags: ["ai", "python", "desktop"],
+        description: "Import bank statement CSVs and get a full Dash dashboard — ML-powered transaction categorisation, monthly trend charts, budget tracking, savings suggestions, and festive season alerts. All data stays local in SQLite.",
+        image: "assets/images/financial_app_dashboard_square_1.svg",
+        tech: [
+            { type: "iconify", icon: "mdi:robot-outline", label: "AI" },
+            { type: "iconify", icon: "mdi:chart-line", label: "Analytics" },
+            { type: "devicon", cls: "devicon-sqlite-plain colored", label: "SQLite" }
+        ],
+        links: [
+            { label: "View in GitHub", url: "https://github.com/suroy92/personal-finance-analyzer", icon: "mdi:github" }
+        ]
+    },
+    {
+        title: "Password Manager",
+        category: "Security",
+        tags: ["desktop", "security", "python"],
+        description: "PySide6 desktop vault with master-password encryption using Argon2id KDF and Fernet AES-128. Features light/dark themes, a password generator, secure clipboard auto-clear, encrypted export/import, and master password rotation.",
+        image: "assets/images/password_manager_square_1.svg",
+        tech: [
+            { type: "iconify", icon: "mdi:lock-outline", label: "Security" },
+            { type: "devicon", cls: "devicon-python-plain colored", label: "Python" },
+            { type: "devicon", cls: "devicon-sqlite-plain colored", label: "SQLite" }
+        ],
+        links: [
+            { label: "View in GitHub", url: "https://github.com/suroy92/password-manager", icon: "mdi:github" }
+        ]
+    }
+];
+
+// ─── Projects Carousel ───────────────────────────────────────────────────────
 (function () {
-    const list = document.getElementById('projectsList');
-    const cards = Array.from(list.querySelectorAll('.project-card'));
-    const chips = Array.from(document.querySelectorAll('[data-chip]'));
-    const search = document.getElementById('projectSearch');
+    const track   = document.getElementById('carouselTrack');
+    const dots    = document.getElementById('carouselDots');
+    const prevBtn = document.getElementById('carouselPrev');
+    const nextBtn = document.getElementById('carouselNext');
+    const search  = document.getElementById('projectSearch');
 
     let activeTag = 'all';
+    let query     = '';
+    let page      = 0;
 
-    function matches(card) {
-        const text = (card.textContent || '').toLowerCase();
-        const q = search ? (search.value || '').toLowerCase() : '';
-        const tags = (card.getAttribute('data-tags') || '').split(',').map(t => t.trim());
-        const tagOk = activeTag === 'all' || tags.includes(activeTag);
-        const qOk = !q || text.includes(q);
+    const visibleCount = () => window.innerWidth >= 900 ? 3 : window.innerWidth >= 600 ? 2 : 1;
+
+    const filtered = () => projectsData.filter(p => {
+        const tagOk = activeTag === 'all' || p.tags.includes(activeTag);
+        const qOk   = !query || p.title.toLowerCase().includes(query) || p.description.toLowerCase().includes(query);
         return tagOk && qOk;
-    }
+    });
 
-    function render() {
-        cards.forEach(card => {
-            if (matches(card)) {
-                card.classList.remove('hidden-card');
-            } else {
-                card.classList.add('hidden-card');
-            }
-        });
-    }
+    const buildCard = p => {
+        const techHtml  = p.tech.map(t =>
+            t.type === 'devicon'
+                ? `<i class="${t.cls}" title="${t.label}"></i>`
+                : `<iconify-icon icon="${t.icon}" title="${t.label}"></iconify-icon>`
+        ).join('');
+        const linksHtml = p.links.map(l =>
+            `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="btn">
+                <iconify-icon icon="${l.icon}"></iconify-icon> ${l.label}
+            </a>`
+        ).join('');
+        return `
+            <article class="project-card">
+                <img src="${p.image}" alt="${p.title}" class="project-card-image" loading="lazy" />
+                <div class="project-card-text">
+                    <span class="project-card-category">${p.category}</span>
+                    <h3>${p.title}</h3>
+                    <p>${p.description}</p>
+                </div>
+                <p class="project-card-tech">${techHtml}</p>
+                <div class="project-links">${linksHtml}</div>
+            </article>`;
+    };
 
-    chips.forEach(chip => {
+    const render = () => {
+        const items = filtered();
+        const cols  = visibleCount();
+        const total = Math.max(1, Math.ceil(items.length / cols));
+        page = Math.max(0, Math.min(page, total - 1));
+
+        track.style.setProperty('--cols', cols);
+
+        const slice = items.slice(page * cols, page * cols + cols);
+        track.innerHTML = slice.length
+            ? slice.map(buildCard).join('')
+            : '<p class="carousel-empty">No projects match your search.</p>';
+
+        // Dots
+        dots.innerHTML = Array.from({ length: total }, (_, i) =>
+            `<button class="carousel-dot${i === page ? ' is-active' : ''}" aria-label="Page ${i + 1}"></button>`
+        ).join('');
+        dots.querySelectorAll('.carousel-dot').forEach((d, i) =>
+            d.addEventListener('click', () => { page = i; render(); })
+        );
+
+        prevBtn.disabled = page === 0;
+        nextBtn.disabled = page >= total - 1;
+    };
+
+    prevBtn.addEventListener('click', () => { page--; render(); });
+    nextBtn.addEventListener('click', () => { page++; render(); });
+
+    // Filter chips
+    document.querySelectorAll('[data-chip]').forEach(chip => {
         chip.addEventListener('click', () => {
-            chips.forEach(c => { c.classList.remove('is-active'); c.setAttribute('aria-selected', 'false'); });
+            document.querySelectorAll('[data-chip]').forEach(c => {
+                c.classList.remove('is-active'); c.setAttribute('aria-selected', 'false');
+            });
             chip.classList.add('is-active'); chip.setAttribute('aria-selected', 'true');
-            activeTag = chip.dataset.chip; render();
+            activeTag = chip.dataset.chip; page = 0; render();
         });
     });
 
-    if (search) {
-        search.addEventListener('input', render);
-    }
+    if (search) search.addEventListener('input', () => { query = search.value.toLowerCase(); page = 0; render(); });
+
+    let resizeTimer;
+    window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => { page = 0; render(); }, 200); });
+
     render();
 })();
 
@@ -218,22 +478,77 @@ if (mobileMenuToggle && navMenu) {
     });
 }
 
-// Cursor trail effect
-let isHoverDevice = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+// Custom two-part cursor (dot + lagging ring)
+(function () {
+    const dot  = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+    if (!dot || !ring) return;
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    if (prefersReducedMotion.matches) return;
 
-if (isHoverDevice) {
+    let mx = 0, my = 0; // mouse
+    let rx = 0, ry = 0; // ring (lerped)
+    const EASE = 0.12;
+
     document.addEventListener('mousemove', (e) => {
-        const trail = document.createElement('div');
-        trail.className = 'cursor-trail';
-        trail.style.left = `${e.clientX - 3}px`;
-        trail.style.top = `${e.clientY - 3}px`;
-        document.body.appendChild(trail);
-
-        setTimeout(() => {
-            trail.remove();
-        }, 500);
+        mx = e.clientX;
+        my = e.clientY;
+        dot.style.transform = `translate(calc(${mx}px - 50%), calc(${my}px - 50%))`;
     });
-}
+
+    (function animateRing() {
+        rx += (mx - rx) * EASE;
+        ry += (my - ry) * EASE;
+        ring.style.transform = `translate(calc(${rx}px - 50%), calc(${ry}px - 50%))`;
+        requestAnimationFrame(animateRing);
+    })();
+
+    // Expand ring on interactive elements
+    const interactiveSelector = 'a, button, .project-card, .chip, .skill-pill, .icon-btn, input, textarea';
+    document.addEventListener('mouseover', (e) => {
+        if (e.target.closest(interactiveSelector)) ring.classList.add('is-expanded');
+    });
+    document.addEventListener('mouseout', (e) => {
+        if (e.target.closest(interactiveSelector)) ring.classList.remove('is-expanded');
+    });
+})();
+
+// Typewriter role cycling
+(function () {
+    const el = document.getElementById('typewriter-text');
+    if (!el) return;
+    if (prefersReducedMotion.matches) { el.textContent = 'Tech Lead'; return; }
+
+    const roles = ['Tech Lead', 'Full-Stack Developer', 'Cloud Architect', 'Open Source Builder'];
+    let roleIdx = 0, charIdx = roles[0].length, deleting = false;
+    const TYPE_SPEED = 80, DELETE_SPEED = 45, PAUSE_END = 1800, PAUSE_START = 320;
+
+    function tick() {
+        const current = roles[roleIdx];
+        if (!deleting) {
+            el.textContent = current.slice(0, charIdx);
+            if (charIdx === current.length) {
+                deleting = true;
+                setTimeout(tick, PAUSE_END);
+                return;
+            }
+            charIdx++;
+        } else {
+            el.textContent = current.slice(0, charIdx);
+            if (charIdx === 0) {
+                deleting = false;
+                roleIdx = (roleIdx + 1) % roles.length;
+                setTimeout(tick, PAUSE_START);
+                return;
+            }
+            charIdx--;
+        }
+        setTimeout(tick, deleting ? DELETE_SPEED : TYPE_SPEED);
+    }
+
+    // Start deleting from the initial text so the animation begins immediately
+    setTimeout(tick, PAUSE_END);
+})();
 
 // Contact Form Handler
 // ============================================================================

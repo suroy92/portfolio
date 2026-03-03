@@ -1,0 +1,214 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+
+    <!-- Background gradient: deep navy to near-black -->
+    <radialGradient id="bgGrad" cx="38%" cy="36%" r="70%">
+      <stop offset="0%"   stop-color="#1a2340"/>
+      <stop offset="100%" stop-color="#080c14"/>
+    </radialGradient>
+
+    <!-- Primary accent: electric blue → indigo-violet -->
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#5BB8FF"/>
+      <stop offset="100%" stop-color="#9B6DFF"/>
+    </linearGradient>
+
+    <!-- Monogram fill: bright electric gradient -->
+    <linearGradient id="monoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#7DD4FC"/>
+      <stop offset="50%"  stop-color="#818CF8"/>
+      <stop offset="100%" stop-color="#C084FC"/>
+    </linearGradient>
+
+    <!-- Subtle inner ring gradient -->
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#5BB8FF" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#9B6DFF" stop-opacity="0.1"/>
+    </linearGradient>
+
+    <!-- Gold accent for highlights -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#F0C674"/>
+      <stop offset="100%" stop-color="#E8A84C"/>
+    </linearGradient>
+
+    <!-- Node glow -->
+    <filter id="nodeGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Strong glow for monogram -->
+    <filter id="textGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="8" result="blur1"/>
+      <feGaussianBlur stdDeviation="3" result="blur2"/>
+      <feMerge>
+        <feMergeNode in="blur1"/>
+        <feMergeNode in="blur2"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Soft glow for lines -->
+    <filter id="lineGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Background ambient glow blob -->
+    <filter id="ambientGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="28"/>
+    </filter>
+
+    <!-- Clip to circle -->
+    <clipPath id="circleClip">
+      <circle cx="200" cy="200" r="192"/>
+    </clipPath>
+
+    <!-- Hexagonal pattern for background texture -->
+    <pattern id="hexPattern" x="0" y="0" width="24" height="28" patternUnits="userSpaceOnUse">
+      <polygon points="12,2 22,7.5 22,18.5 12,24 2,18.5 2,7.5"
+               fill="none" stroke="#4F9CF9" stroke-width="0.4" stroke-opacity="0.08"/>
+    </pattern>
+
+  </defs>
+
+  <!-- ── Base circle ── -->
+  <circle cx="200" cy="200" r="200" fill="url(#bgGrad)"/>
+
+  <!-- ── Hex texture overlay (clipped) ── -->
+  <circle cx="200" cy="200" r="192" fill="url(#hexPattern)" clip-path="url(#circleClip)"/>
+
+  <!-- ── Ambient color blobs for depth ── -->
+  <ellipse cx="155" cy="155" rx="90" ry="90" fill="#3B5FE0" opacity="0.12" filter="url(#ambientGlow)" clip-path="url(#circleClip)"/>
+  <ellipse cx="255" cy="255" rx="80" ry="80" fill="#8B5CF6" opacity="0.12" filter="url(#ambientGlow)" clip-path="url(#circleClip)"/>
+  <ellipse cx="230" cy="150" rx="60" ry="60" fill="#06B6D4" opacity="0.08" filter="url(#ambientGlow)" clip-path="url(#circleClip)"/>
+
+  <!-- ── Outer decorative rings ── -->
+  <circle cx="200" cy="200" r="191" fill="none" stroke="url(#accentGrad)" stroke-width="1"   stroke-opacity="0.5"/>
+  <circle cx="200" cy="200" r="183" fill="none" stroke="url(#ringGrad)"   stroke-width="0.5" stroke-opacity="0.3"/>
+
+  <!-- Dashed orbital ring -->
+  <circle cx="200" cy="200" r="158" fill="none" stroke="#5BB8FF" stroke-width="0.8"
+          stroke-opacity="0.18" stroke-dasharray="5 7"
+          transform="rotate(-30 200 200)"/>
+
+  <!-- ── Architecture node graph ── -->
+
+  <!-- Connector lines first (behind nodes) -->
+  <g filter="url(#lineGlow)" fill="none">
+    <!-- Hub to satellites -->
+    <line x1="200" y1="200" x2="110" y2="118" stroke="url(#accentGrad)" stroke-width="1.2" stroke-opacity="0.5"/>
+    <line x1="200" y1="200" x2="290" y2="108" stroke="url(#accentGrad)" stroke-width="1.2" stroke-opacity="0.45"/>
+    <line x1="200" y1="200" x2="320" y2="200" stroke="url(#accentGrad)" stroke-width="1.2" stroke-opacity="0.5"/>
+    <line x1="200" y1="200" x2="280" y2="305" stroke="url(#accentGrad)" stroke-width="1.2" stroke-opacity="0.45"/>
+    <line x1="200" y1="200" x2="118" y2="300" stroke="url(#accentGrad)" stroke-width="1.2" stroke-opacity="0.45"/>
+    <line x1="200" y1="200" x2="78"  y2="210" stroke="url(#accentGrad)" stroke-width="1.2" stroke-opacity="0.4"/>
+    <line x1="200" y1="200" x2="200" y2="75"  stroke="url(#accentGrad)" stroke-width="1.2" stroke-opacity="0.4"/>
+
+    <!-- Peripheral cross-edges (mesh topology) -->
+    <line x1="110" y1="118" x2="200" y2="75"  stroke="#5BB8FF" stroke-width="0.7" stroke-opacity="0.22"/>
+    <line x1="200" y1="75"  x2="290" y2="108" stroke="#5BB8FF" stroke-width="0.7" stroke-opacity="0.22"/>
+    <line x1="290" y1="108" x2="320" y2="200" stroke="#5BB8FF" stroke-width="0.7" stroke-opacity="0.22"/>
+    <line x1="320" y1="200" x2="280" y2="305" stroke="#5BB8FF" stroke-width="0.7" stroke-opacity="0.22"/>
+    <line x1="280" y1="305" x2="118" y2="300" stroke="#5BB8FF" stroke-width="0.7" stroke-opacity="0.22"/>
+    <line x1="118" y1="300" x2="78"  y2="210" stroke="#5BB8FF" stroke-width="0.7" stroke-opacity="0.22"/>
+    <line x1="78"  y1="210" x2="110" y2="118" stroke="#5BB8FF" stroke-width="0.7" stroke-opacity="0.22"/>
+
+    <!-- Inner triangle bracing lines -->
+    <line x1="110" y1="118" x2="290" y2="108" stroke="#9B6DFF" stroke-width="0.5" stroke-opacity="0.14"/>
+    <line x1="320" y1="200" x2="118" y2="300" stroke="#9B6DFF" stroke-width="0.5" stroke-opacity="0.14"/>
+    <line x1="78"  y1="210" x2="280" y2="305" stroke="#9B6DFF" stroke-width="0.5" stroke-opacity="0.14"/>
+  </g>
+
+  <!-- Satellite nodes -->
+  <circle cx="110" cy="118" r="7"   fill="#5BB8FF" filter="url(#nodeGlow)" opacity="0.9"/>
+  <circle cx="110" cy="118" r="11"  fill="none" stroke="#5BB8FF" stroke-width="0.8" stroke-opacity="0.35"/>
+  <circle cx="200" cy="75"  r="5.5" fill="#9B6DFF" filter="url(#nodeGlow)" opacity="0.85"/>
+  <circle cx="200" cy="75"  r="9"   fill="none" stroke="#9B6DFF" stroke-width="0.7" stroke-opacity="0.3"/>
+  <circle cx="290" cy="108" r="6"   fill="#5BB8FF" filter="url(#nodeGlow)" opacity="0.85"/>
+  <circle cx="290" cy="108" r="10"  fill="none" stroke="#5BB8FF" stroke-width="0.7" stroke-opacity="0.3"/>
+  <circle cx="320" cy="200" r="7.5" fill="#4F9CF9" filter="url(#nodeGlow)" opacity="0.9"/>
+  <circle cx="320" cy="200" r="12"  fill="none" stroke="#4F9CF9" stroke-width="0.8" stroke-opacity="0.35"/>
+  <circle cx="280" cy="305" r="6"   fill="#9B6DFF" filter="url(#nodeGlow)" opacity="0.8"/>
+  <circle cx="280" cy="305" r="10"  fill="none" stroke="#9B6DFF" stroke-width="0.7" stroke-opacity="0.28"/>
+  <circle cx="118" cy="300" r="6.5" fill="#5BB8FF" filter="url(#nodeGlow)" opacity="0.8"/>
+  <circle cx="118" cy="300" r="10"  fill="none" stroke="#5BB8FF" stroke-width="0.7" stroke-opacity="0.28"/>
+  <circle cx="78"  cy="210" r="5.5" fill="#9B6DFF" filter="url(#nodeGlow)" opacity="0.8"/>
+  <circle cx="78"  cy="210" r="9"   fill="none" stroke="#9B6DFF" stroke-width="0.7" stroke-opacity="0.28"/>
+
+  <!-- Micro-nodes on edges -->
+  <circle cx="155" cy="159" r="2.5" fill="#7DD4FC" opacity="0.7"/>
+  <circle cx="245" cy="154" r="2"   fill="#C084FC" opacity="0.6"/>
+  <circle cx="260" cy="200" r="2.5" fill="#7DD4FC" opacity="0.65"/>
+  <circle cx="240" cy="252" r="2"   fill="#C084FC" opacity="0.6"/>
+  <circle cx="159" cy="250" r="2"   fill="#7DD4FC" opacity="0.6"/>
+  <circle cx="139" cy="205" r="2.5" fill="#C084FC" opacity="0.65"/>
+  <circle cx="200" cy="138" r="2"   fill="#7DD4FC" opacity="0.6"/>
+
+  <!-- ── Central hub node ── -->
+  <circle cx="200" cy="200" r="16"  fill="#0d1420" stroke="url(#accentGrad)" stroke-width="1.5"/>
+  <circle cx="200" cy="200" r="9"   fill="url(#accentGrad)" filter="url(#nodeGlow)" opacity="0.95"/>
+  <circle cx="200" cy="200" r="22"  fill="none" stroke="url(#accentGrad)" stroke-width="0.8" stroke-opacity="0.4"/>
+  <circle cx="200" cy="200" r="30"  fill="none" stroke="url(#accentGrad)" stroke-width="0.5" stroke-opacity="0.18"/>
+
+  <!-- ── Monogram backdrop panel ── -->
+  <rect x="118" y="158" width="164" height="84" rx="14"
+        fill="#080c14" fill-opacity="0.78"
+        stroke="url(#accentGrad)" stroke-width="1.2" stroke-opacity="0.55"/>
+  <!-- Inner highlight on panel top edge -->
+  <rect x="120" y="159" width="160" height="2" rx="1"
+        fill="url(#accentGrad)" fill-opacity="0.18"/>
+
+  <!-- ── SR Monogram — proper text element, centered ── -->
+  <text
+    x="200" y="227"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="76"
+    font-weight="700"
+    font-style="italic"
+    letter-spacing="-2"
+    text-anchor="middle"
+    fill="url(#monoGrad)"
+    filter="url(#textGlow)"
+    opacity="0.97">SR</text>
+
+  <!-- Thin separator line inside panel -->
+  <line x1="140" y1="237" x2="260" y2="237" stroke="url(#accentGrad)" stroke-width="0.8" stroke-opacity="0.4"/>
+
+  <!-- ── Role tag pill ── -->
+  <rect x="100" y="310" width="200" height="30" rx="15"
+        fill="#5BB8FF" fill-opacity="0.07"
+        stroke="url(#accentGrad)" stroke-width="1" stroke-opacity="0.5"/>
+  <circle cx="112" cy="325" r="2.5" fill="url(#goldGrad)" opacity="0.8"/>
+  <circle cx="288" cy="325" r="2.5" fill="url(#goldGrad)" opacity="0.8"/>
+  <text x="200" y="330"
+        font-family="'Courier New', 'Lucida Console', monospace"
+        font-size="10.5" font-weight="600" letter-spacing="2.8"
+        fill="url(#accentGrad)" text-anchor="middle" opacity="0.9">ARCHITECT · PM · AI</text>
+
+  <!-- ── Top arc label ── -->
+  <path id="topArc" d="M 90,200 A 110,110 0 0,1 310,200" fill="none"/>
+  <text font-family="'Courier New', monospace" font-size="9" letter-spacing="3.5"
+        fill="#5BB8FF" opacity="0.45" font-weight="400">
+    <textPath href="#topArc" startOffset="50%" text-anchor="middle">
+      SUPRATIK ROY
+    </textPath>
+  </text>
+
+  <!-- ── Precision tick marks ── -->
+  <g stroke="#5BB8FF" stroke-width="1" stroke-opacity="0.35" fill="none">
+    <line x1="200" y1="22"  x2="200" y2="36"/>
+    <line x1="200" y1="364" x2="200" y2="378"/>
+    <line x1="22"  y1="200" x2="36"  y2="200"/>
+    <line x1="364" y1="200" x2="378" y2="200"/>
+    <line x1="62"  y1="62"  x2="71"  y2="71"/>
+    <line x1="338" y1="62"  x2="329" y2="71"/>
+    <line x1="62"  y1="338" x2="71"  y2="329"/>
+    <line x1="338" y1="338" x2="329" y2="329"/>
+  </g>
+
+  <!-- ── Final outer edge ── -->
+  <circle cx="200" cy="200" r="197" fill="none" stroke="url(#accentGrad)" stroke-width="0.6" stroke-opacity="0.25"/>
+
+</svg>
