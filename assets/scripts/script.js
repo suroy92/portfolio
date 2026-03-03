@@ -1,107 +1,134 @@
 // Glitch Background Generator
-// Draws a 600×400 canvas tile once per theme change and applies it as a tiling body background
+// Draws directly onto a fixed-position DOM canvas — grain everywhere, glitch effects only in the
+// side margins (outside the .container max-width), so the content column stays clean.
 function generateGlitchBg() {
-    const isLight = document.body.classList.contains('light');
-    const canvas  = document.createElement('canvas');
-    canvas.width  = 600;
-    canvas.height = 400;
+    const canvas = document.getElementById('glitch-bg');
+    if (!canvas) return;
     const ctx = canvas.getContext('2d');
+    const vw  = canvas.width  = window.innerWidth;
+    const vh  = canvas.height = window.innerHeight;
 
+    const isLight = document.body.classList.contains('light');
     const ri = (min, max) => Math.floor(Math.random() * (max - min) + min);
 
-    const img = ctx.getImageData(0, 0, 600, 400);
+    // Margin bands — mirrors CSS: .container { width: 92%; max-width: 1280px }
+    const containerW = Math.min(1280, vw * 0.92);
+    const margin     = Math.max(0, (vw - containerW) / 2);
+
+    ctx.clearRect(0, 0, vw, vh);
+
+    // 1. Film grain — full canvas, sparse random pixels at very low alpha
+    const img = ctx.getImageData(0, 0, vw, vh);
     const d   = img.data;
     const sp  = (x, y, r, g, b, a) => {
-        if (x < 0 || x >= 600 || y < 0 || y >= 400) return;
-        const i = (y * 600 + x) * 4;
+        if (x < 0 || x >= vw || y < 0 || y >= vh) return;
+        const i = (y * vw + x) * 4;
         d[i] = r; d[i + 1] = g; d[i + 2] = b; d[i + 3] = a;
     };
+    // Film grain — bright in dark mode, dark in light mode so it reads against the background
+    for (let i = 0; i < d.length; i += 4) {
+        if (Math.random() > 0.05) continue;
+        const v = isLight ? ri(0, 80) : ri(180, 255);
+        d[i] = v; d[i + 1] = v; d[i + 2] = v; d[i + 3] = ri(4, 14);
+    }
 
-    // 1. Base fill
-    const base = isLight ? 253 : 13;
-    for (let i = 0; i < d.length; i += 4) { d[i] = base; d[i+1] = base; d[i+2] = isLight ? base : 23; d[i+3] = 255; }
+    // Helper — pick a random x start within left or right margin band
+    const marginX = (w) => {
+        if (margin < w) return -1; // margin too narrow — skip this element
+        return Math.random() < 0.5
+            ? ri(0, margin - w)                    // left band
+            : ri(vw - margin, vw - w);             // right band
+    };
 
-    // 2. RGB chromatic-aberration clusters — edge-anchored only (top / bottom / left / right margins)
-    //    Center stays clean; colored static lives at the borders like the reference
-    const numClusters = ri(5, 9);
+    // 2. RGB chromatic-aberration clusters (margins only)
+    // Fix: draw main pixels first in one pass, then fringe edges in a second pass.
+    // Inline ghost drawing caused each pixel's red ghost (at x-2) to be overwritten
+    // two iterations later by a newer pixel's red ghost — making everything appear red.
+    const numClusters = ri(4, 8);
     for (let c = 0; c < numClusters; c++) {
-        let cx, cy, cw, ch;
-        const zone = ri(0, 4); // 0=top, 1=bottom, 2=left side, 3=right side
-        if (zone === 0) {
-            cy = ri(0, 16);  ch = ri(3, 7);  cw = ri(60, 260); cx = ri(0, 600 - cw);
-        } else if (zone === 1) {
-            ch = ri(3, 7);   cy = 400 - ch - ri(0, 16); cw = ri(60, 260); cx = ri(0, 600 - cw);
-        } else if (zone === 2) {
-            cx = ri(0, 8);   cw = ri(50, 210); ch = ri(2, 6); cy = ri(0, 394);
-        } else {
-            cw = ri(50, 210); cx = 600 - cw - ri(0, 8); ch = ri(2, 6); cy = ri(0, 394);
-        }
+        const cw = ri(40, Math.min(200, Math.max(40, margin - 10)));
+        const cx = marginX(cw);
+        if (cx < 0) continue;
+        const cy = ri(0, vh - 10);
+        const ch = ri(2, 6);
+
+        // Pass 1 — noisy static body (per-pixel random color)
+        let lastR = 0, lastB = 0; // track channels for fringe
         for (let y = cy; y < cy + ch; y++) {
             for (let x = cx; x < cx + cw; x++) {
                 const t = Math.random();
                 let r, g, b, a;
-                if      (t < 0.28) { r = 0;   g = isLight ? 140 : 190; b = isLight ? 200 : 245; a = ri(110, 210); } // cyan
-                else if (t < 0.52) { r = isLight ? 200 : 240; g = 0;   b = isLight ? 120 : 170; a = ri(110, 210); } // magenta
-                else if (t < 0.70) { r = 0;   g = 0;   b = isLight ? 190 : 250; a = ri(90,  185); } // blue
-                else if (t < 0.84) { r = isLight ? 200 : 240; g = 0;   b = 0;   a = ri(80,  165); } // red
-                else               { const v = ri(isLight ? 80 : 160, isLight ? 180 : 245); r = v; g = v; b = v; a = ri(55, 130); }
-                sp(x,     y, r, g, b, a);
-                sp(x - 2, y, r, 0, 0, Math.floor(a * 0.35)); // red ghost left
-                sp(x + 2, y, 0, 0, b, Math.floor(a * 0.35)); // blue ghost right
+                if      (t < 0.30) { r = 0;   g = isLight ? 140 : 190; b = isLight ? 200 : 245; a = ri(110, 210); }
+                else if (t < 0.55) { r = isLight ? 200 : 240; g = 0;   b = isLight ? 120 : 170; a = ri(110, 210); }
+                else if (t < 0.75) { r = 0;   g = 0;   b = isLight ? 190 : 250; a = ri(90,  185); }
+                else               { const wv = ri(isLight ? 80 : 160, isLight ? 180 : 245); r = wv; g = wv; b = wv; a = ri(55, 130); }
+                sp(x, y, r, g, b, a);
+                lastR = isLight ? 200 : 240; // red channel for fringe
+                lastB = isLight ? 200 : 250; // blue channel for fringe
             }
         }
-    }
 
-    // 3. Dashed tracking lines — very few, low alpha; tile repeats make these multiply fast
-    const numLines = ri(3, 6);
-    for (let i = 0; i < numLines; i++) {
-        const lineY  = ri(0, 399);
-        const startX = ri(0, 450);
-        const endX   = Math.min(startX + ri(30, 200), 600);
-        const lv     = isLight ? ri(50, 110) : ri(100, 180);
-        const la     = ri(12, 38);
-        let x = startX;
-        while (x < endX) {
-            const dashW = ri(5, 18);
-            const gapW  = ri(4, 16);
-            for (let px = x; px < Math.min(x + dashW, endX); px++) sp(px, lineY, lv, lv, lv, la);
-            x += dashW + gapW;
+        // Pass 2 — red fringe 2px to the left, blue fringe 2px to the right
+        const fa = ri(60, 130);
+        for (let y = cy; y < cy + ch; y++) {
+            sp(cx - 2, y, lastR, 0, 0, fa);
+            sp(cx - 1, y, lastR, 0, 0, Math.floor(fa * 0.6));
+            sp(cx + cw,     y, 0, 0, lastB, fa);
+            sp(cx + cw + 1, y, 0, 0, lastB, Math.floor(fa * 0.6));
         }
     }
 
-    // 4. Block artifacts — very few, very faint
-    const numBlocks = ri(3, 7);
+    // 3. Dashed tracking lines (margins only)
+    const numLines = ri(3, 6);
+    for (let i = 0; i < numLines; i++) {
+        const lw = ri(30, Math.min(220, Math.max(30, margin - 5)));
+        const lx = marginX(lw);
+        if (lx < 0) continue;
+        const ly = ri(0, vh - 1);
+        const lv = isLight ? ri(50, 110) : ri(100, 180);
+        const la = ri(12, 40);
+        let x = lx;
+        while (x < lx + lw) {
+            const dw = ri(5, 18), gw = ri(4, 14);
+            for (let px = x; px < Math.min(x + dw, lx + lw); px++) sp(px, ly, lv, lv, lv, la);
+            x += dw + gw;
+        }
+    }
+
+    // 4. Block artifacts (margins only)
+    const numBlocks = ri(4, 8);
     for (let i = 0; i < numBlocks; i++) {
-        const bx  = ri(0, 545);
-        const by  = ri(0, 370);
-        const bw  = ri(10, 50);
+        const bw = ri(10, Math.min(55, Math.max(10, margin - 5)));
+        const bx = marginX(bw);
+        if (bx < 0) continue;
+        const by  = ri(0, vh - 20);
         const bh  = ri(3, 14);
         const bri = isLight ? ri(165, 210) : ri(20, 44);
         const ba  = ri(10, 28);
-        for (let y = by; y < Math.min(by + bh, 400); y++)
-            for (let x = bx; x < Math.min(bx + bw, 600); x++)
+        for (let y = by; y < Math.min(by + bh, vh); y++)
+            for (let x = bx; x < Math.min(bx + bw, vw); x++)
                 sp(x, y, bri, bri, bri, ba);
-    }
-
-    // 5. Sparse noise pixels — minimal, just enough for film-grain feel
-    for (let i = 0; i < 250; i++) {
-        const nv = isLight ? ri(0, 60) : ri(180, 255);
-        sp(ri(0, 600), ri(0, 400), nv, nv, nv, ri(4, 22));
     }
 
     ctx.putImageData(img, 0, 0);
 
-    // 6. Subtle scanlines
-    ctx.fillStyle = isLight ? 'rgba(0,0,0,0.01)' : 'rgba(0,0,0,0.032)';
-    for (let y = 0; y < 400; y += 4) ctx.fillRect(0, y + 2, 600, 2);
+    // 5. Scanlines — full width, very faint
+    ctx.fillStyle = isLight ? 'rgba(0,0,0,0.008)' : 'rgba(0,0,0,0.025)';
+    for (let y = 0; y < vh; y += 4) ctx.fillRect(0, y + 2, vw, 1);
 
-    // Apply as fixed tiling background
-    const url = canvas.toDataURL('image/png');
-    document.body.style.backgroundImage      = `url('${url}')`;
-    document.body.style.backgroundSize       = '600px 400px';
-    document.body.style.backgroundRepeat     = 'repeat';
-    document.body.style.backgroundAttachment = 'fixed';
+    // Clear any leftover inline body background styles from the old tiling approach
+    document.body.style.backgroundImage      = '';
+    document.body.style.backgroundSize       = '';
+    document.body.style.backgroundRepeat     = '';
+    document.body.style.backgroundAttachment = '';
 }
+
+// Regenerate glitch canvas on resize (debounced)
+let _glitchResizeTimer;
+window.addEventListener('resize', () => {
+    clearTimeout(_glitchResizeTimer);
+    _glitchResizeTimer = setTimeout(generateGlitchBg, 200);
+}, { passive: true });
 
 // Navbar scroll opacity
 const navEl = document.querySelector("nav");
