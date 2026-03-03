@@ -12,13 +12,13 @@
     <meta property="og:description" content="Tech Lead & Full-Stack Developer." />
     <meta property="og:image" content="profile.png" />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" href="assets/images/portfolio-logo.svg" />
+    <link rel="icon" href="assets/images/portfolio-logo.png" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
         rel="stylesheet" />
 
     <!-- Icons -->
@@ -45,26 +45,42 @@
 
     <!-- Navbar -->
     <nav>
-        <div class="nav-logo">Supratik Roy</div>
-        <ul id="navMenu">
-            <li><a href="#home" class="nav-link">Home</a></li>
-            <li><a href="#about" class="nav-link">About</a></li>
-            <li><a href="#skills" class="nav-link">Skills</a></li>
-            <li><a href="#projects" class="nav-link">Projects</a></li>
-            <li><a href="#experience" class="nav-link">Career</a></li>
-            <li><a href="#contact" class="nav-link">Contact</a></li>
-        </ul>
-        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
-            <iconify-icon icon="mdi:menu"></iconify-icon>
-        </button>
+        <div class="nav-left">
+            <ul id="navMenu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#experience" class="nav-link">Career</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                <iconify-icon icon="mdi:menu"></iconify-icon>
+            </button>
+        </div>
+        <a href="#home" class="nav-logo">
+            <img src="assets/images/portfolio-logo.png" alt="Supratik Roy" />
+        </a>
+        <div class="nav-social">
+            <a class="icon-btn" href="mailto:supratik1992@gmail.com" aria-label="Email">
+                <iconify-icon icon="mdi:email-outline"></iconify-icon>
+            </a>
+            <a class="icon-btn" href="https://www.linkedin.com/in/supratikroy/" target="_blank"
+                rel="noopener noreferrer" aria-label="LinkedIn">
+                <iconify-icon icon="mdi:linkedin"></iconify-icon>
+            </a>
+            <a class="icon-btn" href="https://github.com/suroy92" target="_blank" rel="noopener noreferrer"
+                aria-label="GitHub">
+                <iconify-icon icon="mdi:github"></iconify-icon>
+            </a>
+        </div>
     </nav>
 
     <!-- Hero -->
     <section class="hero" id="home">
         <div class="hero-inner">
             <h1 class="hero-name">Supratik Roy</h1>
-            <h2 class="hero-title" aria-live="polite" aria-label="Tech Lead"><span id="typewriter-text">Tech
-                    Lead</span><span class="type-cursor" aria-hidden="true"></span></h2>
+            <h2 class="hero-title" aria-live="polite" aria-label="Tech Lead"><span class="terminal-prompt" aria-hidden="true">~/portfolio&nbsp;$</span><span id="typewriter-text">Tech Lead</span><span class="type-cursor" aria-hidden="true"></span></h2>
         </div>
     </section>
 
@@ -101,9 +117,9 @@
                 </div>
             </div>
 
-            <!-- Skills pill cloud -->
-            <div class="bento-cell bento-skills" id="skills">
-                <p class="bento-skills-label">Tech Stack</p>
+            <!-- Skills -->
+            <div id="skills" class="skills-section">
+                <h2><iconify-icon icon="ph:code-duotone"></iconify-icon> Tech Stack</h2>
                 <div class="skill-pills">
                     <span class="skill-pill"><i class="devicon-react-original colored"></i><span>React</span></span>
                     <span class="skill-pill"><i class="devicon-angularjs-plain colored"></i><span>Angular</span></span>

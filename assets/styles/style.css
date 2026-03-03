@@ -44,7 +44,7 @@ html {
 }
 
 body {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'DM Sans', sans-serif;
     font-weight: 400;
     margin: 0;
     padding: 0;
@@ -129,14 +129,18 @@ section.show {
 }
 
 /* -------- Typography -------- */
-.hero h1,
-.hero h2 {
-    font-family: 'Montserrat', sans-serif;
+.hero h1 {
+    font-family: 'Syne', sans-serif;
     font-weight: 800;
 }
 
+.hero h2.hero-title {
+    font-family: 'Space Mono', monospace;
+    font-weight: 400;
+}
+
 h2 {
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Syne', sans-serif;
     font-weight: 600;
     font-size: var(--step-2);
     display: flex;
@@ -159,6 +163,7 @@ h2::before {
 
 .section-kicker {
     margin: 0 0 6px;
+    font-family: 'Space Mono', monospace;
     font-weight: 700;
     letter-spacing: .08em;
     text-transform: uppercase;
@@ -167,7 +172,7 @@ h2::before {
 }
 
 h3 {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Syne', sans-serif;
     font-weight: 700;
     font-size: var(--step-1);
 }
@@ -199,20 +204,46 @@ body.light nav::before {
     opacity: 0.85;
 }
 
-.nav-logo {
-    font-size: var(--step-1);
-    font-weight: 800;
-    background: linear-gradient(135deg, var(--primary), var(--accent));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    letter-spacing: -.02em;
-    transition: transform .2s ease;
-    cursor: pointer;
+.nav-left {
+    flex: 1;
+    display: flex;
+    align-items: center;
 }
 
-.nav-logo:hover {
+.nav-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.nav-logo img {
+    height: 64px;
+    width: auto;
+    transition: transform .2s ease, opacity .2s ease;
+}
+
+.nav-logo:hover img {
     transform: scale(1.05);
+    opacity: 0.85;
+}
+
+.nav-social {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+.nav-social .icon-btn {
+    padding: .45rem .6rem;
+    font-size: 1.15rem;
+    border-color: rgba(255, 255, 255, .1);
+}
+
+.nav-social .icon-btn iconify-icon {
+    margin: 0;
 }
 
 nav ul {
@@ -273,13 +304,22 @@ body.light nav ul li a:hover {
 
 @media (max-width: 600px) {
     nav {
-        padding: 16px 24px;
+        padding: 16px 20px;
+    }
+
+    .nav-social {
+        gap: 2px;
+    }
+
+    .nav-social .icon-btn {
+        padding: .4rem .5rem;
+        font-size: 1rem;
     }
 
     nav ul {
         display: flex;
         position: fixed;
-        top: 72px;
+        top: 68px;
         left: 0;
         right: 0;
         background: var(--card-bg);
@@ -460,7 +500,7 @@ body.light .hero {
     background-clip: text;
     color: transparent;
     line-height: 1.05;
-    letter-spacing: -.02em;
+    letter-spacing: -.03em;
     animation: gradientShift 6s linear infinite;
 }
 
@@ -477,26 +517,43 @@ body.light .hero-name {
 }
 
 .hero-title {
-    font-size: clamp(1.8rem, 4.5vw, 3.8rem);
-    font-weight: 600;
-    margin: 4px 0 0 0;
-    color: color-mix(in oklab, white 90%, var(--primary) 10%);
-    min-height: 1.4em;
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(.95rem, 1.8vw, 1.45rem);
+    font-weight: 400;
+    margin: 20px 0 0 0;
+    color: color-mix(in oklab, white 88%, var(--primary) 12%);
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    background: rgba(0, 0, 0, 0.42);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 8px;
+    padding: 14px 22px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 body.light .hero-title {
     color: color-mix(in oklab, #1F2328 85%, var(--primary) 15%);
+    background: rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+.terminal-prompt {
+    color: var(--primary);
+    margin-right: 10px;
+    user-select: none;
+    opacity: .9;
 }
 
 .type-cursor {
     display: inline-block;
-    width: 3px;
-    height: .85em;
-    background: var(--primary);
-    margin-left: 3px;
-    border-radius: 2px;
-    vertical-align: middle;
-    animation: blink .8s step-end infinite;
+    width: .55em;
+    height: 1.05em;
+    background: currentColor;
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    animation: blink .9s step-end infinite;
 }
 
 @keyframes blink {
@@ -551,13 +608,14 @@ body.light .hero-title {
 }
 
 .stat .num {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Syne', sans-serif;
     font-weight: 800;
     font-size: clamp(1.4rem, 1rem + 1vw, 2rem);
     line-height: 1;
 }
 
 .stat .label {
+    font-family: 'Space Mono', monospace;
     opacity: .85;
     font-size: var(--step--1);
 }
@@ -591,7 +649,7 @@ body.light .hero-title {
 }
 
 .about-stats .num {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Syne', sans-serif;
     font-weight: 800;
     font-size: clamp(3rem, 2rem + 4vw, 5.5rem);
     line-height: 1;
@@ -612,8 +670,9 @@ body.light .hero-title {
 }
 
 .about-stats .label {
+    font-family: 'Space Mono', monospace;
     font-size: var(--step--1);
-    font-weight: 600;
+    font-weight: 400;
     text-transform: uppercase;
     letter-spacing: .1em;
     opacity: .55;
@@ -644,6 +703,7 @@ section.show .about-layout-left {
 }
 
 .about-label {
+    font-family: 'Space Mono', monospace;
     font-size: .7rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -771,46 +831,30 @@ section.show .about-layout-right {
     font-size: var(--step-0);
 }
 
-/* Skills card */
-.bento-skills {
-    display: block;
+/* -------- Skills Section -------- */
+.skills-section {
+    margin-top: 60px;
 }
 
-.bento-skills-label {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: var(--step--1);
-    text-transform: uppercase;
-    letter-spacing: .08em;
-    color: color-mix(in oklab, var(--text-color) 60%, var(--primary) 40%);
-    margin: 0 0 14px;
-}
-
-/* -------- Skill Pills -------- */
 .skill-pills {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 32px 28px;
+    margin-top: 24px;
 }
 
 .skill-pill {
     display: inline-flex;
+    flex-direction: column;
     align-items: center;
-    gap: 7px;
-    padding: .38rem .85rem;
-    background: color-mix(in oklab, var(--card-bg) 80%, transparent);
-    border: 1px solid rgba(255, 255, 255, .1);
-    border-radius: 999px;
-    font-size: 1.15rem;
-    animation: float 4s ease-in-out infinite;
-    transition: border-color .2s ease;
+    gap: 10px;
+    font-size: 2.4rem;
     cursor: default;
+    transition: transform .2s ease;
 }
 
 .skill-pill:hover {
-    border-color: var(--primary);
-    animation-play-state: paused;
-    transform: translateY(-4px) scale(1.08);
+    transform: translateY(-4px);
 }
 
 .skill-pill span {
@@ -819,26 +863,16 @@ section.show .about-layout-right {
     color: color-mix(in oklab, var(--text-color) 80%, transparent);
 }
 
-.skill-pill:nth-child(3n)   { animation-delay: 0s; }
-.skill-pill:nth-child(3n+1) { animation-delay: -1.4s; }
-.skill-pill:nth-child(3n+2) { animation-delay: -2.8s; }
-
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50%       { transform: translateY(-5px); }
-}
-
 @media (max-width: 900px) {
     .bento {
         grid-template-columns: repeat(2, 1fr);
     }
     .bento-bio  { grid-column: 1 / -1; }
-    .bento-skills { grid-column: 1 / -1; }
 }
 
 @media (max-width: 600px) {
     .bento { grid-template-columns: 1fr; }
-    .bento-bio, .bento-skills { grid-column: 1; }
+    .bento-bio { grid-column: 1; }
 }
 
 /* Technology category cards (removed) */
@@ -1121,7 +1155,7 @@ section.show .about-layout-right {
 }
 
 .career-company {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Syne', sans-serif;
     font-weight: 700;
     font-size: var(--step-1);
     color: var(--primary);
@@ -1139,8 +1173,9 @@ section.show .about-layout-right {
     display: inline-flex;
     align-items: center;
     gap: 6px;
+    font-family: 'Space Mono', monospace;
     font-size: .7rem;
-    font-weight: 700;
+    font-weight: 400;
     letter-spacing: .1em;
     text-transform: uppercase;
     color: color-mix(in oklab, var(--text-color) 55%, transparent);
@@ -1297,7 +1332,7 @@ body.light .education-icon-large {
 }
 
 .education-degree {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Syne', sans-serif;
     font-weight: 700;
     font-size: var(--step-1);
     margin: 0;
@@ -1516,7 +1551,6 @@ body.light .education-icon-large {
     margin: 32px 0 0;
     display: flex;
     flex-direction: column;
-    border-bottom: 1px solid color-mix(in oklab, var(--text-color) 10%, transparent);
 }
 
 .contact-form label {
@@ -1524,7 +1558,6 @@ body.light .education-icon-large {
     flex-direction: column;
     gap: 8px;
     padding: 24px 0 16px;
-    border-top: 1px solid color-mix(in oklab, var(--text-color) 10%, transparent);
 }
 
 .form-label-text {
