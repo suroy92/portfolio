@@ -419,14 +419,14 @@ nav ul li a.active {
     right: 32px;
     z-index: 999;
     background: var(--card-bg);
-    border: 2px solid rgba(255, 255, 255, .08);
-    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, .12);
+    border-radius: 3px;
     width: 56px;
     height: 56px;
     cursor: pointer;
     color: var(--text-color);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    transition: border-color .2s ease, box-shadow .2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -434,8 +434,8 @@ nav ul li a.active {
 }
 
 .theme-toggle-fixed:hover {
-    transform: scale(1.08);
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+    transform: none;
+    box-shadow: 0 0 14px rgba(56, 189, 248, 0.2);
     border-color: var(--primary);
 }
 
@@ -613,13 +613,25 @@ body.light .hero-title {
 
 .btn-secondary {
     background: transparent;
-    border: 2px solid var(--primary);
-    color: var(--primary);
+    border-color: var(--accent);
+    color: var(--accent);
+    filter: none;
+}
+
+.btn-secondary::after {
+    background: var(--accent);
 }
 
 .btn-secondary:hover {
-    background: color-mix(in oklab, var(--primary) 10%, transparent);
-    filter: brightness(1);
+    color: #fff;
+    box-shadow: 0 0 14px rgba(129, 140, 248, 0.25);
+    background: transparent;
+    filter: none;
+}
+
+body.light .btn:hover,
+body.light .btn-secondary:hover {
+    color: #fff;
 }
 
 @media (max-width: 600px) {
@@ -955,23 +967,52 @@ section.show .about-layout-right {
 }
 
 .chip {
-    padding: .4rem .8rem;
-    border-radius: 999px;
+    padding: .35rem .85rem;
+    border-radius: 3px;
     border: 1px solid rgba(255, 255, 255, .12);
-    background: color-mix(in oklab, var(--bg-color) 70%, transparent);
+    background: transparent;
     cursor: pointer;
-    font-weight: 600;
-    transition: all .2s ease;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 400;
+    color: color-mix(in oklab, var(--text-color) 65%, transparent);
+    transition: border-color .2s ease, color .2s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.chip::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: color-mix(in oklab, var(--primary) 12%, transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .2s ease;
+    z-index: -1;
 }
 
 .chip:hover {
-    transform: translateY(-2px);
     border-color: var(--primary);
+    color: var(--primary);
+    transform: none;
+}
+
+.chip:hover::after {
+    transform: scaleX(1);
 }
 
 .chip.is-active {
-    outline: 2px solid var(--ring);
-    border-color: color-mix(in oklab, var(--primary) 45%, transparent);
+    border-color: var(--primary);
+    color: var(--primary);
+    background: color-mix(in oklab, var(--primary) 10%, transparent);
+    outline: none;
+    box-shadow: none;
+}
+
+body.light .chip {
+    border-color: rgba(0, 0, 0, .12);
 }
 
 .search {
@@ -1029,23 +1070,24 @@ section.show .about-layout-right {
 }
 
 .carousel-btn {
-    background: var(--card-bg);
-    border: 1px solid rgba(255,255,255,.08);
-    color: var(--text-color);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, .14);
+    color: color-mix(in oklab, var(--text-color) 65%, transparent);
+    width: 36px;
+    height: 36px;
+    border-radius: 3px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.4rem;
-    transition: background .2s ease, border-color .2s ease, opacity .2s ease;
+    font-size: 1.2rem;
+    transition: border-color .2s ease, color .2s ease;
     flex-shrink: 0;
 }
 
 .carousel-btn:hover:not(:disabled) {
-    background: color-mix(in oklab, var(--primary) 15%, var(--card-bg));
+    background: transparent;
     border-color: var(--primary);
+    color: var(--primary);
 }
 
 .carousel-btn:disabled {
@@ -1643,76 +1685,44 @@ body.light .education-icon-large {
     width: fit-content;
     align-self: flex-start;
     margin-top: 28px;
-    background: linear-gradient(135deg, var(--primary), var(--accent));
     padding: 14px 40px;
     font-size: var(--step-0);
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 6px 20px color-mix(in oklab, var(--primary) 35%, transparent);
-}
-
-.contact-form button::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, var(--accent), var(--primary));
-    opacity: 0;
-    transition: opacity .3s ease;
-}
-
-.contact-form button:hover::before {
-    opacity: 1;
-}
-
-.contact-form button iconify-icon {
-    position: relative;
-    z-index: 1;
 }
 
 .contact-form button:hover {
-    box-shadow: 0 8px 25px color-mix(in oklab, var(--primary) 45%, transparent),
-        0 0 30px color-mix(in oklab, var(--accent) 25%, transparent);
+    box-shadow: 0 0 14px rgba(56, 189, 248, 0.25);
 }
 
 .icon-btn {
     display: inline-flex;
     align-items: center;
     gap: .5rem;
-    padding: .55rem .9rem;
-    border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, .12);
-    background: color-mix(in oklab, var(--bg-color) 70%, transparent);
-    transition: transform .2s ease, border-color .2s ease, background .2s ease;
+    padding: .5rem .6rem;
+    border-radius: 3px;
+    border: 1px solid rgba(255, 255, 255, .14);
+    background: transparent;
+    color: color-mix(in oklab, var(--text-color) 65%, transparent);
+    transition: border-color .2s ease, color .2s ease, box-shadow .2s ease;
 }
 
 .icon-btn:hover {
-    transform: translateY(-3px);
+    transform: none;
     border-color: var(--primary);
-    background: color-mix(in oklab, var(--primary) 10%, var(--bg-color) 70%);
+    color: var(--primary);
+    background: transparent;
+    box-shadow: 0 0 8px rgba(56, 189, 248, 0.18);
 }
 
 .icon-btn iconify-icon {
-    transition: transform .3s ease;
+    transition: none;
 }
 
 .icon-btn:hover iconify-icon {
-    animation: wiggle .5s ease;
+    animation: none;
 }
 
-@keyframes wiggle {
-
-    0%,
-    100% {
-        transform: rotate(0deg);
-    }
-
-    25% {
-        transform: rotate(-10deg);
-    }
-
-    75% {
-        transform: rotate(10deg);
-    }
+body.light .icon-btn {
+    border-color: rgba(0, 0, 0, .14);
 }
 
 /* -------- Footer -------- */
@@ -1804,29 +1814,51 @@ footer {
 
 /* -------- Buttons -------- */
 .btn {
-    background: var(--primary);
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 25px;
-    font-weight: 700;
-    transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+    background: transparent;
+    color: var(--primary);
+    padding: 10px 24px;
+    border-radius: 3px;
+    border: 1px solid var(--primary);
+    font-weight: 600;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.875rem;
+    letter-spacing: 0.03em;
+    position: relative;
+    overflow: hidden;
+    transition: color .22s ease, box-shadow .22s ease;
     display: inline-flex;
     align-items: center;
     gap: .5rem;
-    box-shadow: 0 4px 12px rgba(56, 189, 248, .3);
-    border: none;
     cursor: none;
+    z-index: 0;
+    box-shadow: none;
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--primary);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .25s ease;
+    z-index: -1;
 }
 
 .btn:hover {
-    filter: brightness(110%);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(56, 189, 248, .4);
+    color: #0D1117;
+    box-shadow: 0 0 14px rgba(56, 189, 248, 0.25);
+    filter: none;
+    transform: none;
+}
+
+.btn:hover::after {
+    transform: scaleX(1);
 }
 
 .btn:active {
-    transform: translateY(-1px) scale(.98);
-    box-shadow: 0 2px 8px rgba(56, 189, 248, .3);
+    transform: none;
+    box-shadow: none;
 }
 
 .btn iconify-icon {
@@ -1834,7 +1866,7 @@ footer {
 }
 
 .btn:hover iconify-icon {
-    transform: scale(1.1) rotate(-5deg);
+    transform: translateX(2px);
 }
 
 /* -------- Custom Cursor -------- */
