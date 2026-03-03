@@ -196,12 +196,17 @@ nav::before {
     position: absolute;
     inset: 0;
     background: var(--bg-color);
-    opacity: 0.7;
+    opacity: 0;
     z-index: -1;
+    transition: opacity .4s ease;
 }
 
-body.light nav::before {
-    opacity: 0.85;
+nav.nav-scrolled::before {
+    opacity: 0.82;
+}
+
+body.light nav.nav-scrolled::before {
+    opacity: 0.92;
 }
 
 .nav-left {
@@ -256,36 +261,59 @@ nav ul {
 
 nav ul li a {
     display: block;
-    color: color-mix(in oklab, var(--text-color) 80%, transparent);
+    position: relative;
+    color: color-mix(in oklab, var(--text-color) 65%, transparent);
     font-weight: 500;
     font-size: var(--step-0);
-    padding: 8px 16px;
-    border-radius: 25px;
-    border: 1px solid transparent;
+    padding: 8px 20px;
+    border-radius: 4px;
+    border: none;
     background: transparent;
-    backdrop-filter: blur(0px);
-    transition: all .3s ease;
+    transition: color .2s ease;
 }
 
-nav ul li a:hover {
-    color: var(--text-color);
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%);
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow:
-        0 4px 16px rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.25),
-        inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+nav ul li a::before,
+nav ul li a::after {
+    content: '[';
+    position: absolute;
+    top: 50%;
+    left: 6px;
+    transform: translateY(-50%) translateX(-4px);
+    color: var(--primary);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85em;
+    font-weight: 400;
+    opacity: 0;
+    transition: transform .2s ease, opacity .2s ease;
+    pointer-events: none;
 }
 
-body.light nav ul li a:hover {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.4) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    box-shadow:
-        0 4px 16px rgba(0, 0, 0, 0.08),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8),
-        inset 0 -1px 0 rgba(255, 255, 255, 0.3);
+nav ul li a::after {
+    content: ']';
+    left: auto;
+    right: 6px;
+    transform: translateY(-50%) translateX(4px);
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+    color: var(--primary);
+}
+
+nav ul li a:hover::before,
+nav ul li a.active::before {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+}
+
+nav ul li a:hover::after,
+nav ul li a.active::after {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+}
+
+nav ul li a.active {
+    color: var(--primary);
 }
 
 @media (max-width: 900px) {
@@ -469,7 +497,7 @@ body.light nav ul li a:hover {
     position: relative;
     overflow: clip;
     isolation: isolate;
-    background: #0D1117;
+    background: transparent;
     padding: 40px 0 20px;
 }
 
@@ -486,11 +514,12 @@ body.light nav ul li a:hover {
 }
 
 body.light .hero {
-    background: #EBF2FA;
+    background: transparent;
     color: #1F2328;
 }
 
 .hero-name {
+    position: relative;
     font-size: clamp(3.5rem, 9vw, 7rem);
     font-weight: 800;
     margin: 0;
@@ -1848,6 +1877,85 @@ footer {
     border: 1px solid rgba(255, 255, 255, .12);
     background: color-mix(in oklab, var(--bg-color) 70%, transparent);
     font-size: .9rem;
+}
+
+/* -------- Element Glitch Keyframes (global for cross-browser reliability) -------- */
+@keyframes glitchRed {
+    0%, 7%, 100% { opacity: 0; transform: none; clip-path: none; }
+    2%  { opacity: .75; transform: translate(-5px, 0); clip-path: polygon(0 15%, 100% 15%, 100% 38%, 0 38%); }
+    4%  { opacity: .55; transform: translate(-7px, 0); clip-path: polygon(0 62%, 100% 62%, 100% 80%, 0 80%); }
+    6%  { opacity: 0;   transform: none;               clip-path: none; }
+}
+
+@keyframes glitchCyan {
+    0%, 7%, 100% { opacity: 0; transform: none; clip-path: none; }
+    2%  { opacity: .7;  transform: translate(5px, 0);  clip-path: polygon(0 40%, 100% 40%, 100% 62%, 0 62%); }
+    4%  { opacity: .5;  transform: translate(7px, 0);  clip-path: polygon(0 8%,  100% 8%,  100% 26%, 0 26%); }
+    6%  { opacity: 0;   transform: none;               clip-path: none; }
+}
+
+@keyframes glitchIn {
+    0%   { transform: none;                            clip-path: none;                                        opacity: 1; }
+    20%  { transform: translate(-3px, 0) skewX(-1deg); clip-path: polygon(0 0,   100% 0,   100% 45%, 0 45%);  opacity: .85; }
+    40%  { transform: translate(3px, 0)  skewX(1deg);  clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%); opacity: .9; }
+    60%  { transform: translate(-1px, 0);              clip-path: none;                                        opacity: 1; }
+    80%  { transform: translate(1px, 0); }
+    100% { transform: none;                            clip-path: none;                                        opacity: 1; }
+}
+
+@keyframes glitchFilter {
+    0%, 100% { filter: none;                                            transform: none;        }
+    20%      { filter: hue-rotate(80deg)  saturate(3) brightness(1.4); transform: skewX(-1deg); }
+    40%      { filter: hue-rotate(-60deg) saturate(2);                  transform: skewX(1deg);  }
+    60%      { filter: brightness(1.6)    saturate(1.5);                transform: none;        }
+    80%      { filter: hue-rotate(40deg); }
+}
+
+/* -------- Glitch Effects (motion-safe only) -------- */
+@media (prefers-reduced-motion: no-preference) {
+
+    /* Type 1: Chromatic aberration — glitch fires at 2% of a 3s loop = ~0.36s after page load */
+    .hero-name::before,
+    .hero-name::after {
+        content: attr(data-text);
+        position: absolute;
+        inset: 0;
+        background: none;
+        -webkit-background-clip: unset;
+        background-clip: unset;
+        pointer-events: none;
+        opacity: 0;
+        font-size: inherit;
+        font-weight: inherit;
+        letter-spacing: inherit;
+        line-height: inherit;
+        text-align: inherit;
+    }
+
+    .hero-name::before {
+        color: #f55;
+        animation: glitchRed 3s 0.3s infinite;
+    }
+
+    .hero-name::after {
+        color: #0ef;
+        animation: glitchCyan 3s 0.5s infinite;
+    }
+
+    /* Type 2: Scan-line distortion fires once when section scrolls into view */
+    section.show h2 {
+        animation: glitchIn 0.45s steps(4) forwards;
+    }
+
+    /* Type 3: Filter flicker on hover */
+    .nav-logo:hover img {
+        animation: glitchFilter 0.4s steps(3);
+    }
+
+    .section-kicker:hover {
+        animation: glitchFilter 0.35s steps(3);
+    }
+
 }
 
 /* Respect reduced motion */
