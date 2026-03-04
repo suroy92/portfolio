@@ -311,6 +311,21 @@ const projectsData = [
         ]
     },
     {
+        title: "DG Bespoke Menswear",
+        category: "Web",
+        tags: ["web"],
+        description: "Showcase website for a luxury bespoke menswear brand based in Kolkata. Features a dark, editorial aesthetic with gold accents, scroll-triggered animations, a filterable gallery with lightbox, and a full brand story — built with Alpine.js, GLightbox, and custom CSS.",
+        image: "assets/images/dg_showcase_1.svg",
+        tech: [
+            { type: "iconify", icon: "mdi:language-html5", label: "HTML" },
+            { type: "iconify", icon: "mdi:language-css3", label: "CSS" },
+            { type: "iconify", icon: "simple-icons:alpinedotjs", label: "Alpine.js" }
+        ],
+        links: [
+            { label: "Live Site", url: "https://dg-showcase.netlify.app/", icon: "ph:globe-duotone" }
+        ]
+    },
+    {
         title: "Password Manager",
         category: "Security",
         tags: ["desktop", "security", "python"],
