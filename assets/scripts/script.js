@@ -5,22 +5,22 @@ function generateGlitchBg() {
     const canvas = document.getElementById('glitch-bg');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    const vw  = canvas.width  = window.innerWidth;
-    const vh  = canvas.height = window.innerHeight;
+    const vw = canvas.width = window.innerWidth;
+    const vh = canvas.height = window.innerHeight;
 
     const isLight = document.body.classList.contains('light');
     const ri = (min, max) => Math.floor(Math.random() * (max - min) + min);
 
     // Margin bands — mirrors CSS: .container { width: 92%; max-width: 1280px }
     const containerW = Math.min(1280, vw * 0.92);
-    const margin     = Math.max(0, (vw - containerW) / 2);
+    const margin = Math.max(0, (vw - containerW) / 2);
 
     ctx.clearRect(0, 0, vw, vh);
 
     // 1. Film grain — full canvas, sparse random pixels at very low alpha
     const img = ctx.getImageData(0, 0, vw, vh);
-    const d   = img.data;
-    const sp  = (x, y, r, g, b, a) => {
+    const d = img.data;
+    const sp = (x, y, r, g, b, a) => {
         if (x < 0 || x >= vw || y < 0 || y >= vh) return;
         const i = (y * vw + x) * 4;
         d[i] = r; d[i + 1] = g; d[i + 2] = b; d[i + 3] = a;
@@ -58,10 +58,10 @@ function generateGlitchBg() {
             for (let x = cx; x < cx + cw; x++) {
                 const t = Math.random();
                 let r, g, b, a;
-                if      (t < 0.30) { r = 0;   g = isLight ? 140 : 190; b = isLight ? 200 : 245; a = ri(110, 210); }
-                else if (t < 0.55) { r = isLight ? 200 : 240; g = 0;   b = isLight ? 120 : 170; a = ri(110, 210); }
-                else if (t < 0.75) { r = 0;   g = 0;   b = isLight ? 190 : 250; a = ri(90,  185); }
-                else               { const wv = ri(isLight ? 80 : 160, isLight ? 180 : 245); r = wv; g = wv; b = wv; a = ri(55, 130); }
+                if (t < 0.30) { r = 0; g = isLight ? 140 : 190; b = isLight ? 200 : 245; a = ri(110, 210); }
+                else if (t < 0.55) { r = isLight ? 200 : 240; g = 0; b = isLight ? 120 : 170; a = ri(110, 210); }
+                else if (t < 0.75) { r = 0; g = 0; b = isLight ? 190 : 250; a = ri(90, 185); }
+                else { const wv = ri(isLight ? 80 : 160, isLight ? 180 : 245); r = wv; g = wv; b = wv; a = ri(55, 130); }
                 sp(x, y, r, g, b, a);
                 lastR = isLight ? 200 : 240; // red channel for fringe
                 lastB = isLight ? 200 : 250; // blue channel for fringe
@@ -73,7 +73,7 @@ function generateGlitchBg() {
         for (let y = cy; y < cy + ch; y++) {
             sp(cx - 2, y, lastR, 0, 0, fa);
             sp(cx - 1, y, lastR, 0, 0, Math.floor(fa * 0.6));
-            sp(cx + cw,     y, 0, 0, lastB, fa);
+            sp(cx + cw, y, 0, 0, lastB, fa);
             sp(cx + cw + 1, y, 0, 0, lastB, Math.floor(fa * 0.6));
         }
     }
@@ -101,10 +101,10 @@ function generateGlitchBg() {
         const bw = ri(10, Math.min(55, Math.max(10, margin - 5)));
         const bx = marginX(bw);
         if (bx < 0) continue;
-        const by  = ri(0, vh - 20);
-        const bh  = ri(3, 14);
+        const by = ri(0, vh - 20);
+        const bh = ri(3, 14);
         const bri = isLight ? ri(165, 210) : ri(20, 44);
-        const ba  = ri(10, 28);
+        const ba = ri(10, 28);
         for (let y = by; y < Math.min(by + bh, vh); y++)
             for (let x = bx; x < Math.min(bx + bw, vw); x++)
                 sp(x, y, bri, bri, bri, ba);
@@ -117,9 +117,9 @@ function generateGlitchBg() {
     for (let y = 0; y < vh; y += 4) ctx.fillRect(0, y + 2, vw, 1);
 
     // Clear any leftover inline body background styles from the old tiling approach
-    document.body.style.backgroundImage      = '';
-    document.body.style.backgroundSize       = '';
-    document.body.style.backgroundRepeat     = '';
+    document.body.style.backgroundImage = '';
+    document.body.style.backgroundSize = '';
+    document.body.style.backgroundRepeat = '';
     document.body.style.backgroundAttachment = '';
 }
 
@@ -311,6 +311,21 @@ const projectsData = [
         ]
     },
     {
+        title: "DG Bespoke Menswear",
+        category: "Web",
+        tags: ["web"],
+        description: "Showcase website for a luxury bespoke menswear brand based in Kolkata. Features a dark, editorial aesthetic with gold accents, scroll-triggered animations, a filterable gallery with lightbox, and a full brand story — built with Alpine.js, GLightbox, and custom CSS.",
+        image: "assets/images/dg_showcase_1.svg",
+        tech: [
+            { type: "iconify", icon: "mdi:language-html5", label: "HTML" },
+            { type: "iconify", icon: "mdi:language-css3", label: "CSS" },
+            { type: "iconify", icon: "simple-icons:alpinedotjs", label: "Alpine.js" }
+        ],
+        links: [
+            { label: "Live Site", url: "https://dg-showcase.netlify.app/", icon: "ph:globe-duotone" }
+        ]
+    },
+    {
         title: "Password Manager",
         category: "Security",
         tags: ["desktop", "security", "python"],
@@ -329,26 +344,26 @@ const projectsData = [
 
 // ─── Projects Carousel ───────────────────────────────────────────────────────
 (function () {
-    const track   = document.getElementById('carouselTrack');
-    const dots    = document.getElementById('carouselDots');
+    const track = document.getElementById('carouselTrack');
+    const dots = document.getElementById('carouselDots');
     const prevBtn = document.getElementById('carouselPrev');
     const nextBtn = document.getElementById('carouselNext');
-    const search  = document.getElementById('projectSearch');
+    const search = document.getElementById('projectSearch');
 
     let activeTag = 'all';
-    let query     = '';
-    let page      = 0;
+    let query = '';
+    let page = 0;
 
     const visibleCount = () => window.innerWidth >= 900 ? 3 : window.innerWidth >= 600 ? 2 : 1;
 
     const filtered = () => projectsData.filter(p => {
         const tagOk = activeTag === 'all' || p.tags.includes(activeTag);
-        const qOk   = !query || p.title.toLowerCase().includes(query) || p.description.toLowerCase().includes(query);
+        const qOk = !query || p.title.toLowerCase().includes(query) || p.description.toLowerCase().includes(query);
         return tagOk && qOk;
     });
 
     const buildCard = p => {
-        const techHtml  = p.tech.map(t =>
+        const techHtml = p.tech.map(t =>
             t.type === 'devicon'
                 ? `<i class="${t.cls}" title="${t.label}"></i>`
                 : `<iconify-icon icon="${t.icon}" title="${t.label}"></iconify-icon>`
@@ -373,7 +388,7 @@ const projectsData = [
 
     const render = () => {
         const items = filtered();
-        const cols  = visibleCount();
+        const cols = visibleCount();
         const total = Math.max(1, Math.ceil(items.length / cols));
         page = Math.max(0, Math.min(page, total - 1));
 
@@ -507,7 +522,7 @@ if (mobileMenuToggle && navMenu) {
 
 // Custom two-part cursor (dot + lagging ring)
 (function () {
-    const dot  = document.getElementById('cursor-dot');
+    const dot = document.getElementById('cursor-dot');
     const ring = document.getElementById('cursor-ring');
     if (!dot || !ring) return;
     if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
@@ -590,24 +605,24 @@ if (mobileMenuToggle && navMenu) {
 //    - Set rate limits
 // ============================================================================
 
-(function() {
+(function () {
     const contactForm = document.querySelector('.contact-form');
-    
+
     if (!contactForm) return;
 
     // EmailJS configuration - replace with your credentials
     const EMAILJS_CONFIG = {
         publicKey: 'r2AePUGGm7nheYfl3',      // From Account → API Keys
-        serviceId: 'service_b84zon8',       // From Email Services
+        serviceId: 'service_0yib5am',       // From Email Services
         templateId: 'template_dibbdzv'      // From Email Templates
     };
 
-    contactForm.addEventListener('submit', async function(e) {
+    contactForm.addEventListener('submit', async function (e) {
         e.preventDefault();
 
         const submitBtn = contactForm.querySelector('button[type="submit"]');
         const originalBtnText = submitBtn.innerHTML;
-        
+
         // Get form data
         const formData = {
             from_name: contactForm.querySelector('input[name="name"]').value,
